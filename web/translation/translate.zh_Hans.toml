@@ -40,3 +40,4 @@ panelURLRootPathDesc = "必须以 '/' 开头，以 '/' 结尾，重启面板生�
 "timezone" = "时区"
 "timezoneDesc" = "定时任务按照该时区的时间运行，重启面板生效"
 
+"confirmRestart" = "确定要重启面板吗？点击确定将于 3 秒后重启，若重启后无法访问面板，请前往服务器查看面板日志信息"
