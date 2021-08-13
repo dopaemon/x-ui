@@ -1,3 +1,4 @@
+# html/login.html
 "username" = "用户名"
 "password" = "密码"
 "login" = "登录"
@@ -10,3 +11,32 @@
 "remark" = "备注"
 "enable" = "启用"
 "protocol" = "协议"
+
+# html/setting.html
+"updateAllSetting" = "保存配置"
+"restartPanel" = "重启面板"
+"panelConfiguration" = "面板配置"
+"panelMonitoringIP" = "面板监听 IP"
+"panelMonitoringIPDesc" = "默认留空监听所有 IP，重启面板生效"
+"panelMonitoringPort" = "面板监听端口"
+"panelMonitoringPortDesc" = "重启面板生效"
+"panelCertificatePublicKey" = "面板证书公钥文件路径"
+"panelCertificatePublicKeyDesc" = "填写一个 '/' 开头的绝对路径，重启面板生效"
+"panelCertificateKey" = "面板证书密钥文件路径"
+"panelCertificateKeyDesc" = "填写一个 '/' 开头的绝对路径，重启面板生效"
+"panelURLRootPath" = "面板 url 根路径"
+panelURLRootPathDesc = "必须以 '/' 开头，以 '/' 结尾，重启面板生效"
+
+"userSettings" = "用户设置"
+"oldUsername" = "原用户名"
+"oldPassword" = "原密码"
+"newUsername" = "新用户名"
+"newPassword" = "新密码"
+"updateUser" = "修改"
+"xraySettings" = "xray 相关设置"
+"xrayConfigTemplate" = "xray 配置模版"
+"xrayConfigTemplateDesc" = "以该模版为基础生成最终的 xray 配置文件，重启面板生效"
+"otherSettings" = "其他设置"
+"timezone" = "时区"
+"timezoneDesc" = "定时任务按照该时区的时间运行，重启面板生效"
+

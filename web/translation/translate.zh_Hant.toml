@@ -1,3 +1,4 @@
+# html/login.html
 "username" = "用戶名"
 "password" = "密碼"
 "login" = "登錄"
@@ -10,3 +11,5 @@
 "remark" = "備註"
 "enable" = "啟用"
 "protocol" = "協議"
+
+# html/setting.html
