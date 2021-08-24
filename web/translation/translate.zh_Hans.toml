@@ -95,3 +95,14 @@ panelURLRootPathDesc = "必须以 '/' 开头，以 '/' 结尾，重启面板生�
 "sureDeleteInbound" = "确定要删除入站吗?"
 "delete" = "删除"
 
+# html/inbounds_info_modal.html
+"copyLink" = "复制链接"
+"copySuccessful" = "复制成功"
+
+# html/common_spider.html
+"systemStatus" = "系统状态"
+"inboundsList" = "入站列表"
+"panelSettings" = "面板设置"
+"clients" = "客户端"  # now unused
+"other" = "其他"
+"logout" = "退出登录"
