@@ -25,7 +25,7 @@
 "panelCertificateKey" = "面板证书密钥文件路径"
 "panelCertificateKeyDesc" = "填写一个 '/' 开头的绝对路径，重启面板生效"
 "panelURLRootPath" = "面板 url 根路径"
-panelURLRootPathDesc = "必须以 '/' 开头，以 '/' 结尾，重启面板生效"
+"panelURLRootPathDesc" = "必须以 '/' 开头，以 '/' 结尾，重启面板生效"
 
 "userSettings" = "用户设置"
 "oldUsername" = "原用户名"
@@ -93,7 +93,6 @@ panelURLRootPathDesc = "必须以 '/' 开头，以 '/' 结尾，重启面板生�
 "modify" = "修改"
 "deleteInbound" = "删除入站"
 "sureDeleteInbound" = "确定要删除入站吗?"
-"delete" = "删除"
 
 # html/inbounds_info_modal.html
 "copyLink" = "复制链接"
@@ -104,5 +103,5 @@ panelURLRootPathDesc = "必须以 '/' 开头，以 '/' 结尾，重启面板生�
 "inboundsList" = "入站列表"
 "panelSettings" = "面板设置"
 "clients" = "客户端"  # now unused
-"other" = "其他"
+"settingOther" = "其他"
 "logout" = "退出登录"

@@ -33,7 +33,7 @@
                 <a-space direction="vertical">
                     <a-space direction="horizontal">
                         <a-button type="primary" :disabled="saveBtnDisable" @click="updateAllSetting">{{ i18n "updateAllSetting" }}</a-button>
-                        <a-button type="danger" :disabled="!saveBtnDisable" @click="restartPanel">{{ i18n "restartPanel" }</a-button>
+                        <a-button type="danger" :disabled="!saveBtnDisable" @click="restartPanel">{{ i18n "restartPanel" }}</a-button>
                     </a-space>
                     <a-tabs default-active-key="1">
                         <a-tab-pane key="1" tab='{{ i18n "panelConfiguration" }}'>
