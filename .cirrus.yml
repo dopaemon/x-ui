@@ -37,5 +37,6 @@ task:
     - mv ../src/bin/xray-linux-amd64 ../src-zip/bin/
     - mv ../src/bin/geosite.dat ../src-zip/bin/
     - mv ../src/bin/geoip.dat ../src-zip/bin/
-    - tar -czvf x-ui-linux-arm64.tar.gz *
-    - github upload --token $token --owner 'dopaemon' --repo 'x-ui' --tag '0.3.2' --file '/tmp/x-ui/src-zip/x-ui-linux-arm64.tar.gz' --name 'x-ui-linux-arm64.tar.gz'
+    - tar -czvf x-ui-linux-amd64.tar.gz *
+    - cp -r /tmp/x-ui/src/github-release.sh ../src-zip/
+    - ./github-release.sh
