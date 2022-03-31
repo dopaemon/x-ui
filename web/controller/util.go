@@ -46,12 +46,12 @@ func jsonMsgObj(c *gin.Context, msg string, obj interface{}, err error) {
 	if err == nil {
 		m.Success = true
 		if msg != "" {
-			m.Msg = msg + "成功"
+			m.Msg = msg + "Thành Công"
 		}
 	} else {
 		m.Success = false
-		m.Msg = msg + "失败: " + err.Error()
-		logger.Warning(msg+"失败: ", err)
+		m.Msg = msg + "Thất Bại: " + err.Error()
+		logger.Warning(msg+"Thất Bại: ", err)
 	}
 	c.JSON(http.StatusOK, m)
 }

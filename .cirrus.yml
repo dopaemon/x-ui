@@ -1,0 +1,32 @@
+env:
+    CIRRUS_CLONE_DEPTH: 1
+    BUILD_HOSTNAME: "CirrusCI"
+
+task:
+  name: Compile X-UI For X64
+  container:
+    image: dopaemon/bionic:latest
+    cpu: 2
+    memory: 4G
+  install_packages_script:
+    - sudo apt update
+    - sudo apt remove golang-go gccgo-go -y
+    - curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
+    - sha256sum go1.16.7.linux-amd64.tar.gz
+    - sudo tar -C /usr/local -xvf go1.16.7.linux-amd64.tar.gz
+    - touch ~/.goi
+    - echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.goi
+    - source ~/.goi
+  gitsource_script:
+    - source ~/.goi
+    - sudo mkdir -p /tmp/x-ui && sudo chmod 777 /tmp/x-ui && cd /tmp/x-ui
+    - git clone -b main https://github.com/dopaemon/x-ui.git src && cd src
+    - go build main.go
+    - cd .. && mkdir -p src-zip && cd src-zip && mkdir -p bin
+    - mv ../src/main ../src-zip/x-ui
+    - mv ../src/x-ui.service ../src-zip/
+    - mv ../src/x-ui.sh ../src-zip/
+    - mv ../src/bin/xray-linux-amd64 ../src-zip/bin/
+    - mv ../src/bin/geosite.dat ../src-zip/bin/
+    - mv ../src/bin/geoip.dat ../src-zip/bin/
+    - tar -czvf x-ui-linux-arm64.tar.gz *
