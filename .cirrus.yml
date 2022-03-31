@@ -1,6 +1,8 @@
 env:
     CIRRUS_CLONE_DEPTH: 1
     BUILD_HOSTNAME: "CirrusCI"
+    
+    token: "ENCRYPTED[8899d705efa5229bdebf7958f8e6005750663f9a9debc0d5a5d1a3977a182de19f840510f47fa14576e6381db124c443]"
 
 task:
   name: Compile X-UI For X64
@@ -12,6 +14,7 @@ task:
     - sudo apt update
     - sudo apt remove golang-go gccgo-go -y
     - curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
+    - sudo apt install wget -y && wget https://github.com/tfausak/github-release/releases/download/2.0.0.0/github-release-2.0.0.0-ubuntu && mv github-release-2.0.0.0-ubuntu github && sudo mv github /usr/bin/ && sudo chmod +x /usr/bin/github
     - sha256sum go1.16.7.linux-amd64.tar.gz
     - sudo tar -C /usr/local -xvf go1.16.7.linux-amd64.tar.gz
     - touch ~/.goi
@@ -30,3 +33,4 @@ task:
     - mv ../src/bin/geosite.dat ../src-zip/bin/
     - mv ../src/bin/geoip.dat ../src-zip/bin/
     - tar -czvf x-ui-linux-arm64.tar.gz *
+    - github upload --token $token --owner 'dopaemon' --repo 'x-ui' --tag '0.3.2' --file '/tmp/x-ui/src-zip/x-ui-linux-arm64.tar.gz' --name 'x-ui-linux-arm64.tar.gz'
