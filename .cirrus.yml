@@ -12,7 +12,7 @@ task:
     memory: 4G
   install_packages_script:
     - sudo apt update
-    - sudo apt install software-properties-common -y
+    - sudo apt install software-properties-common jq -y
     - sudo apt remove golang-go gccgo-go -y
     - curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
     - sudo apt install wget -y && wget https://github.com/tfausak/github-release/releases/download/2.0.0.0/github-release-2.0.0.0-ubuntu && mv github-release-2.0.0.0-ubuntu github && sudo mv github /usr/bin/ && sudo chmod +x /usr/bin/github
