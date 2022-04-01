@@ -164,9 +164,9 @@
             </transition>
         </a-layout-content>
     </a-layout>
-    <a-modal id="version-modal" v-model="versionModal.visible" title="切换版本"
+    <a-modal id="version-modal" v-model="versionModal.visible" title="Chuyển Phiên Bản"
              :closable="true" @ok="() => versionModal.visible = false"
-             ok-text="确定" cancel-text="取消">
+             ok-text="Đồng ý" cancel-text="Hủy bỏ">
         <h2>Nhấp vào phiên bản bạn muốn chuyển đổi</h2>
         <h2>Vui lòng chọn cẩn thận, phiên bản cũ có thể không tương thích với cấu hình</h2>
         <template v-for="version, index in versionModal.versions">

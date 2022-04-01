@@ -130,10 +130,10 @@
             async restartPanel() {
                 await new Promise(resolve => {
                     this.$confirm({
-                        title: '重启面板',
-                        content: '确定要重启面板吗？点击确定将于 3 秒后重启，若重启后无法访问面板，请前往服务器查看面板日志信息',
-                        okText: '确定',
-                        cancelText: '取消',
+                        title: 'Khởi động lại Dashboard',
+                        content: 'Bạn có chắc chắn muốn khởi động lại bảng điều khiển không? Nhấn OK để khởi động lại sau 3 giây. Nếu bạn không thể truy cập bảng điều khiển sau khi khởi động lại, vui lòng truy cập máy chủ để xem thông tin nhật ký bảng điều khiển',
+                        okText: 'Đồng ý',
+                        cancelText: 'Hủy bỏ',
                         onOk: () => resolve(),
                     });
                 });
