@@ -12,10 +12,9 @@ task:
     memory: 4G
   install_packages_script:
     - sudo apt update
-    - sudo apt install software-properties-common jq -y
+    - sudo apt install software-properties-common jq wget unzip -y
     - sudo apt remove golang-go gccgo-go -y
     - curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
-    - sudo apt install wget -y && wget https://github.com/tfausak/github-release/releases/download/2.0.0.0/github-release-2.0.0.0-ubuntu && mv github-release-2.0.0.0-ubuntu github && sudo mv github /usr/bin/ && sudo chmod +x /usr/bin/github
     - sha256sum go1.16.7.linux-amd64.tar.gz
     - sudo tar -C /usr/local -xvf go1.16.7.linux-amd64.tar.gz
     - touch ~/.goi
@@ -31,16 +30,21 @@ task:
     - mv ../src/main ../src-zip/x-ui/x-ui
     - mv ../src/x-ui.service ../src-zip/x-ui/
     - mv ../src/x-ui.sh ../src-zip/x-ui/
-    - mv ../src/bin/amd64/geosite.dat ../src-zip/x-ui/bin/
-    - mv ../src/bin/amd64/geoip.dat ../src-zip/x-ui/bin/
-    - mv ../src/bin/amd64/xray-linux-amd64 ../src-zip/x-ui/bin/
+    - cd x-ui/bin/
+    - wget https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
+    - unzip Xray-linux-64.zip
+    - rm -rf README.md LICENSE Xray-linux-64.zip
+    - mv xray xray-linux-amd64
+    - chmod +x *
+    - cd ../../
     - tar -czvf x-ui-linux-amd64.tar.gz x-ui
-    - rm -rf ../src-zip/x-ui/bin/geosite.dat
-    - rm -rf ../src-zip/x-ui/bin/geoip.dat
-    - rm -rf ../src-zip/x-ui/bin/xray-linux-amd64
-    - mv ../src/bin/arm64/geosite.dat ../src-zip/x-ui/bin/
-    - mv ../src/bin/arm64/geoip.dat ../src-zip/x-ui/bin/
-    - mv ../src/bin/arm64/xray-linux-arm64 ../src-zip/x-ui/bin/
+    - cd x-ui/bin/
+    - wget https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-arm64-v8a.zip
+    - unzip Xray-linux-arm64-v8a.zip
+    - rm -rf README.md LICENSE Xray-linux-arm64-v8a.zip
+    - mv xray xray-linux-arm64
+    - chmod +x *
+    - cd ../../
     - tar -czvf x-ui-linux-arm64.tar.gz x-ui
   GithubRelease_script:
     - cp -r /tmp/x-ui/src/github-release.sh /tmp/x-ui/ && cd /tmp/x-ui/
