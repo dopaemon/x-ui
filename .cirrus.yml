@@ -30,7 +30,7 @@ task:
     - mv ../src/main ../src-zip/x-ui/x-ui
     - mv ../src/x-ui.service ../src-zip/x-ui/
     - mv ../src/x-ui.sh ../src-zip/x-ui/
-    - cd x-ui/bin/
+    - cd x-ui/bin/ && rm -rf *
     - wget https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
     - unzip Xray-linux-64.zip
     - rm -rf README.md LICENSE Xray-linux-64.zip
@@ -38,7 +38,7 @@ task:
     - chmod +x *
     - cd ../../
     - tar -czvf x-ui-linux-amd64.tar.gz x-ui
-    - cd x-ui/bin/
+    - cd x-ui/bin/ && rm -rf *
     - wget https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-arm64-v8a.zip
     - unzip Xray-linux-arm64-v8a.zip
     - rm -rf README.md LICENSE Xray-linux-arm64-v8a.zip
