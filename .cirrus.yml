@@ -31,12 +31,16 @@ task:
     - mv ../src/main ../src-zip/x-ui/x-ui
     - mv ../src/x-ui.service ../src-zip/x-ui/
     - mv ../src/x-ui.sh ../src-zip/x-ui/
-    - mv ../src/bin/geosite.dat ../src-zip/x-ui/bin/
-    - mv ../src/bin/geoip.dat ../src-zip/x-ui/bin/
-    - mv ../src/bin/xray-linux-amd64 ../src-zip/x-ui/bin/
+    - mv ../src/bin/amd64/geosite.dat ../src-zip/x-ui/bin/
+    - mv ../src/bin/amd64/geoip.dat ../src-zip/x-ui/bin/
+    - mv ../src/bin/amd64/xray-linux-amd64 ../src-zip/x-ui/bin/
     - tar -czvf x-ui-linux-amd64.tar.gz x-ui
+    - rm -rf ../src-zip/x-ui/bin/geosite.dat
+    - rm -rf ../src-zip/x-ui/bin/geoip.dat
     - rm -rf ../src-zip/x-ui/bin/xray-linux-amd64
-    - mv ../src/bin/xray-linux-arm64 ../src-zip/x-ui/bin/
+    - mv ../src/bin/arm64/geosite.dat ../src-zip/x-ui/bin/
+    - mv ../src/bin/arm64/geoip.dat ../src-zip/x-ui/bin/
+    - mv ../src/bin/arm64/xray-linux-arm64 ../src-zip/x-ui/bin/
     - tar -czvf x-ui-linux-arm64.tar.gz x-ui
   GithubRelease_script:
     - cp -r /tmp/x-ui/src/github-release.sh /tmp/x-ui/ && cd /tmp/x-ui/
