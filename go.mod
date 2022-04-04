@@ -4,7 +4,6 @@ go 1.16
 
 require (
 	github.com/BurntSushi/toml v1.0.0
-	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/Workiva/go-datastructures v1.0.53
 	github.com/gin-contrib/sessions v0.0.4
 	github.com/gin-gonic/gin v1.7.7
@@ -29,9 +28,6 @@ require (
 	golang.org/x/text v0.3.7
 	google.golang.org/genproto v0.0.0-20220401170504-314d38edb7de // indirect
 	google.golang.org/grpc v1.45.0
-	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
-	gopkg.in/go-playground/validator.v9 v9.29.1 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gorm.io/driver/sqlite v1.3.1
 	gorm.io/gorm v1.23.4
 )
