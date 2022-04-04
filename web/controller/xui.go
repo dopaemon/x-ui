@@ -34,7 +34,7 @@ func (a *XUIController) index(c *gin.Context) {
 }
 
 func (a *XUIController) inbounds(c *gin.Context) {
-	html(c, "inbounds.html", "Tạo Server 4G", nil)
+	html(c, "inbounds.html", "Danh Sách Server", nil)
 }
 
 func (a *XUIController) setting(c *gin.Context) {

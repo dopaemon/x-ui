@@ -11,10 +11,20 @@
     <a-icon type="setting"></a-icon>
     <span>Cài Đặt</span>
 </a-menu-item>
-<a-menu-item key="{{ .base_path }}xui/clients">
-    <a-icon type="laptop"></a-icon>
-    <span>Người dùng</span>
-</a-menu-item>
+<a-sub-menu>
+    <template slot="title">
+        <a-icon type="earth"></a-icon>
+        <span>Kiểm Tra Tốc Độ Mạng</span>
+    </template>
+    <a-menu-item key="{{ .base_path }}xui/speedtest">
+       <a-icon type="earth"></a-icon>
+       <span>SpeedTest</span>
+    </a-menu-item>
+    <a-menu-item key="{{ .base_path }}xui/fast">
+       <a-icon type="earth"></a-icon>
+       <span>Fast</span>
+    </a-menu-item>
+</a-sub-menu>
 <a-sub-menu>
     <template slot="title">
         <a-icon type="link"></a-icon>
