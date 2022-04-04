@@ -33,19 +33,18 @@ arch=$(arch)
 
 if [[ $arch == "x86_64" || $arch == "x64" || $arch == "amd64" ]]; then
     arch="amd64"
+elif [[ $arch == "x86" ]]; then
+    arch="x86"
 elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
     arch="arm64"
+elif [[ $arch == "aarch32" || $arch == "arm32" ]]; then
+    arch="arm32"
 else
     arch="amd64"
     echo -e "${red}Không thể xác định cấu trúc CPU, thử dùng Kiến Trúc amd64 ${arch}${plain}"
 fi
 
 echo "Kiến Trúc CPU: ${arch}"
-
-if [ $(getconf WORD_BIT) != '32' ] && [ $(getconf LONG_BIT) != '64' ]; then
-    echo "Không hỗ trợ các hệ điều hành 32Bit vui lòng sử dụng hệ điều hành 64Bit ( Hoặc đợi cập nhật trong tương lai )"
-    exit -1
-fi
 
 os_version=""
 

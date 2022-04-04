@@ -46,6 +46,22 @@ task:
     - chmod +x *
     - cd ../../
     - tar -czvf x-ui-linux-arm64.tar.gz x-ui
+    - cd x-ui/bin/ && rm -rf *
+    - wget https://github.com/XTLS/Xray-core/releases/download/v1.5.4/Xray-linux-32.zip
+    - unzip Xray-linux-32.zip
+    - rm -rf README.md LICENSE Xray-linux-32.zip
+    - mv xray xray-linux-x86
+    - chmod +x *
+    - cd ../../
+    - tar -czvf x-ui-linux-x86.tar.gz x-ui
+    - cd x-ui/bin/ && rm -rf *
+    - wget https://github.com/XTLS/Xray-core/releases/download/v1.5.4/Xray-linux-arm32-v7a.zip
+    - unzip Xray-linux-arm32-v7a.zip
+    - rm -rf README.md LICENSE Xray-linux-arm32-v7a.zip
+    - mv xray xray-linux-arm32
+    - chmod +x *
+    - cd ../../
+    - tar -czvf x-ui-linux-arm32.tar.gz x-ui
   GithubRelease_script:
     - cp -r /tmp/x-ui/src/github-release.sh /tmp/x-ui/ && cd /tmp/x-ui/
     - ./github-release.sh
