@@ -184,7 +184,4 @@ task:
     - tar -czvf x-ui-linux-arm64.tar.gz x-ui
     - cd /
   release_script:
-    - git clone -b main --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/x-ui
-    - cd /tmp/ci/x-ui
-    - chmod +x github-release.sh
-    - ./github-release.sh
+    - bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/github-release.sh)
