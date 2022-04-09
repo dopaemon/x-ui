@@ -169,7 +169,9 @@ task:
     memory: 4G
   install_script:
     - sudo apt-get update
-    - sudo apt-get install aria2 jq curl wget unzip zip git -y -q
+    - sudo apt-get install aria2 jq curl wget unzip zip git gdebi -y -q
+    - wget https://github.com/cli/cli/releases/latest/download/gh_2.7.0_linux_amd64.deb
+    - sudo gdebi gh_2.7.0_linux_amd64.deb
   github_script:
     - sudo rm -rf /tmp/ci/*
     - sudo chmod 777 /tmp/ci
@@ -184,4 +186,9 @@ task:
     - tar -czvf x-ui-linux-arm64.tar.gz x-ui
     - cd /
   release_script:
-    - bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/github-release.sh)
+    - cd /tmp/ci
+    - git clone -b main --single-branch https://github.com/dopaemon/x-ui.git
+    - mkdir -p /tmp/ci/out/
+    - mv /tmp/ci/amd64/x-u/ix-ui-linux-amd64.tar.gz /tmp/ci/out/
+    - mv /tmp/ci/amd64/x-u/ix-ui-linux-arm64.tar.gz /tmp/ci/out/
+    - gh release create $VERSIONS ./tmp/ci/out/*.tar.gz --notes "X-UI $VERSIONS UNOFFICIAL Việt Hoá"
