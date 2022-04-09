@@ -189,6 +189,6 @@ task:
     - cd /tmp/ci
     - git clone -b main --single-branch https://github.com/dopaemon/x-ui.git
     - mkdir -p /tmp/ci/out/
-    - mv /tmp/ci/amd64/x-u/ix-ui-linux-amd64.tar.gz /tmp/ci/out/
-    - mv /tmp/ci/amd64/x-u/ix-ui-linux-arm64.tar.gz /tmp/ci/out/
+    - mv /tmp/ci/amd64/x-ui/x-ui-linux-amd64.tar.gz /tmp/ci/out/
+    - mv /tmp/ci/amd64/x-ui/x-ui-linux-arm64.tar.gz /tmp/ci/out/
     - gh release create $VERSIONS ./tmp/ci/out/*.tar.gz --notes "X-UI $VERSIONS UNOFFICIAL Việt Hoá"
