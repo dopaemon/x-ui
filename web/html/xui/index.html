@@ -68,7 +68,7 @@
                 <a-row>
                     <a-col :sm="24" :md="12">
                         <a-card hoverable>
-                            xray trạng thái:
+                            Thông Tin Xray:
                             <a-tag :color="status.xray.color">[[ status.xray.state ]]</a-tag>
                             <a-tooltip v-if="status.xray.state === State.Error">
                                 <template slot="title">
@@ -94,12 +94,12 @@
                     </a-col>
                     <a-col :sm="24" :md="12">
                         <a-card hoverable>
-                            Tải hệ thống: [[ status.loads[0] ]] | [[ status.loads[1] ]] | [[ status.loads[2] ]]
+                            System Loading: [[ status.loads[0] ]] | [[ status.loads[1] ]] | [[ status.loads[2] ]]
                         </a-card>
                     </a-col>
                     <a-col :sm="24" :md="12">
                         <a-card hoverable>
-                            tcp / udp Số lượng kết nối: [[ status.tcpCount ]] / [[ status.udpCount ]]
+                            Số kết nối tcp/udp: [[ status.tcpCount ]] / [[ status.udpCount ]]
                             <a-tooltip>
                                 <template slot="title">
                                     Tổng số kết nối của tất cả các card mạng
@@ -162,6 +162,14 @@
                     </a-col>
                 </a-row>
             </transition>
+            <br><div class="ant-card ant-card-bordered ant-card-hoverable">
+                <!--"your-company-name" is set up in your online configuration dashboard -->
+                <div class="ant-card-body">
+                    <div class="ant-row">
+                        <iframe width="100%" height="350px" scrolling="no" frameborder="0" src="https://fast.com"></iframe>
+                    </div>
+                </div> 
+            </div>
         </a-layout-content>
     </a-layout>
     <a-modal id="version-modal" v-model="versionModal.visible" title="Chuyển Phiên Bản"
