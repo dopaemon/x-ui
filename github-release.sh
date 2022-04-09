@@ -3,7 +3,7 @@
 repo=dopaemon/x-ui
 
 upload_url=$(curl -s -H "Authorization: token $TOKEN"  \
-     -d '{"tag_name": "0.3.4", "name":"X-UI "$VERSIONS" Việt Hoá","body":"$INFORELEASE"}'  \
+     -d '{"tag_name": "0.3.4", "name":"X-UI $VERSIONS Việt Hoá","body":"$INFORELEASE"}'  \
      "https://api.github.com/repos/$repo/releases" | jq -r '.upload_url')
 
 upload_url="${upload_url%\{*}" > /dev/null 2>&1
