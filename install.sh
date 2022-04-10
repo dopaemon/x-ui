@@ -93,7 +93,7 @@ config_after_install() {
         /usr/local/x-ui/x-ui setting -username ${config_account} -password ${config_password}
         echo -e "${yellow}Hoàn tất đặt mật khẩu${plain}"
         /usr/local/x-ui/x-ui setting -port ${config_port}
-        echo -e "${yellow}Hoàn tất đặt Port${plain}"
+        echo -e "${plain}${yellow}Hoàn tất đặt Port${plain}"
     else
         echo -e "${red}Đã hủy cài đặt: Vui lòng cài đặt X-UI lại hoặc gỡ cài đặt mặc định, lý do bảo mật.${plain}"
     fi
