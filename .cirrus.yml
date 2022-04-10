@@ -1,18 +1,45 @@
 env:
     CIRRUS_CLONE_DEPTH: 1
     BUILD_HOSTNAME: "CirrusCI"
-    
-    token: "ENCRYPTED[8899d705efa5229bdebf7958f8e6005750663f9a9debc0d5a5d1a3977a182de19f840510f47fa14576e6381db124c443]"
+    CIRRUS_WORKING_DIR: "/tmp/ci"
+    TOKEN: "ENCRYPTED[8899d705efa5229bdebf7958f8e6005750663f9a9debc0d5a5d1a3977a182de19f840510f47fa14576e6381db124c443]"
+    RCLONE: "ENCRYPTED[1f8f7e7eaf78795dc4106cc960a25dcaf2395de9b39575a5ba34ad7d3fb9dd4679f3f05a3292baf09181916f3f08c60a]"
+    RELEASE: "ENCRYPTED[ce13be89c0c70b830928e53fe444ed3749387cd2364a8919bd19a6a4d08f16b597ca3795503e8d8236bb723eea28cf5f]"
+    VERSIONS: "0.3.4"
+    INFORELEASE: "Việt Hoá X-UI Từ Bản Gốc\nNgưng support 32Bit tạm thời\nDùng Fix Binary arm64\n*** Vui lòng tạo Issues nếu có bất kỳ lỗi nào"
+    DEBIAN_FRONTEND: "noninteractive"
+    SSHKEY2: "ENCRYPTED[!8469040b7a3c804aed48d1626698c53b9f5c665227a91e8a8e3c9c1f73959da955d935bb19f05d1bfc37a1c5e589489f!]"
+    SSHKEY1: "ENCRYPTED[!f571f1926b820ceab939cf2786e76cbd6aff9ef70679515414df507cbe7f5f88d24f5f535164ca178736031ebe5bf1b6!]"
+    USERNAME: "ENCRYPTED[!84300cf406cc0695b827f4cbc9883c7712ab134798e1347bccac9395580fd618298d6dd1ff7897e77eea3a3203fda42b!]"
+    EMAIL: "ENCRYPTED[!a03cbd7c4b2f675b5535c1199bc8bd6eb2f30db7812c7846e372b3e51d00d3c1b4de9e7654bf683c1e5728aba6bfba0e!]"
+    GHCONFIG: "ENCRYPTED[!a9370eec9a3e109160953a26c8dc9c4e6625e2a26b241029341baae89fe929a1341a3c8fe115cf69976de1bfcac2e9b9!]"
+    GHHOST: "ENCRYPTED[!348343a6388b2af14707d32b2e2b19d101232761579e04804d5144f98dc484ed9bcb500785feb03c64ede236f52ca4bb!]"    
 
 task:
-  name: Compile X-UI Việt Hoá
+  name: Checked
+  only_if: $CIRRUS_REPO_OWNER == 'dopaemon'
+  skip: $CIRRUS_BRANCH != 'main'
+  container:
+    image: dopaemon/bionic:latest
+    cpu: 1
+    memory: 1G
+  check_script:
+    - echo "Checked"
+
+task:
+  name: Compile X-UI amd64
+  only_if: $CIRRUS_REPO_OWNER == 'dopaemon'                                             
+  skip: $CIRRUS_BRANCH != 'main'
+  depends_on:
+    - Checked
   container:
     image: dopaemon/bionic:latest
     cpu: 2
     memory: 4G
   install_packages_script:
+    - sudo rm -rf /tmp/ci/*
     - sudo apt update
-    - sudo apt install software-properties-common jq wget unzip -y
+    - sudo apt install software-properties-common jq wget unzip rclone aria2 git -y -q
     - sudo apt remove golang-go gccgo-go -y
     - curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
     - sha256sum go1.16.7.linux-amd64.tar.gz
@@ -20,32 +47,167 @@ task:
     - touch ~/.goi
     - echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.goi
     - source ~/.goi
+    - mkdir -p ~/.config/rclone
+    - echo "$RCLONE" > ~/.config/rclone/rclone.conf
   build_script:
     - source ~/.goi
-    - sudo mkdir -p /tmp/x-ui && sudo chmod 777 /tmp/x-ui && cd /tmp/x-ui
+    - sudo mkdir -p /tmp/ci/x-ui-amd64 && sudo chmod 777 /tmp/ci/x-ui-amd64 && cd /tmp/ci/x-ui-amd64
     - git clone -b main https://github.com/dopaemon/x-ui.git src && cd src
-    - go build main.go
+    - CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o main -v main.go
   gzip_script:
-    - cd /tmp/x-ui && mkdir -p src-zip && cd src-zip && mkdir -p x-ui/bin
+    - git clone -b main --single-branch https://github.com/dopaemon/x-ui.git proc
+    - cd /tmp/ci/x-ui-amd64 && mkdir -p src-zip && cd src-zip && mkdir -p x-ui/bin
     - mv ../src/main ../src-zip/x-ui/x-ui
     - mv ../src/x-ui.service ../src-zip/x-ui/
     - mv ../src/x-ui.sh ../src-zip/x-ui/
     - cd x-ui/bin/ && rm -rf *
     - wget https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
     - unzip Xray-linux-64.zip
+    - rm -rf geoip.dat geosite.dat
+    - wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
+    - wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
     - rm -rf README.md LICENSE Xray-linux-64.zip
     - mv xray xray-linux-amd64
     - chmod +x *
-    - cd ../../
-    - tar -czvf x-ui-linux-amd64.tar.gz x-ui
-    - cd x-ui/bin/ && rm -rf *
+  github_script:
+    - mkdir -p ~/.ssh
+    - sudo chmod 700 ~/.ssh/
+    - sudo rm -rf /root/.ssh
+    - git config --global user.name "$USERNAME"
+    - git config --global user.email "$EMAIL"
+    - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+    - touch ~/.ssh/id_ed25519.pub
+    - touch ~/.ssh/id_ed25519
+    - echo "$SSHKEY1" > ~/.ssh/id_ed25519.pub
+    - echo "$SSHKEY2" > ~/.ssh/id_ed25519
+    - sudo chmod 400 ~/.ssh/*
+  push_script:
+    - cd /tmp/ci/x-ui-amd64/src-zip/x-ui
+    - git init
+    - git add -vA
+    - git commit -sm "Release: X-UI $VERSIONS AMD64"
+    - git remote add origin git@github.com:dopaemon/x-ui.git
+    - git checkout -b "X-UI-$VERSIONS-AMD64"
+    - echo "yes" | git push -uf origin "X-UI-$VERSIONS-AMD64"
+
+task:
+  name: Compile X-UI arm64v8
+  only_if: $CIRRUS_REPO_OWNER == 'dopaemon'                                             
+  skip: $CIRRUS_BRANCH != 'main'
+  depends_on:
+    - Compile X-UI amd64
+  arm_container:
+    image: ubuntu:focal
+    cpu: 2
+    memory: 4G
+  install_packages_script:
+    - rm -rf /tmp/ci/*
+    - apt update
+    - apt full-upgrade -y
+    - apt install wget curl unzip zip gcc g++ clang git rclone aria2 git -y -q
+    - curl -OL https://golang.org/dl/go1.16.7.linux-arm64.tar.gz
+    - sha256sum go1.16.7.linux-arm64.tar.gz
+    - tar -C /usr/local -xvf go1.16.7.linux-arm64.tar.gz
+    - touch ~/.goi
+    - echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.goi
+    - source ~/.goi
+    - mkdir -p ~/.config/rclone
+    - echo "$RCLONE" > ~/.config/rclone/rclone.conf
+  build_script:
+    - git clone -b main --single-branch https://github.com/dopaemon/x-ui.git proc
+    - source ~/.goi
+    - mkdir -p /tmp/ci/x-ui-arm64
+    - chmod 777 /tmp/ci/x-ui-arm64
+    - git clone -b main https://github.com/dopaemon/x-ui.git
+    - mv /tmp/ci/x-ui /tmp/ci/x-ui-arm64/src
+    - cd /tmp/ci/x-ui-arm64/src/
+    - GOOS=linux GOARCH=arm64 go build -o main -v main.go
+  gzip_script:
+    - cd /tmp/ci/x-ui-arm64
+    - mkdir -p /tmp/ci/x-ui-arm64/src-zip/x-ui/bin
+    - chmod +x /tmp/ci/x-ui-arm64/src/x-ui.service
+    - chmod +x /tmp/ci/x-ui-arm64/src/x-ui.sh
+    - mv /tmp/ci/x-ui-arm64/src/main /tmp/ci/x-ui-arm64/src-zip/x-ui/x-ui
+    - mv /tmp/ci/x-ui-arm64/src/x-ui.service /tmp/ci/x-ui-arm64/src-zip/x-ui/
+    - mv /tmp/ci/x-ui-arm64/src/x-ui.sh /tmp/ci/x-ui-arm64/src-zip/x-ui/
+    - cd /tmp/ci/x-ui-arm64/src-zip/x-ui/bin/ && rm -rf *
     - wget https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-arm64-v8a.zip
     - unzip Xray-linux-arm64-v8a.zip
     - rm -rf README.md LICENSE Xray-linux-arm64-v8a.zip
+    - rm -f geoip.dat geosite.dat
+    - wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
+    - wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
     - mv xray xray-linux-arm64
     - chmod +x *
-    - cd ../../
+  github_script:
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh/
+    - git config --global user.name "$USERNAME"
+    - git config --global user.email "$EMAIL"
+    - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+    - touch ~/.ssh/id_ed25519.pub
+    - touch ~/.ssh/id_ed25519
+    - echo "$SSHKEY1" > ~/.ssh/id_ed25519.pub
+    - echo "$SSHKEY2" > ~/.ssh/id_ed25519
+    - chmod 400 ~/.ssh/*
+  push_script:
+    - cd /tmp/ci/x-ui-arm64/src-zip/x-ui
+    - git init
+    - git add -vA
+    - git commit -sm "Release: X-UI $VERSIONS AMD64"
+    - git remote add origin git@github.com:dopaemon/x-ui.git
+    - git checkout -b "X-UI-$VERSIONS-ARM64"
+    - echo "yes" | git push -uf origin "X-UI-$VERSIONS-ARM64"
+
+task:
+  name: Create Github Release
+  only_if: $CIRRUS_REPO_OWNER == 'dopaemon'
+  skip: $CIRRUS_BRANCH != 'main'
+  depends_on:
+    - Compile X-UI arm64v8
+  container:
+    image: dopaemon/bionic:latest
+    cpu: 2
+    memory: 4G
+  install_script:
+    - sudo apt-get update
+    - sudo apt-get install aria2 jq curl wget unzip zip git software-properties-common -y -q
+    - sudo /usr/bin/apt-key adv --no-tty --keyserver hkp://keyserver.ubuntu.com:80 --recv C99B11DEB97541F0
+    - sudo apt-add-repository https://cli.github.com/packages
+    - sudo apt-get update
+    - sudo apt-get install gh
+  ssh_script:
+    - mkdir -p ~/.ssh
+    - sudo chmod 700 ~/.ssh/
+    - git config --global user.name "$USERNAME"
+    - git config --global user.email "$EMAIL"
+    - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+    - touch ~/.ssh/id_ed25519.pub
+    - touch ~/.ssh/id_ed25519
+    - echo "$SSHKEY1" > ~/.ssh/id_ed25519.pub
+    - echo "$SSHKEY2" > ~/.ssh/id_ed25519
+    - sudo chmod 400 ~/.ssh/*
+  github_script:
+    - sudo rm -rf /tmp/ci/*
+    - sudo chmod 777 /tmp/ci
+    - mkdir -p /tmp/ci/amd64
+    - mkdir -p /tmp/ci/arm64
+    - git clone -b "X-UI-$VERSIONS-AMD64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/amd64/x-ui
+    - cd /tmp/ci/amd64/
+    - tar -czvf x-ui-linux-amd64.tar.gz x-ui
+    - cd /
+    - git clone -b "X-UI-$VERSIONS-ARM64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/arm64/x-ui
+    - cd /tmp/ci/arm64/
     - tar -czvf x-ui-linux-arm64.tar.gz x-ui
-  GithubRelease_script:
-    - cp -r /tmp/x-ui/src/github-release.sh /tmp/x-ui/ && cd /tmp/x-ui/
-    - ./github-release.sh
+    - cd /
+  release_script:
+    - cd /tmp/ci
+    - git clone -b main --single-branch git@github.com:dopaemon/x-ui.git
+    - mkdir -p /tmp/ci/out/
+    - mv /tmp/ci/amd64/x-ui-linux-amd64.tar.gz /tmp/ci/out/
+    - mv /tmp/ci/arm64/x-ui-linux-arm64.tar.gz /tmp/ci/out/
+    - gh config set git_protocol ssh --host github.com
+    - touch mytoken.txt
+    - echo "$TOKEN" > mytoken.txt
+    - gh auth login --with-token < mytoken.txt
+    - echo "yes" | gh release create $VERSIONS /tmp/ci/out/*.tar.gz --notes "$INFORELEASE"

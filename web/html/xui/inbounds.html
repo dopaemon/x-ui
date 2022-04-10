@@ -27,15 +27,15 @@
                     <a-card hoverable style="margin-bottom: 20px;">
                         <a-row>
                             <a-col :xs="24" :sm="24" :lg="12">
-                                Tổng số lượt tải lên / Tải xuống：
+                                Tổng Lưu Lượng Data ↑|↓：
                                 <a-tag color="green">[[ sizeFormat(total.up) ]] / [[ sizeFormat(total.down) ]]</a-tag>
                             </a-col>
                             <a-col :xs="24" :sm="24" :lg="12">
-                                Tổng Cộng：
+                                Tổng Cộng:
                                 <a-tag color="green">[[ sizeFormat(total.up + total.down) ]]</a-tag>
                             </a-col>
                             <a-col :xs="24" :sm="24" :lg="12">
-                                Số lượng đến：
+                                Số Server：
                                 <a-tag color="green">[[ dbInbounds.length ]]</a-tag>
                             </a-col>
                         </a-row>
@@ -86,7 +86,7 @@
                                 <a-tag v-else color="green">Vô hạn</a-tag>
                             </template>
                             <template slot="settings" slot-scope="text, dbInbound">
-                                <a-button type="link" @click="showInfo(dbInbound)">Đánh dấu</a-button>
+                                <a-button type="link" @click="showInfo(dbInbound)">Chi Tiết</a-button>
                             </template>
                             <template slot="stream" slot-scope="text, dbInbound, index">
                                 <template v-if="dbInbound.isVMess || dbInbound.isVLess || dbInbound.isTrojan || dbInbound.isSS">
@@ -121,7 +121,7 @@
 <script>
 
     const columns = [{
-        title: "Server Bạn",
+        title: "Chức Năng",
         align: 'center',
         width: 30,
         scopedSlots: { customRender: 'action' },
@@ -131,37 +131,37 @@
         width: 40,
         scopedSlots: { customRender: 'enable' },
     }, {
-        title: "id",
+        title: "ID",
         align: 'center',
         dataIndex: "id",
         width: 30,
     }, {
-        title: "Nhận xét",
+        title: "Tên",
         align: 'center',
         width: 100,
         dataIndex: "remark",
     }, {
-        title: "giao thức",
+        title: "Giao Thức",
         align: 'center',
         width: 60,
         scopedSlots: { customRender: 'protocol' },
     }, {
-        title: "Cổng",
+        title: "Port",
         align: 'center',
         dataIndex: "port",
         width: 60,
     }, {
-        title: "lưu lượng↑|↓",
+        title: "Lưu Lượng ↑|↓",
         align: 'center',
         width: 150,
         scopedSlots: { customRender: 'traffic' },
     }, {
-        title: "thông tin chi tiết",
+        title: "Thông Tin Chi Tiết",
         align: 'center',
         width: 40,
         scopedSlots: { customRender: 'settings' },
     }, {
-        title: "Cấu hình truyền",
+        title: "Giao Thức Truyền Tải",
         align: 'center',
         width: 60,
         scopedSlots: { customRender: 'stream' },

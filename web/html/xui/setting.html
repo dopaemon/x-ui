@@ -39,7 +39,7 @@
                         <a-tab-pane key="1" tab="Cấu hình bảng điều khiển">
                             <a-list item-layout="horizontal" style="background: white">
                                 <setting-list-item type="text" title="Giám sát bảng điều khiển IP" desc="Để trống theo mặc định để nghe tất cả IP，Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.webListen"></setting-list-item>
-                                <setting-list-item type="number" title="Cổng nghe bảng điều khiển" desc="Khởi động lại bảng điều khiển để có hiệu lực" v-model.number="allSetting.webPort"></setting-list-item>
+                                <setting-list-item type="number" title="Port truy cập bảng điều khiển" desc="Khởi động lại bảng điều khiển để có hiệu lực" v-model.number="allSetting.webPort"></setting-list-item>
                                 <setting-list-item type="text" title="Đường dẫn tệp khóa công khai của chứng chỉ bảng điều khiển" desc="Điền vào một '/' Đường dẫn tuyệt đối ở đầu，Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.webCertFile"></setting-list-item>
                                 <setting-list-item type="text" title="Đường dẫn tệp khóa chứng chỉ bảng điều khiển" desc="Điền vào một '/' Đường dẫn tuyệt đối ở đầu，Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.webKeyFile"></setting-list-item>
                                 <setting-list-item type="text" title="bảng điều khiển url Đường dẫn gốc" desc="Phải bắt đầu với '/' Bắt đầu ， với '/' kết thúc ， Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.webBasePath"></setting-list-item>
