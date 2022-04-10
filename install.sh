@@ -81,14 +81,14 @@ install_base() {
 #This function will be called when user installed x-ui out of sercurity
 config_after_install() {
     echo -e "${yellow}Vì lí do bảo mật, bạn nên đổi mật khẩu và tài khoản sau khi thiết lập xong ( hoặc cả port nếu bạn muốn )${plain}"
-    read -p "Tài khoản: " config_account
-    echo -e "${yellow}Tên tài khoản bạn đặt là: ${config_account}${plain}"
-    read -p "Mật khẩu:" config_password
-    echo -e "${yellow}Mật khẩu của bạn đặt là: ${config_password}${plain}"
-    read -p "Nhập Port:" config_port
-    echo -e "${yellow}Port bạn sử dụng là: ${config_port}${plain}"
     read -p "Xác nhận cài đặt hoàn tất ？[y/n]": config_confirm
     if [[ x"${config_confirm}" == x"y" || x"${config_confirm}" == x"Y" ]]; then
+    	read -p "Tài khoản: " config_account
+    	echo -e "${yellow}Tên tài khoản bạn đặt là: ${config_account}${plain}"
+    	read -p "Mật khẩu:" config_password
+    	echo -e "${yellow}Mật khẩu của bạn đặt là: ${config_password}${plain}"
+    	read -p "Nhập Port:" config_port
+    	echo -e "${yellow}Port bạn sử dụng là: ${config_port}${plain}"
         echo -e "${yellow}Xác nhận cài đặt${plain}"
         /usr/local/x-ui/x-ui setting -username ${config_account} -password ${config_password}
         echo -e "${yellow}Hoàn tất đặt mật khẩu${plain}"

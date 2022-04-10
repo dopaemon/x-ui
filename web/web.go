@@ -4,13 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"embed"
-	"github.com/BurntSushi/toml"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
-	"github.com/gin-gonic/gin"
-	"github.com/nicksnyder/go-i18n/v2/i18n"
-	"github.com/robfig/cron/v3"
-	"golang.org/x/text/language"
+	"fmt"
 	"html/template"
 	"io"
 	"io/fs"
@@ -27,6 +21,14 @@ import (
 	"x-ui/web/job"
 	"x-ui/web/network"
 	"x-ui/web/service"
+
+	"github.com/BurntSushi/toml"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
+	"github.com/gin-gonic/gin"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
+	"github.com/robfig/cron/v3"
+	"golang.org/x/text/language"
 )
 
 //go:embed assets/*
@@ -294,6 +296,18 @@ func (s *Server) startTask() {
 
 	// 每 30 秒检查一次 inbound 流量超出和到期的情况
 	s.cron.AddJob("@every 30s", job.NewCheckInboundJob())
+	// 每一天提示一次流量情况,上海时间8点30
+	var entry cron.EntryID
+	isTgbotenabled,err:=s.settingService.GetTgbotenabled()
+	if(( err == nil)&&(isTgbotenabled)) {
+    	entry,err=s.cron.AddJob("@daily", job.NewStatsNotifyJob())
+		if err != nil{
+			fmt.Println("Add NewStatsNotifyJob error")
+			return
+		}
+	}else{
+		s.cron.Remove(entry)
+	}
 }
 
 func (s *Server) Start() (err error) {

@@ -18,7 +18,7 @@ function LOGI() {
     echo -e "${green}[INF] $* ${plain}"
 }
 # check root
-[[ $EUID -ne 0 ]] && LOGE "Lỗi: Bạn cần chạy Script này dưới quyền root ( Không phải sudo ) ！\n" && exit 1
+[[ $EUID -ne 0 ]] && LOGE "Lỗi: Bạn cần chạy Script này dưới quyền root ( Không phải sudo ) !\n" && exit 1
 
 # check os
 if [[ -f /etc/redhat-release ]]; then
@@ -169,6 +169,15 @@ reset_config() {
     /usr/local/x-ui/x-ui setting -reset
     echo -e "Tất cả cài đặt bảng điều khiển đã được đặt lại về mặc định, vui lòng khởi động lại bảng điều khiển ngay bây giờ và sử dụng cài đặt mặc định ${green}54321${plain} Bảng điều khiển truy cập cổng"
     confirm_restart
+}
+
+check_config() {
+    info=$(/usr/local/x-ui/x-ui setting -show true)
+    if [[ $? != 0 ]]; then
+        LOGE "get current settings error,please check logs"
+        show_menu
+    fi
+    LOGI "${info}"
 }
 
 set_port() {
@@ -399,6 +408,69 @@ show_xray_status() {
     fi
 }
 
+set_telegram_bot() {
+    echo -E ""
+    LOGI "Thiết lập Telegram Bot Cần Có Bot Token Và ChatId"
+    confirm "Đồng Ý [y/n]" "y"
+    if [ $? -ne 0 ]; then
+        show_menu
+    else
+        read -p "please input your tg bot token here:" TG_BOT_TOKEN
+        LOGI "Bot Token Của Bạn Thiết lập Là: $TG_BOT_TOKEN"
+        read -p "please input your tg chat id here:" TG_BOT_CHATID
+        LOGI "Chat ID Bạn Đã Đặt Là: $TG_BOT_CHATID"
+        info=$(/usr/local/x-ui/x-ui setting -tgbottoken ${TG_BOT_TOKEN} -tgbotchatid ${TG_BOT_CHATID})
+        if [ $? != 0 ]; then
+            LOGE "$info"
+            LOGE "Không Thể Thiết Lập Được Bot"
+            exit 1
+        else
+            LOGI "$info"
+            LOGI "Thiết Lập Bot Thành Công"
+            show_menu
+        fi
+    fi
+}
+
+enable_telegram_bot() {
+    echo -E ""
+    LOGI "Kích Hoạt Thông Báo Bot Telegram"
+    LOGI "Nội dung thông báo bao gồm: "
+    LOGI "1.Lưu lượng sử dụng"
+    LOGI "2.Nhắc hạn dùng server (Nếu có)"
+    LOGI "3.Nhắc về việc đăng nhập dashboard (Cần Cập Nhật Thêm)"
+    confirm "Đồng Ý Bật [y/n]" "y"
+    if [ $? -eq 0 ]; then
+        info=$(/usr/local/x-ui/x-ui setting -enabletgbot true)
+        if [ $? == 0 ]; then
+            LOGI "Thành Công, Khởi động lại X-UI...."
+            restart
+        else
+            LOGE "Thất bại, Ngưng..."
+            exit 1
+        fi
+    else
+        show_menu
+    fi
+}
+
+disable_telegram_bot() {
+    confirm "Bạn chắc muốn tắt Bot Telegram không? [y/n]" "n"
+    if [ $? -eq 0 ]; then
+        info=$(/usr/local/x-ui/x-ui setting -enabletgbot false)
+        if [ $? == 0 ]; then
+            LOGI "Tắt thành công, khởi động lại X-UI để có hiệu lực...."
+            restart
+        else
+            LOGE "Có lỗi xảy ra..."
+            exit 1
+        fi
+    else
+        show_menu
+    fi
+}
+
+
 ssl_cert_issue() {
     echo -E ""
     LOGD "******Hướng dẫn sử dụng******"
@@ -450,8 +522,8 @@ ssl_cert_issue() {
             LOGI "Chứng chỉ được cấp thành công, quá trình cài đặt đang diễn ra..."
         fi
         ~/.acme.sh/acme.sh --installcert -d ${CF_Domain} -d *.${CF_Domain} --ca-file /root/cert/ca.cer \
-            --cert-file /root/cert/${CF_Domain}.cer --key-file /root/cert/${CF_Domain}.key \
-            --fullchain-file /root/cert/fullchain.cer
+           --cert-file /root/cert/${CF_Domain}.cer --key-file /root/cert/${CF_Domain}.key \
+           --fullchain-file /root/cert/fullchain.cer
         if [ $? -ne 0 ]; then
             LOGE "Cài đặt chứng chỉ không thành công, tập lệnh đã thoát"
             exit 1
@@ -504,21 +576,25 @@ show_menu() {
   ${green}4.${plain} đặt lại mật khẩu tên người dùng
   ${green}5.${plain} đặt lại cài đặt bảng điều khiển
   ${green}6.${plain} Thiết lập các Port bảng điều khiển
+  ${green}7.${plain} Cài đặt dashboard hiện tại
 ————————————————
-  ${green}7.${plain} khởi động x-ui
-  ${green}8.${plain} Ngừng x-ui
-  ${green}9.${plain} khởi động lại x-ui
- ${green}10.${plain} Xem trạng thái x-ui
- ${green}11.${plain} Xem nhật ký x-ui
+  ${green}8.${plain} khởi động x-ui
+  ${green}9.${plain} Ngừng x-ui
+  ${green}10.${plain} khởi động lại x-ui
+  ${green}11.${plain} Xem trạng thái x-ui
+  ${green}12.${plain} Xem nhật ký x-ui
 ————————————————
- ${green}12.${plain} Đặt x-ui để bắt đầu tự động khi khởi động
- ${green}13.${plain} Hủy tự động khởi động x-ui boot
+  ${green}13.${plain} Đặt x-ui để bắt đầu tự động khi khởi động
+  ${green}14.${plain} Hủy tự động khởi động x-ui boot
 ————————————————
- ${green}14.${plain} cài đặt bbr (hạt nhân mới nhất)
- ${green}15.${plain} Cài đặt chứng chỉ SSL (ứng dụng acme)
+  ${green}15.${plain} cài đặt bbr (hạt nhân mới nhất)
+  ${green}16.${plain} Cài đặt chứng chỉ SSL (ứng dụng acme)
+  ${green}17.${plain} Bật Thông Báo Telegram Bot
+  ${green}18.${plain} Tắt Thông Báo Telegram Bot
+  ${green}19.${plain} Thiết lập Telegram Bot
  "
     show_status
-    echo && read -p "Vui lòng nhập một lựa chọn [0-14]: " num
+    echo && read -p "Vui lòng nhập một lựa chọn [0-19]: " num
 
     case "${num}" in
     0)
@@ -543,34 +619,46 @@ show_menu() {
         check_install && set_port
         ;;
     7)
-        check_install && start
+        check_install && check_config
         ;;
     8)
-        check_install && stop
+        check_install && start
         ;;
     9)
-        check_install && restart
+        check_install && stop
         ;;
     10)
-        check_install && status
+        check_install && restart
         ;;
     11)
-        check_install && show_log
+        check_install && status
         ;;
     12)
-        check_install && enable
+        check_install && show_log
         ;;
     13)
-        check_install && disable
+        check_install && enable
         ;;
     14)
-        install_bbr
+        check_install && disable
         ;;
     15)
+        install_bbr
+        ;;
+    16)
         ssl_cert_issue
         ;;
+    17)
+        enable_telegram_bot
+        ;;
+    18)
+        disable_telegram_bot
+        ;;
+    19)
+        set_telegram_bot
+        ;;
     *)
-        LOGE "Vui lòng nhập lựa chọn [0-14]"
+        LOGE "Vui lòng nhập lựa chọn [0-19]"
         ;;
     esac
 }
