@@ -17,7 +17,7 @@ env:
 
 task:
   name: Checked
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon'
+  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH != 'main'
   skip: $CIRRUS_BRANCH != 'main'
   container:
     image: dopaemon/bionic:latest
@@ -28,7 +28,7 @@ task:
 
 task:
   name: Compile X-UI amd64
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon'                                             
+  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH != 'main'                 
   skip: $CIRRUS_BRANCH != 'main'
   depends_on:
     - Checked
@@ -92,10 +92,10 @@ task:
 
 task:
   name: Compile X-UI arm64v8
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon'                                             
+  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH != 'main'                 
   skip: $CIRRUS_BRANCH != 'main'
   depends_on:
-    - Compile X-UI amd64
+    - Checked
   arm_container:
     image: ubuntu:focal
     cpu: 2
@@ -161,9 +161,10 @@ task:
 
 task:
   name: Create Github Release
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon'
+  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH != 'main'
   skip: $CIRRUS_BRANCH != 'main'
   depends_on:
+    - Compile X-UI amd64
     - Compile X-UI arm64v8
   container:
     image: dopaemon/bionic:latest
