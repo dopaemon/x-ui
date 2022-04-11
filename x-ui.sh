@@ -441,7 +441,7 @@ enable_telegram_bot() {
     LOGI "3.Nhắc về việc đăng nhập dashboard (Cần Cập Nhật Thêm)"
     confirm "Đồng Ý Bật [y/n]" "y"
     if [ $? -eq 0 ]; then
-        info=$(/usr/local/x-ui/x-ui setting -enabletgbot true)
+        info=$(/usr/local/x-ui/x-ui setting -enabletgbot=true)
         if [ $? == 0 ]; then
             LOGI "Thành Công, Khởi động lại X-UI...."
             restart
@@ -457,7 +457,7 @@ enable_telegram_bot() {
 disable_telegram_bot() {
     confirm "Bạn chắc muốn tắt Bot Telegram không? [y/n]" "n"
     if [ $? -eq 0 ]; then
-        info=$(/usr/local/x-ui/x-ui setting -enabletgbot false)
+        info=$(/usr/local/x-ui/x-ui setting -enabletgbot=false)
         if [ $? == 0 ]; then
             LOGI "Tắt thành công, khởi động lại X-UI để có hiệu lực...."
             restart
@@ -522,8 +522,8 @@ ssl_cert_issue() {
             LOGI "Chứng chỉ được cấp thành công, quá trình cài đặt đang diễn ra..."
         fi
         ~/.acme.sh/acme.sh --installcert -d ${CF_Domain} -d *.${CF_Domain} --ca-file /root/cert/ca.cer \
-           --cert-file /root/cert/${CF_Domain}.cer --key-file /root/cert/${CF_Domain}.key \
-           --fullchain-file /root/cert/fullchain.cer
+        --cert-file /root/cert/${CF_Domain}.cer --key-file /root/cert/${CF_Domain}.key \
+        --fullchain-file /root/cert/fullchain.cer
         if [ $? -ne 0 ]; then
             LOGE "Cài đặt chứng chỉ không thành công, tập lệnh đã thoát"
             exit 1

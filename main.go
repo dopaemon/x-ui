@@ -122,13 +122,14 @@ func updateTgbotEnableSts(status bool) {
 		fmt.Println(err)
 		return
 	}
+	logger.Infof("current enabletgbot status[%v],need update to status[%v]",currentTgSts,status)
 	if(currentTgSts != status){
 		err:=settingService.SetTgbotenabled(status)
 		if err!=nil {
 			fmt.Println(err)
 			return
 		}else{
-			fmt.Println("SetTgbotenabled[%t] success",status)
+			logger.Infof("SetTgbotenabled[%v] success",status)
 		}
 	}
 	return
@@ -150,7 +151,7 @@ func updateTgbotSetting(tgBotToken string,tgBotChatid int){
 			return
 		}
 	}else{
-			fmt.Println("SetTgBotToken failed,null data")
+			logger.Info("updateTgbotSetting tgBotToken success")
 	}
 
 	if (tgBotChatid != 0) {
@@ -160,7 +161,7 @@ func updateTgbotSetting(tgBotToken string,tgBotChatid int){
 			return
 		}
 	}else{
-			fmt.Println("SetTgBotChatId failed,null data")
+			logger.Info("updateTgbotSetting tgBotChatid success")
 	}
 }
 
@@ -273,6 +274,7 @@ func main() {
 		if show {
 			showSetting(show)
 		}
+		logger.Infof("updateTgbotEnableSts enabletgbot[%v]",enabletgbot)
 		updateTgbotEnableSts(enabletgbot)
 		if((tgbottoken!="")||(tgbotchatid!=0)){
 			updateTgbotSetting(tgbottoken,tgbotchatid)
