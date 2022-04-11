@@ -5,6 +5,7 @@ import (
 	"net"
 	"os"
 	"x-ui/logger"
+	"x-ui/util/common"
 	"x-ui/web/service"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -35,28 +36,14 @@ func (j *StatsNotifyJob) Run() {
 		logger.Warning("StatsNotifyJob run failed,GetTgBotChatId fail:", err)
 		return
 	}
-	//get traffic 
-	inbouds,err := j.inboundService.GetAllInbounds()
-	if err != nil {
-		logger.Warning("StatsNotifyJob run failed:", err)
-		return
-	}
-	var upTraffic int64
-	var downTraffic int64
-	var totalTraffic int64
-	for _, inbound := range inbouds {
-		upTraffic+=inbound.Up
-		downTraffic+=inbound.Down
-	}
-	upTraffic=upTraffic/(1024*1024)
-	downTraffic=downTraffic/(1024*1024)
-	totalTraffic=upTraffic+downTraffic
+	var info string
 	//get hostname
 	name, err := os.Hostname()
 	if err != nil {
 		fmt.Println("get hostname error:",err)
 		return
 	}
+	info=fmt.Sprintf("Tên máy chủ:%s\r\n",name)
 	//get ip address
 	var ip string
     netInterfaces, err := net.Interfaces()
@@ -83,16 +70,26 @@ func (j *StatsNotifyJob) Run() {
         }
     }
 
+	info+=fmt.Sprintf("Địa Chỉ IP: %s\r\n \r\n",ip)
+
+	//get traffic
+	inbouds,err := j.inboundService.GetAllInbounds()
+	if err != nil {
+		logger.Warning("StatsNotifyJob run failed:", err)
+		return
+	}
+	//NOTE:If there no any sessions here,need to notify here
+	//TODO:分节点推送,自动转化格式
+	for _, inbound := range inbouds {
+		info+=fmt.Sprintf("Tên Server: %s\r\nPort:%d\r\nLưu lượng tải lên ↑: %s\r\nLưu lượng tải xuống ↓: %s\r\nTổng lưu lượng truy cập: %s\r\n \r\n",inbound.Remark,inbound.Port,common.FormatTraffic(inbound.Up),common.FormatTraffic(inbound.Down),common.FormatTraffic((inbound.Up+inbound.Down)))
+	}
+
 	bot, err := tgbotapi.NewBotAPI(tgBottoken)
 	if err != nil {
 		fmt.Println("get tgbot error:",err)
 	}
 	bot.Debug = true
 	fmt.Printf("Authorized on account %s", bot.Self.UserName)
-	var info string
-	info=fmt.Sprintf("Tên Máy Chủ:%s\r\n",name)
-	info+=fmt.Sprintf("IP Máy Chủ:%s\r\n",ip)
-	info+=fmt.Sprintf("Lưu Lượng Tải Lên ↑: %dM\r\nLưu Lượng Tải Xuống ↓: %dM\r\nTổng Lưu Lượng: %dM\r\n",upTraffic,downTraffic,totalTraffic)
 	msg := tgbotapi.NewMessage(int64(tgBotid),info)
 	//msg.ReplyToMessageID = int(tgBotid)
 	bot.Send(msg)
