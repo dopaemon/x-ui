@@ -566,6 +566,15 @@ show_usage() {
 
 show_menu() {
     echo -e "
+————————————————
+██████╗  ██████╗ ██████╗  █████╗
+██╔══██╗██╔═══██╗██╔══██╗██╔══██╗
+██║  ██║██║   ██║██████╔╝███████║
+██║  ██║██║   ██║██╔══██╗██╔══██║
+██████╔╝╚██████╔╝██║  ██║██║  ██║
+╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+https://github.com/dopaemon/x-ui.git
+————————————————
   ${green}x-ui Tập lệnh quản lý bảng điều khiển${plain}
   ${green}0.${plain} Thoát Script
 ————————————————
@@ -589,6 +598,7 @@ show_menu() {
 ————————————————
   ${green}15.${plain} cài đặt bbr (hạt nhân mới nhất)
   ${green}16.${plain} Cài đặt chứng chỉ SSL (ứng dụng acme)
+————————————————
   ${green}17.${plain} Bật Thông Báo Telegram Bot
   ${green}18.${plain} Tắt Thông Báo Telegram Bot
   ${green}19.${plain} Thiết lập Telegram Bot
