@@ -5,7 +5,7 @@ env:
     TOKEN: "ENCRYPTED[8899d705efa5229bdebf7958f8e6005750663f9a9debc0d5a5d1a3977a182de19f840510f47fa14576e6381db124c443]"
     RCLONE: "ENCRYPTED[1f8f7e7eaf78795dc4106cc960a25dcaf2395de9b39575a5ba34ad7d3fb9dd4679f3f05a3292baf09181916f3f08c60a]"
     RELEASE: "ENCRYPTED[ce13be89c0c70b830928e53fe444ed3749387cd2364a8919bd19a6a4d08f16b597ca3795503e8d8236bb723eea28cf5f]"
-    VERSIONS: "0.3.5"
+    VERSIONS: "0.3.2.1"
     INFORELEASE: "Việt Hoá X-UI Từ Bản Gốc\nNgưng support 32Bit tạm thời\nDùng Fix Binary arm64\nThêm Bot Telegram và CloudFlare\n*** Vui lòng tạo Issues nếu có bất kỳ lỗi nào"
     DEBIAN_FRONTEND: "noninteractive"
     SSHKEY2: "ENCRYPTED[!8469040b7a3c804aed48d1626698c53b9f5c665227a91e8a8e3c9c1f73959da955d935bb19f05d1bfc37a1c5e589489f!]"
