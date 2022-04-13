@@ -91,57 +91,52 @@ task:
     - echo "yes" | git push -uf origin "X-UI-$VERSIONS-AMD64"
 
 task:
-  name: Compile X-UI arm64v8
+  name: Compile X-UI arm64-v8a
   only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'main'
   skip: $CIRRUS_BRANCH != 'main'
   depends_on:
     - Checked
-  arm_container:
-    image: ubuntu:focal
+  container:
+    image: dopaemon/bionic:latest
     cpu: 2
     memory: 4G
   install_packages_script:
-    - rm -rf /tmp/ci/*
-    - apt update
-    - apt full-upgrade -y
-    - apt install wget curl unzip zip gcc g++ clang git rclone aria2 git -y -q
-    - curl -OL https://golang.org/dl/go1.16.7.linux-arm64.tar.gz
-    - sha256sum go1.16.7.linux-arm64.tar.gz
-    - tar -C /usr/local -xvf go1.16.7.linux-arm64.tar.gz
+    - sudo rm -rf /tmp/ci/*
+    - sudo apt update
+    - sudo apt install gcc-aarch64-linux-gnu software-properties-common jq wget unzip rclone aria2 git -y -q
+    - sudo apt remove golang-go gccgo-go -y
+    - curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
+    - sha256sum go1.16.7.linux-amd64.tar.gz
+    - sudo tar -C /usr/local -xvf go1.16.7.linux-amd64.tar.gz
     - touch ~/.goi
     - echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.goi
     - source ~/.goi
     - mkdir -p ~/.config/rclone
     - echo "$RCLONE" > ~/.config/rclone/rclone.conf
   build_script:
-    - git clone -b main --single-branch https://github.com/dopaemon/x-ui.git proc
     - source ~/.goi
-    - mkdir -p /tmp/ci/x-ui-arm64
-    - chmod 777 /tmp/ci/x-ui-arm64
-    - git clone -b main https://github.com/dopaemon/x-ui.git
-    - mv /tmp/ci/x-ui /tmp/ci/x-ui-arm64/src
-    - cd /tmp/ci/x-ui-arm64/src/
-    - GOOS=linux GOARCH=arm64 go build -o main -v main.go
+    - sudo mkdir -p /tmp/ci/x-ui-arm64 && sudo chmod 777 /tmp/ci/x-ui-arm64 && cd /tmp/ci/x-ui-arm64
+    - git clone -b main https://github.com/dopaemon/x-ui.git src && cd src
+    - CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc go build -o main -v main.go
   gzip_script:
-    - cd /tmp/ci/x-ui-arm64
-    - mkdir -p /tmp/ci/x-ui-arm64/src-zip/x-ui/bin
-    - chmod +x /tmp/ci/x-ui-arm64/src/x-ui.service
-    - chmod +x /tmp/ci/x-ui-arm64/src/x-ui.sh
-    - mv /tmp/ci/x-ui-arm64/src/main /tmp/ci/x-ui-arm64/src-zip/x-ui/x-ui
-    - mv /tmp/ci/x-ui-arm64/src/x-ui.service /tmp/ci/x-ui-arm64/src-zip/x-ui/
-    - mv /tmp/ci/x-ui-arm64/src/x-ui.sh /tmp/ci/x-ui-arm64/src-zip/x-ui/
-    - cd /tmp/ci/x-ui-arm64/src-zip/x-ui/bin/ && rm -rf *
+    - git clone -b main --single-branch https://github.com/dopaemon/x-ui.git proc
+    - cd /tmp/ci/x-ui-arm64 && mkdir -p src-zip && cd src-zip && mkdir -p x-ui/bin
+    - mv ../src/main ../src-zip/x-ui/x-ui
+    - mv ../src/x-ui.service ../src-zip/x-ui/
+    - mv ../src/x-ui.sh ../src-zip/x-ui/
+    - cd x-ui/bin/ && rm -rf *
     - wget https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-arm64-v8a.zip
     - unzip Xray-linux-arm64-v8a.zip
-    - rm -rf README.md LICENSE Xray-linux-arm64-v8a.zip
-    - rm -f geoip.dat geosite.dat
+    - rm -rf geoip.dat geosite.dat
     - wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
     - wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
+    - rm -rf README.md LICENSE Xray-linux-arm64-v8a.zip
     - mv xray xray-linux-arm64
     - chmod +x *
   github_script:
     - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh/
+    - sudo chmod 700 ~/.ssh/
+    - sudo rm -rf /root/.ssh
     - git config --global user.name "$USERNAME"
     - git config --global user.email "$EMAIL"
     - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
@@ -149,12 +144,12 @@ task:
     - touch ~/.ssh/id_ed25519
     - echo "$SSHKEY1" > ~/.ssh/id_ed25519.pub
     - echo "$SSHKEY2" > ~/.ssh/id_ed25519
-    - chmod 400 ~/.ssh/*
+    - sudo chmod 400 ~/.ssh/*
   push_script:
     - cd /tmp/ci/x-ui-arm64/src-zip/x-ui
     - git init
     - git add -vA
-    - git commit -sm "Release: X-UI $VERSIONS AMD64"
+    - git commit -sm "Release: X-UI $VERSIONS ARM64"
     - git remote add origin git@github.com:dopaemon/x-ui.git
     - git checkout -b "X-UI-$VERSIONS-ARM64"
     - echo "yes" | git push -uf origin "X-UI-$VERSIONS-ARM64"
@@ -293,7 +288,7 @@ task:
   skip: $CIRRUS_BRANCH != 'main'
   depends_on:
     - Compile X-UI amd64
-    - Compile X-UI arm64v8
+    - Compile X-UI arm64-v8a
     - Compile X-UI s390x
     - Compile X-UI riscv64
   container:
@@ -327,18 +322,22 @@ task:
     - mkdir -p /tmp/ci/riscv64
     - git clone -b "X-UI-$VERSIONS-AMD64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/amd64/x-ui
     - cd /tmp/ci/amd64/
+    - rm -rvf .git
     - tar -czvf x-ui-linux-amd64.tar.gz x-ui
     - cd /
     - git clone -b "X-UI-$VERSIONS-ARM64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/arm64/x-ui
     - cd /tmp/ci/arm64/
+    - rm -rvf .git
     - tar -czvf x-ui-linux-arm64.tar.gz x-ui
     - cd /
     - git clone -b "X-UI-$VERSIONS-S390X" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/s390x/x-ui
     - cd /tmp/ci/s390x/
+    - rm -rvf .git
     - tar -czvf x-ui-linux-s390x.tar.gz x-ui
     - cd /
-    - git clone -b "X-UI-$VERSIONS-RISCV64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/arm64/x-ui
+    - git clone -b "X-UI-$VERSIONS-RISCV64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/riscv64/x-ui
     - cd /tmp/ci/riscv64/
+    - rm -rvf .git
     - tar -czvf x-ui-linux-riscv64.tar.gz x-ui
     - cd /
   release_script:

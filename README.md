@@ -8,6 +8,7 @@ Linux:
 - amd64 ( x68_64 )
 - arm64-v8a ( aarch64 )
 - s390x
+- Riscv64
 ```
 ## Cài Đặt Bằng Script [ Đọc lưu ý phía dưới ]
 ```
