@@ -224,6 +224,70 @@ task:
     - echo "yes" | git push -uf origin "X-UI-$VERSIONS-S390X"
 
 task:
+  name: Compile X-UI riscv64
+  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'main'
+  skip: $CIRRUS_BRANCH != 'main'
+  depends_on:
+    - Checked
+  container:
+    image: dopaemon/bionic:latest
+    cpu: 2
+    memory: 4G
+  install_packages_script:
+    - sudo rm -rf /tmp/ci/*
+    - sudo apt update
+    - sudo apt install gcc-riscv64-linux-gnu software-properties-common jq wget unzip rclone aria2 git -y -q
+    - sudo apt remove golang-go gccgo-go -y
+    - curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
+    - sha256sum go1.16.7.linux-amd64.tar.gz
+    - sudo tar -C /usr/local -xvf go1.16.7.linux-amd64.tar.gz
+    - touch ~/.goi
+    - echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.goi
+    - source ~/.goi
+    - mkdir -p ~/.config/rclone
+    - echo "$RCLONE" > ~/.config/rclone/rclone.conf
+  build_script:
+    - source ~/.goi
+    - sudo mkdir -p /tmp/ci/x-ui-riscv64 && sudo chmod 777 /tmp/ci/x-ui-riscv64 && cd /tmp/ci/x-ui-riscv64
+    - git clone -b main https://github.com/dopaemon/x-ui.git src && cd src
+    - CGO_ENABLED=1 GOOS=linux GOARCH=riscv64 CC=riscv64-linux-gnu-gcc go build -o main -v main.go
+  gzip_script:
+    - git clone -b main --single-branch https://github.com/dopaemon/x-ui.git proc
+    - cd /tmp/ci/x-ui-riscv64 && mkdir -p src-zip && cd src-zip && mkdir -p x-ui/bin
+    - mv ../src/main ../src-zip/x-ui/x-ui
+    - mv ../src/x-ui.service ../src-zip/x-ui/
+    - mv ../src/x-ui.sh ../src-zip/x-ui/
+    - cd x-ui/bin/ && rm -rf *
+    - wget https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-riscv64.zip
+    - unzip Xray-linux-riscv64.zip
+    - rm -rf geoip.dat geosite.dat
+    - wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
+    - wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
+    - rm -rf README.md LICENSE Xray-linux-riscv64.zip
+    - mv xray xray-linux-riscv64
+    - chmod +x *
+  github_script:
+    - mkdir -p ~/.ssh
+    - sudo chmod 700 ~/.ssh/
+    - sudo rm -rf /root/.ssh
+    - git config --global user.name "$USERNAME"
+    - git config --global user.email "$EMAIL"
+    - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+    - touch ~/.ssh/id_ed25519.pub
+    - touch ~/.ssh/id_ed25519
+    - echo "$SSHKEY1" > ~/.ssh/id_ed25519.pub
+    - echo "$SSHKEY2" > ~/.ssh/id_ed25519
+    - sudo chmod 400 ~/.ssh/*
+  push_script:
+    - cd /tmp/ci/x-ui-riscv64/src-zip/x-ui
+    - git init
+    - git add -vA
+    - git commit -sm "Release: X-UI $VERSIONS RISCV64"
+    - git remote add origin git@github.com:dopaemon/x-ui.git
+    - git checkout -b "X-UI-$VERSIONS-RISCV64"
+    - echo "yes" | git push -uf origin "X-UI-$VERSIONS-RISCV64"
+
+task:
   name: Create Github Release
   only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'main'
   skip: $CIRRUS_BRANCH != 'main'
@@ -231,6 +295,7 @@ task:
     - Compile X-UI amd64
     - Compile X-UI arm64v8
     - Compile X-UI s390x
+    - Compile X-UI riscv64
   container:
     image: dopaemon/bionic:latest
     cpu: 2
@@ -259,6 +324,7 @@ task:
     - mkdir -p /tmp/ci/amd64
     - mkdir -p /tmp/ci/arm64
     - mkdir -p /tmp/ci/s390x
+    - mkdir -p /tmp/ci/riscv64
     - git clone -b "X-UI-$VERSIONS-AMD64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/amd64/x-ui
     - cd /tmp/ci/amd64/
     - tar -czvf x-ui-linux-amd64.tar.gz x-ui
@@ -271,6 +337,10 @@ task:
     - cd /tmp/ci/s390x/
     - tar -czvf x-ui-linux-s390x.tar.gz x-ui
     - cd /
+    - git clone -b "X-UI-$VERSIONS-RISCV64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/arm64/x-ui
+    - cd /tmp/ci/riscv64/
+    - tar -czvf x-ui-linux-riscv64.tar.gz x-ui
+    - cd /
   release_script:
     - cd /tmp/ci
     - git clone -b main --single-branch https://github.com/dopaemon/x-ui.git
@@ -278,6 +348,7 @@ task:
     - mv /tmp/ci/amd64/x-ui-linux-amd64.tar.gz /tmp/ci/out/
     - mv /tmp/ci/arm64/x-ui-linux-arm64.tar.gz /tmp/ci/out/
     - mv /tmp/ci/s390x/x-ui-linux-s390x.tar.gz /tmp/ci/out/
+    - mv /tmp/ci/riscv64/x-ui-linux-riscv64.tar.gz /tmp/ci/out/
     - gh config set git_protocol ssh --host github.com
     - touch mytoken.txt
     - echo "$TOKEN" > mytoken.txt

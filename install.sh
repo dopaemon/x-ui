@@ -39,6 +39,8 @@ elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
     arch="arm64"
 elif [[ $arch == "s390x" ]]; then
     arch="s390x"
+elif [[ $arch == "riscv64" ]]; then
+    arch="riscv64"
 else
     arch="amd64"
     echo -e "${red}Không thể xác định cấu trúc CPU, thử dùng Kiến Trúc amd64 ${arch}${plain}"
