@@ -300,7 +300,13 @@ func (s *Server) startTask() {
 	var entry cron.EntryID
 	isTgbotenabled,err:=s.settingService.GetTgbotenabled()
 	if(( err == nil)&&(isTgbotenabled)) {
-    	entry,err=s.cron.AddJob("@daily", job.NewStatsNotifyJob())
+		runtime,err:=s.settingService.GetTgbotRuntime()
+		if (err == nil || runtime == ""){
+			logger.Errorf("Add NewStatsNotifyJob error,Runtime[%s] invalid,wil run default",runtime)
+			runtime="@daily"
+		}
+		logger.Infof("Tg notify enabled,run at %s",runtime)
+    	entry,err=s.cron.AddJob(runtime, job.NewStatsNotifyJob())
 		if err != nil{
 			fmt.Println("Add NewStatsNotifyJob error")
 			return

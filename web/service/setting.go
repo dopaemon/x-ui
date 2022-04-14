@@ -31,7 +31,8 @@ var defaultValueMap = map[string]string{
 	"timeLocation":       "Asia/Ho_Chi_Minh",
 	"tgBotEnable":        "false",
 	"tgBotToken":         "",
-	"tgBotChatId":        "",
+	"tgBotChatId":        "0",
+	"tgRunTime":	      "",
 }
 
 type SettingService struct {
@@ -213,6 +214,14 @@ func (s *SettingService) SetTgbotenabled(value bool) error {
 
 func (s *SettingService) GetTgbotenabled() (bool, error) {
 	return s.getBool("tgBotEnable")
+}
+
+func (s *SettingService) SetTgbotRuntime(time string) error {
+	return s.setString("tgRunTime",time)
+}
+
+func (s *SettingService) GetTgbotRuntime() (string, error) {
+	return s.getString("tgRunTime")
 }
 
 func (s *SettingService) GetPort() (int, error) {

@@ -71,7 +71,14 @@
                                 <setting-list-item type="textarea" title="Mẫu cấu hình xray" desc="Tạo tệp cấu hình xray cuối cùng dựa trên mẫu này ，Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.xrayTemplateConfig"></setting-list-item>
                             </a-list>
                         </a-tab-pane>
-                        <a-tab-pane key="4" tab="Múi Giờ">
+			<a-tab-pane key="4" tab="Telegram Bot Settings">
+                            <a-list item-layout="horizontal" style="background: white">
+                                <setting-list-item type="text" title="TOKEN Bot" desc="Khởi động lại bảng điều khiển để có hiệu lực"  v-model="allSetting.tgBotToken"></setting-list-item>
+                                <setting-list-item type="number" title="ChatId Telegram" desc="Khởi động lại bảng điều khiển để có hiệu lực"  v-model.number="allSetting.tgBotChatId"></setting-list-item>
+                                <setting-list-item type="text" title="Thời gian thông báo Telegram" desc="Sử dụng Crontab Timed Grid"  v-model="allSetting.tgRunTime"></setting-list-item>
+                            </a-list>
+                        </a-tab-pane>
+                        <a-tab-pane key="5" tab="Múi Giờ">
                             <a-list item-layout="horizontal" style="background: white">
                                 <setting-list-item type="text" title="Múi giờ" desc="Các tác vụ đã lên lịch chạy theo thời gian trong múi giờ，Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.timeLocation"></setting-list-item>
                             </a-list>
