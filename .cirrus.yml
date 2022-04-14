@@ -2,44 +2,31 @@ env:
     CIRRUS_CLONE_DEPTH: 1
     BUILD_HOSTNAME: "CirrusCI"
     CIRRUS_WORKING_DIR: "/tmp/ci"
-    TOKEN: "ENCRYPTED[8899d705efa5229bdebf7958f8e6005750663f9a9debc0d5a5d1a3977a182de19f840510f47fa14576e6381db124c443]"
-    RCLONE: "ENCRYPTED[1f8f7e7eaf78795dc4106cc960a25dcaf2395de9b39575a5ba34ad7d3fb9dd4679f3f05a3292baf09181916f3f08c60a]"
-    RELEASE: "ENCRYPTED[ce13be89c0c70b830928e53fe444ed3749387cd2364a8919bd19a6a4d08f16b597ca3795503e8d8236bb723eea28cf5f]"
+    TOKEN: "ENCRYPTED[!fe92b05186850ad5deb3f6b17c377c157b7f4eb2b23b5c51f27f9779ac4e6acc537b41972fb3b3ce97b8b640eb414a55!]"
     VERSIONS: "0.3.2.1"
     INFORELEASE: "X-UI Vietnamese Language\n\nNgưng support 32Bit\nThêm Bot Telegram và CloudFlare\n\nSupport: amd64, arm64v8a, s390x.\n\n*** Vui lòng tạo Issues nếu có bất kỳ lỗi nào"
     DEBIAN_FRONTEND: "noninteractive"
-    SSHKEY2: "ENCRYPTED[!8469040b7a3c804aed48d1626698c53b9f5c665227a91e8a8e3c9c1f73959da955d935bb19f05d1bfc37a1c5e589489f!]"
-    SSHKEY1: "ENCRYPTED[!f571f1926b820ceab939cf2786e76cbd6aff9ef70679515414df507cbe7f5f88d24f5f535164ca178736031ebe5bf1b6!]"
+    SSHKEY1: "ENCRYPTED[!e6706dd32621e320165c4cbc6a710c42329ed1149221addf97dd393018e52bf72b2b9b3cdae7cc1aba7863d394a53f46!]"
+    SSHKEY2: "ENCRYPTED[!a5d564aa645ea61bb70aa6ce21a8f8bb51766a8b9fc80dec8aebcf34df41a0afd66f6e7766acea683fece365311949e8!]"
     USERNAME: "ENCRYPTED[!84300cf406cc0695b827f4cbc9883c7712ab134798e1347bccac9395580fd618298d6dd1ff7897e77eea3a3203fda42b!]"
     EMAIL: "ENCRYPTED[!a03cbd7c4b2f675b5535c1199bc8bd6eb2f30db7812c7846e372b3e51d00d3c1b4de9e7654bf683c1e5728aba6bfba0e!]"
-    GHCONFIG: "ENCRYPTED[!a9370eec9a3e109160953a26c8dc9c4e6625e2a26b241029341baae89fe929a1341a3c8fe115cf69976de1bfcac2e9b9!]"
-    GHHOST: "ENCRYPTED[!348343a6388b2af14707d32b2e2b19d101232761579e04804d5144f98dc484ed9bcb500785feb03c64ede236f52ca4bb!]"    
-
-task:
-  name: Checked
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'main'
-  skip: $CIRRUS_BRANCH != 'main'
-  container:
-    image: dopaemon/bionic:latest
-    cpu: 1
-    memory: 1G
-  check_script:
-    - echo "Checked"
 
 task:
   name: Compile X-UI
   only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'main'
   skip: $CIRRUS_BRANCH != 'main'
-  depends_on:
-    - Checked
   container:
     image: dopaemon/bionic:latest
-    cpu: 2
-    memory: 4G
+    cpu: 4
+    memory: 8G
   install_packages_script:
     - sudo rm -rf /tmp/ci/*
     - sudo apt update
     - sudo apt install software-properties-common jq wget unzip rclone aria2 git gcc-riscv64-linux-gnu gcc-7-aarch64-linux-gnu gcc-7-s390x-linux-gnu gcc-aarch64-linux-gnu gcc-s390x-linux-gnu -y -q
+    - sudo /usr/bin/apt-key adv --no-tty --keyserver hkp://keyserver.ubuntu.com:80 --recv C99B11DEB97541F0
+    - sudo apt-add-repository https://cli.github.com/packages
+    - sudo apt-get update
+    - sudo apt-get install gh
     - sudo apt remove golang-go gccgo-go -y
     - curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
     - sha256sum go1.16.7.linux-amd64.tar.gz
@@ -47,9 +34,7 @@ task:
     - touch ~/.goi
     - echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.goi
     - source ~/.goi
-    - mkdir -p ~/.config/rclone
-    - echo "$RCLONE" > ~/.config/rclone/rclone.conf
-  github_script:
+  sshkey_script:
     - mkdir -p ~/.ssh
     - sudo chmod 700 ~/.ssh/
     - sudo rm -rf /root/.ssh
@@ -154,34 +139,6 @@ task:
     - git init && git add -vA && git commit -sm "Release: X-UI $VERSIONS RISVC64" && git remote add origin git@github.com:dopaemon/x-ui.git
     - git checkout -b "X-UI-$VERSIONS-RISVC64"
     - echo "yes" | git push -uf origin "X-UI-$VERSIONS-RISVC64"
-task:
-  name: Create Github Release
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'main'
-  skip: $CIRRUS_BRANCH != 'main'
-  depends_on:
-    - Compile X-UI
-  container:
-    image: dopaemon/bionic:latest
-    cpu: 2
-    memory: 4G
-  install_script:
-    - sudo apt-get update
-    - sudo apt-get install aria2 jq curl wget unzip zip git software-properties-common -y -q
-    - sudo /usr/bin/apt-key adv --no-tty --keyserver hkp://keyserver.ubuntu.com:80 --recv C99B11DEB97541F0
-    - sudo apt-add-repository https://cli.github.com/packages
-    - sudo apt-get update
-    - sudo apt-get install gh
-  ssh_script:
-    - mkdir -p ~/.ssh
-    - sudo chmod 700 ~/.ssh/
-    - git config --global user.name "$USERNAME"
-    - git config --global user.email "$EMAIL"
-    - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-    - touch ~/.ssh/id_ed25519.pub
-    - touch ~/.ssh/id_ed25519
-    - echo "$SSHKEY1" > ~/.ssh/id_ed25519.pub
-    - echo "$SSHKEY2" > ~/.ssh/id_ed25519
-    - sudo chmod 400 ~/.ssh/*
   github_script:
     - sudo rm -rf /tmp/ci/*
     - sudo chmod 777 /tmp/ci
