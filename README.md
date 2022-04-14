@@ -1,3 +1,4 @@
+# Owner: Dự án gốc nằm ở đây [**vaxilu**](https://github.com/vaxilu/x-ui) - Tôi chỉ phát triển nó cho người Việt Nam dễ tiếp cận hơn.
 # X-UI Unofficial
 ```
 Đây Là Phiên Bản X-UI được Việt Hoá và cập nhật Xray định kỳ. kèm các bản vá Pull.
@@ -21,3 +22,4 @@ bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh)
 ```
 sudo bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh)
 ```
+# From Me [**dopaemon**](https://github.com/dopaemon)
