@@ -3,6 +3,9 @@
 ```
 Đây Là Phiên Bản X-UI được Việt Hoá và cập nhật Xray định kỳ. kèm các bản vá Pull.
 ```
+## Tag
+![Visits Badge](https://badges.pufler.dev/visits/dopaemon/x-ui)
+![Updated Badge](https://badges.pufler.dev/updated/dopaemon/x-ui)
 ## Support Platform
 Linux:
 ```
@@ -22,4 +25,5 @@ bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh)
 ```
 sudo bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh)
 ```
-# From Me [**dopaemon**](https://github.com/dopaemon)
+# Contributors
+![Contributors Display](https://badges.pufler.dev/contributors/dopaemon/x-ui?size=50&padding=5&bots=true)
