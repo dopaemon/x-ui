@@ -16,6 +16,9 @@ Linux:
 ```
 ## Cài Đặt Bằng Script [ Đọc lưu ý phía dưới ]
 ```
+Tắt Unikey trước khi chạy Script. Tránh trình trạng Sai Mật Khẩu
+```
+```
 sudo -s
 ```
 ```
