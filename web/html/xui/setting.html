@@ -75,7 +75,7 @@
                             <a-list item-layout="horizontal" style="background: white">
                                 <setting-list-item type="text" title="TOKEN Bot" desc="Khởi động lại bảng điều khiển để có hiệu lực"  v-model="allSetting.tgBotToken"></setting-list-item>
                                 <setting-list-item type="number" title="ChatId Telegram" desc="Khởi động lại bảng điều khiển để có hiệu lực"  v-model.number="allSetting.tgBotChatId"></setting-list-item>
-                                <setting-list-item type="text" title="Thời gian thông báo Telegram" desc="Sử dụng Crontab Timed Grid"  v-model="allSetting.tgRunTime"></setting-list-item>
+                                <setting-list-item type="text" title="Thời gian thông báo Telegram" desc="Cách sử dụng: <br> - @ hourly : để thông báo hàng giờ <br> - 30 * * * * * : ₫ể thông báo sau mỗi 30 phút <br> - @ every 1h30m : thông báo sau 1 giờ và 30 phút"  v-model="allSetting.tgRunTime"></setting-list-item>
                             </a-list>
                         </a-tab-pane>
                         <a-tab-pane key="5" tab="Múi Giờ">
