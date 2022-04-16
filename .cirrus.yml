@@ -148,22 +148,22 @@ task:
     - mkdir -p /tmp/ci/riscv64
     - git clone -b "X-UI-$VERSIONS-AMD64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/amd64/x-ui
     - cd /tmp/ci/amd64/
-    - rm -rvf .git
+    - rm -rvf x-ui/.git
     - tar -czvf x-ui-linux-amd64.tar.gz x-ui
     - cd /
     - git clone -b "X-UI-$VERSIONS-ARM64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/arm64/x-ui
     - cd /tmp/ci/arm64/
-    - rm -rvf .git
+    - rm -rvf x-ui/.git
     - tar -czvf x-ui-linux-arm64.tar.gz x-ui
     - cd /
     - git clone -b "X-UI-$VERSIONS-S390X" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/s390x/x-ui
     - cd /tmp/ci/s390x/
-    - rm -rvf .git
+    - rm -rvf x-ui/.git
     - tar -czvf x-ui-linux-s390x.tar.gz x-ui
     - cd /
     - git clone -b "X-UI-$VERSIONS-RISCV64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/riscv64/x-ui
     - cd /tmp/ci/riscv64/
-    - rm -rvf .git
+    - rm -rvf x-ui/.git
     - tar -czvf x-ui-linux-riscv64.tar.gz x-ui
     - cd /
   release_script:
