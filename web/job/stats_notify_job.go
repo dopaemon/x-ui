@@ -22,19 +22,33 @@ func NewStatsNotifyJob() *StatsNotifyJob {
 	return new(StatsNotifyJob)
 }
 
-func (j *StatsNotifyJob) Run() {
-	if !j.xrayService.IsXrayRunning() {
-		return
-	}
+func (j *StatsNotifyJob) SendMsgToTgbot(msg string) {
 	//Telegram bot basic info
 	tgBottoken, err := j.settingService.GetTgBotToken()
 	if err != nil {
-		logger.Warning("StatsNotifyJob run failed,GetTgBotToken fail:", err)
+		logger.Warning("sendMsgToTgbot failed,GetTgBotToken fail:", err)
 		return
 	}
 	tgBotid, err := j.settingService.GetTgBotChatId()
 	if err != nil {
-		logger.Warning("StatsNotifyJob run failed,GetTgBotChatId fail:", err)
+		logger.Warning("sendMsgToTgbot failed,GetTgBotChatId fail:", err)
+		return
+	}
+
+	bot, err := tgbotapi.NewBotAPI(tgBottoken)
+	if err != nil {
+		fmt.Println("get tgbot error:", err)
+	}
+	bot.Debug = true
+	fmt.Printf("Authorized on account %s", bot.Self.UserName)
+	info := tgbotapi.NewMessage(int64(tgBotid), msg)
+	//msg.ReplyToMessageID = int(tgBotid)
+	bot.Send(info)
+}
+
+//Here run is a interface method of Job interface
+func (j *StatsNotifyJob) Run() {
+	if !j.xrayService.IsXrayRunning() {
 		return
 	}
 	var info string
@@ -84,14 +98,24 @@ func (j *StatsNotifyJob) Run() {
 	for _, inbound := range inbouds {
 		info += fmt.Sprintf("Tên Server: %s\r\nPort:%d\r\nLưu lượng tải lên ↑: %s\r\nLưu lượng tải xuống ↓: %s\r\nTổng lưu lượng truy cập: %s\r\n \r\n", inbound.Remark, inbound.Port, common.FormatTraffic(inbound.Up), common.FormatTraffic(inbound.Down), common.FormatTraffic((inbound.Up + inbound.Down)))
 	}
+	j.SendMsgToTgbot(info)
+}
 
-	bot, err := tgbotapi.NewBotAPI(tgBottoken)
-	if err != nil {
-		fmt.Println("get tgbot error:", err)
+func (j *StatsNotifyJob) UserLoginNotify(username string, ip string, time string) {
+	if username == "" || ip == "" || time == "" {
+		logger.Warning("UserLoginNotify failed,invalid info")
+		return
 	}
-	bot.Debug = true
-	fmt.Printf("Authorized on account %s", bot.Self.UserName)
-	msg := tgbotapi.NewMessage(int64(tgBotid), info)
-	//msg.ReplyToMessageID = int(tgBotid)
-	bot.Send(msg)
+	var msg string
+	//get hostname
+	name, err := os.Hostname()
+	if err != nil {
+		fmt.Println("get hostname error:", err)
+		return
+	}
+	msg = fmt.Sprintf("Có phiên ₫ăng nhập mới vào máy chủ\r\nhostname: %s\r\n", name)
+	msg += fmt.Sprintf("Thời gian: %s\r\n", time)
+	msg += fmt.Sprintf("Tài khoản: %s\r\n", username)
+	msg += fmt.Sprintf("IP: %s\r\n", ip)
+	j.SendMsgToTgbot(msg)
 }

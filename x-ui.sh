@@ -419,13 +419,14 @@ set_telegram_bot() {
         LOGI "Bot Token Của Bạn Thiết lập Là: $TG_BOT_TOKEN"
         read -p "please input your tg chat id here:" TG_BOT_CHATID
         LOGI "Chat ID Bạn Đã Đặt Là: $TG_BOT_CHATID"
-        info=$(/usr/local/x-ui/x-ui setting -tgbottoken ${TG_BOT_TOKEN} -tgbotchatid ${TG_BOT_CHATID})
+	read -p "Nhập thời gian chạy bot Telegram\n - @ hourly - Chạy sau mỗi 1 giờ\n - 30 * * * * * - Chạy sau mỗi 30 phút\n - @ every 1h30m - Chạy sau mỗi 1 giờ 30 phút \nNhập thời gian bạn muốn bot chạy:" TG_BOT_RUNTIME
+	LOGI "Thời gian chạy bot bạn đặt là: $TG_BOT_RUNTIME"
+	info=$(/usr/local/x-ui/x-ui setting -tgbottoken ${TG_BOT_TOKEN} -tgbotchatid ${TG_BOT_CHATID} -tgbotRuntime "$TG_BOT_RUNTIME")
         if [ $? != 0 ]; then
             LOGE "$info"
             LOGE "Không Thể Thiết Lập Được Bot"
             exit 1
         else
-            LOGI "$info"
             LOGI "Thiết Lập Bot Thành Công"
             show_menu
         fi
