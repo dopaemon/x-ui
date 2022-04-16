@@ -129,16 +129,16 @@ task:
     - git init && git add -vA && git commit -sm "Release: X-UI $VERSIONS S390X" && git remote add origin git@github.com:dopaemon/x-ui.git
     - git checkout -b "X-UI-$VERSIONS-S390X"
     - echo "yes" | git push -uf origin "X-UI-$VERSIONS-S390X"
-  branch_risvc64_script:
+  branch_riscv64_script:
     - rm -rvf /tmp/ci/x-ui/src-zip/x-ui/.git
     - rm -rvf /tmp/ci/x-ui/src-zip/x-ui/x-ui
     - rm -rvf /tmp/ci/x-ui/src-zip/x-ui/bin/xray-linux-*
     - mv /tmp/ci/platform/xui-riscv64 /tmp/ci/x-ui/src-zip/x-ui/x-ui
-    - mv /tmp/ci/xray/riscv64/xray /tmp/ci/x-ui/src-zip/x-ui/bin/xray-linux-risvc64
+    - mv /tmp/ci/xray/riscv64/xray /tmp/ci/x-ui/src-zip/x-ui/bin/xray-linux-riscv64
     - cd /tmp/ci/x-ui/src-zip/x-ui
-    - git init && git add -vA && git commit -sm "Release: X-UI $VERSIONS RISVC64" && git remote add origin git@github.com:dopaemon/x-ui.git
-    - git checkout -b "X-UI-$VERSIONS-RISVC64"
-    - echo "yes" | git push -uf origin "X-UI-$VERSIONS-RISVC64"
+    - git init && git add -vA && git commit -sm "Release: X-UI $VERSIONS RISCV64" && git remote add origin git@github.com:dopaemon/x-ui.git
+    - git checkout -b "X-UI-$VERSIONS-RISCV64"
+    - echo "yes" | git push -uf origin "X-UI-$VERSIONS-RISCV64"
   github_script:
     - sudo rm -rf /tmp/ci/*
     - sudo chmod 777 /tmp/ci
