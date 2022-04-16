@@ -65,7 +65,7 @@ fi
 
 confirm() {
     if [[ $# > 1 ]]; then
-        echo && read -p "$1 [Mặc định$2]: " temp
+        echo && read -p "$1 [Mặc định $2]: " temp
         if [[ x"${temp}" == x"" ]]; then
             temp=$2
         fi
@@ -174,7 +174,7 @@ reset_config() {
 check_config() {
     info=$(/usr/local/x-ui/x-ui setting -show true)
     if [[ $? != 0 ]]; then
-        LOGE "get current settings error,please check logs"
+        LOGE "Lấy cài đặt hiện tại lỗi, vui lòng xem log"
         show_menu
     fi
     LOGI "${info}"
@@ -415,11 +415,12 @@ set_telegram_bot() {
     if [ $? -ne 0 ]; then
         show_menu
     else
-        read -p "please input your tg bot token here:" TG_BOT_TOKEN
+        read -p "Nhập bot token telegram: " TG_BOT_TOKEN
         LOGI "Bot Token Của Bạn Thiết lập Là: $TG_BOT_TOKEN"
-        read -p "please input your tg chat id here:" TG_BOT_CHATID
+        read -p "Nhập ID Chat Telegram ở đây: " TG_BOT_CHATID
         LOGI "Chat ID Bạn Đã Đặt Là: $TG_BOT_CHATID"
-	read -p "Nhập thời gian chạy bot Telegram\n - @ hourly - Chạy sau mỗi 1 giờ\n - 30 * * * * * - Chạy sau mỗi 30 phút\n - @ every 1h30m - Chạy sau mỗi 1 giờ 30 phút \nNhập thời gian bạn muốn bot chạy:" TG_BOT_RUNTIME
+	echo -e "\n*** Nhập thời gian chạy bot Telegram ***\n - @ hourly - Chạy sau mỗi 1 giờ\n - 30 * * * * * - Chạy sau mỗi 30 phút\n - @ every 1h30m - Chạy sau mỗi 1 giờ 30 phút \n${plain}"
+	read -p "Nhập thời gian chạy bot Telegram: " TG_BOT_RUNTIME
 	LOGI "Thời gian chạy bot bạn đặt là: $TG_BOT_RUNTIME"
 	info=$(/usr/local/x-ui/x-ui setting -tgbottoken ${TG_BOT_TOKEN} -tgbotchatid ${TG_BOT_CHATID} -tgbotRuntime "$TG_BOT_RUNTIME")
         if [ $? != 0 ]; then
@@ -503,7 +504,7 @@ ssl_cert_issue() {
         read -p "Nhập domain của bạn ở đây:" CF_Domain
         LOGD "Domain của bạn được đặt thành:${CF_Domain}"
         LOGD "Nhập API: "
-        read -p "Nhập API key ở đây: " CF_GlobalKey
+        read -p "Nhập API key ở đây: " CF_GlobalKeyA
         LOGD "Khóa API của bạn là: ${CF_GlobalKey}"
         LOGD "Vui lòng đặt địa chỉ email đã đăng ký: "
         read -p "Nhập Email của bạn: " CF_AccountEmail
