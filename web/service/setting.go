@@ -31,8 +31,8 @@ var defaultValueMap = map[string]string{
 	"timeLocation":       "Asia/Ho_Chi_Minh",
 	"tgBotEnable":        "false",
 	"tgBotToken":         "",
-	"tgBotChatId":        "0",
-	"tgRunTime":	      "",
+	"tgBotChatId":        "-100",
+	"tgRunTime":	      "30 * * * * *",
 }
 
 type SettingService struct {
@@ -76,7 +76,7 @@ func (s *SettingService) GetAllSetting() (*entity.AllSetting, error) {
 		fieldV := v.FieldByName(field.Name)
 		switch t := fieldV.Interface().(type) {
 		case int:
-			n, err := strconv.ParseInt(value, 10, 32)
+			n, err := strconv.ParseUint(value, 0, 64)
 			if err != nil {
 				return err
 			}
