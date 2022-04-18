@@ -32,6 +32,7 @@ type Inbound struct {
 	Remark     string `json:"remark" form:"remark"`
 	Enable     bool   `json:"enable" form:"enable"`
 	ExpiryTime int64  `json:"expiryTime" form:"expiryTime"`
+	Contact    string `json:"contact" form:"contact"`
 
 	// config part
 	Listen         string   `json:"listen" form:"listen"`

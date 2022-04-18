@@ -38,6 +38,9 @@
                                 Số Server：
                                 <a-tag color="green">[[ dbInbounds.length ]]</a-tag>
                             </a-col>
+                            <a-col :xs="24" :sm="24" :lg="12">
+                                <a-button @click="resetallTraffic(dbInbounds)">Đặt lại tất cả lưu lượng</a-button>
+                            </a-col>
                         </a-row>
                     </a-card>
                 </transition>
@@ -170,6 +173,11 @@
         align: 'center',
         width: 80,
         scopedSlots: { customRender: 'expiryTime' },
+    }, {
+        title: "Địa chỉ email",
+        align: 'center',
+        width: 80,
+        dataIndex: "contact",
     }];
 
     const app = new Vue({
@@ -265,6 +273,7 @@
                     remark: dbInbound.remark,
                     enable: dbInbound.enable,
                     expiryTime: dbInbound.expiryTime,
+                    contact: dbInbound.contact,
 
                     listen: inbound.listen,
                     port: inbound.port,
@@ -283,6 +292,7 @@
                     remark: dbInbound.remark,
                     enable: dbInbound.enable,
                     expiryTime: dbInbound.expiryTime,
+                    contact: dbInbound.contact,
 
                     listen: inbound.listen,
                     port: inbound.port,
@@ -306,6 +316,14 @@
                         this.updateInbound(inbound, dbInbound);
                     },
                 });
+            },
+            resetallTraffic(dbInbounds) {
+                for (const aInbound of dbInbounds) {
+                    const inbound = aInbound.toInbound();
+                    aInbound.down = 0;
+                    aInbound.up = 0;
+                    this.updateInbound(inbound, aInbound);
+                };
             },
             delInbound(dbInbound) {
                 this.$confirm({
