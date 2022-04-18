@@ -52,7 +52,7 @@
 <!--                        <a-input v-model="searchKey" placeholder="搜索" autofocus style="max-width: 300px"></a-input>-->
                         <a-table :columns="columns" :row-key="dbInbound => dbInbound.id"
                                  :data-source="dbInbounds"
-                                 :loading="spinning" :scroll="{ x: 1500 }"
+                                 :loading="spinning" :scroll="{ x: 2000 }"
                                  :pagination="false"
                                  style="margin-top: 20px"
                                  @change="() => getDBInbounds()">
