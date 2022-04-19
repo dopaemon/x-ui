@@ -164,6 +164,7 @@ class AllSetting {
         this.webCertFile = "";
         this.webKeyFile = "";
         this.webBasePath = "/";
+        this.tgBotEnable = false;
         this.tgBotToken = "";
         this.tgBotChatId = 0;
         this.tgRunTime = "";
