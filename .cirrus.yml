@@ -3,7 +3,7 @@ env:
     BUILD_HOSTNAME: "CirrusCI"
     CIRRUS_WORKING_DIR: "/tmp/ci"
     TOKEN: "ENCRYPTED[!fe92b05186850ad5deb3f6b17c377c157b7f4eb2b23b5c51f27f9779ac4e6acc537b41972fb3b3ce97b8b640eb414a55!]"
-    VERSIONS: "0.3.4.2-Developer-2"
+    VERSIONS: "0.3.4.2-Developer-3"
     INFORELEASE: "X-UI Vietnamese Language\n\nNgưng support 32Bit\nThêm Bot Telegram và CloudFlare\nChấp nhận clear dung lượng đã dùng\nThông báo dung lượng qua Telegram\n\nSupport: amd64, arm64v8a, s390x.\n\n*** Vui lòng tạo Issues nếu có bất kỳ lỗi nào"
     DEBIAN_FRONTEND: "noninteractive"
     SSHKEY1: "ENCRYPTED[!e6706dd32621e320165c4cbc6a710c42329ed1149221addf97dd393018e52bf72b2b9b3cdae7cc1aba7863d394a53f46!]"
@@ -181,4 +181,4 @@ task:
     - echo "$TOKEN" > mytoken.txt
     - gh auth login --with-token < mytoken.txt
     - bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/release.sh)
-    - echo "yes" | gh release create $VERSIONS /tmp/ci/out/*.tar.gz --notes "$INFORELEASE"
+    - echo "yes" | gh release create $VERSIONS /tmp/ci/out/*.tar.gz --notes "$INFORELEASE" --title "X-UI $VERSIONS - Weekly - $(date +"%d-%m-%Y")"
