@@ -4,11 +4,19 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"time"
 	"x-ui/logger"
 	"x-ui/util/common"
 	"x-ui/web/service"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+)
+
+type LoginStatus byte
+
+const (
+	LoginSuccess LoginStatus = 1
+	LoginFail    LoginStatus = 0
 )
 
 type StatsNotifyJob struct {
@@ -97,12 +105,12 @@ func (j *StatsNotifyJob) Run() {
 	//NOTE:If there no any sessions here,need to notify here
 	//TODO:分节点推送,自动转化格式
 	for _, inbound := range inbouds {
-		info += fmt.Sprintf("Tên Server: %s\r\nPort:%d\r\nLưu lượng tải lên ↑: %s\r\nLưu lượng tải xuống ↓: %s\r\nTổng lưu lượng truy cập: %s\r\n \r\n", inbound.Remark, inbound.Port, common.FormatTraffic(inbound.Up), common.FormatTraffic(inbound.Down), common.FormatTraffic((inbound.Up + inbound.Down)))
+		info += fmt.Sprintf("Tên Server: %s\r\nPort:%d\r\nHạn sử dụng: %s\r\nLưu lượng tải lên ↑: %s\r\nLưu lượng tải xuống ↓: %s\r\nTổng lưu lượng truy cập: %s\r\n \r\n", inbound.Remark, inbound.Port, time.Unix((inbound.ExpiryTime/1000), 0).Format("2006-01-02 15:04:05"), common.FormatTraffic(inbound.Up), common.FormatTraffic(inbound.Down), common.FormatTraffic((inbound.Up + inbound.Down)))
 	}
 	j.SendMsgToTgbot(info)
 }
 
-func (j *StatsNotifyJob) UserLoginNotify(username string, ip string, time string) {
+func (j *StatsNotifyJob) UserLoginNotify(username string, ip string, time string, status LoginStatus) {
 	if username == "" || ip == "" || time == "" {
 		logger.Warning("UserLoginNotify failed,invalid info")
 		return
@@ -114,7 +122,12 @@ func (j *StatsNotifyJob) UserLoginNotify(username string, ip string, time string
 		fmt.Println("get hostname error:", err)
 		return
 	}
-	msg = fmt.Sprintf("Có phiên ₫ăng nhập mới vào máy chủ\r\nhostname: %s\r\n", name)
+	//msg = fmt.Sprintf("Có phiên ₫ăng nhập mới vào máy chủ\r\nhostname: %s\r\n", name)
+	if status == LoginSuccess {
+		msg = fmt.Sprintf("Đăng nhập thành công bảng điều khiển\r\nCPU:%s\r\n", name)
+	} else if status == LoginFail {
+		msg = fmt.Sprintf("đăng nhập bảng điều khiển không thành công\r\nCPU:%s\r\n", name)
+	}
 	msg += fmt.Sprintf("Thời gian: %s\r\n", time)
 	msg += fmt.Sprintf("Tài khoản: %s\r\n", username)
 	msg += fmt.Sprintf("IP: %s\r\n", ip)
