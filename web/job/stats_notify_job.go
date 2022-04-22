@@ -105,7 +105,12 @@ func (j *StatsNotifyJob) Run() {
 	//NOTE:If there no any sessions here,need to notify here
 	//TODO:分节点推送,自动转化格式
 	for _, inbound := range inbouds {
-		info += fmt.Sprintf("Tên Server: %s\r\nPort:%d\r\nHạn sử dụng: %s\r\nLưu lượng tải lên ↑: %s\r\nLưu lượng tải xuống ↓: %s\r\nTổng lưu lượng truy cập: %s\r\n \r\n", inbound.Remark, inbound.Port, time.Unix((inbound.ExpiryTime/1000), 0).Format("2006-01-02 15:04:05"), common.FormatTraffic(inbound.Up), common.FormatTraffic(inbound.Down), common.FormatTraffic((inbound.Up + inbound.Down)))
+		info += fmt.Sprintf("Tên Server: %s\r\nPort:%d\r\nLưu lượng tải lên ↑: %s\r\nLưu lượng tải xuống ↓: %s\r\nTổng lưu lượng truy cập: %s\r\n \r\n", inbound.Remark, inbound.Port, common.FormatTraffic(inbound.Up), common.FormatTraffic(inbound.Down), common.FormatTraffic((inbound.Up + inbound.Down)))
+		if inbound.ExpiryTime == 0 {
+			info += fmt.Sprintf("Hạn sử dụng: Vô thời hạn\r\n \r\n")
+		} else {
+			info += fmt.Sprintf("Hạn sử dụng: %s\r\n \r\n", time.Unix((inbound.ExpiryTime/1000), 0).Format("2006-01-02 15:04:05"))
+		}
 	}
 	j.SendMsgToTgbot(info)
 }
