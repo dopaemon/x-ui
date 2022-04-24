@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"os/exec"
+	"strconv"
 	"time"
 	"x-ui/logger"
 	"x-ui/util/common"
@@ -11,6 +13,8 @@ import (
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
+
+var SSHLoginUser int
 
 type LoginStatus byte
 
@@ -137,4 +141,72 @@ func (j *StatsNotifyJob) UserLoginNotify(username string, ip string, time string
 	msg += fmt.Sprintf("Tài khoản: %s\r\n", username)
 	msg += fmt.Sprintf("IP: %s\r\n", ip)
 	j.SendMsgToTgbot(msg)
+}
+
+func (j *StatsNotifyJob) SSHStatusLoginNotify(xuiStartTime string) {
+	getSSHUserNumber, error := exec.Command("bash", "-c", "who | awk  '{print $1}'|wc -l").Output()
+	if error != nil {
+		fmt.Println("getSSHUserNumber error:", error)
+		return
+	}
+	//fmt.Printf("getSSHUserNumber:%s\r\n", common.ByteToString(getSSHUserNumber))
+	var numberInt int
+	numberInt, error = strconv.Atoi(common.ByteToString(getSSHUserNumber))
+	if error != nil {
+		return
+	}
+	if numberInt > SSHLoginUser {
+		var SSHLoginInfo string
+		SSHLoginUser = numberInt
+		//hostname
+		name, err := os.Hostname()
+		if err != nil {
+			fmt.Println("get hostname error:", err)
+			return
+		}
+		//Time compare,need if x-ui got restart while ssh already exist users
+		SSHLoginTime, error := exec.Command("bash", "-c", "who | awk  '{print $3,$4}'|tail -n 1 ").Output()
+		if error != nil {
+			fmt.Println("getLoginTime error:", error.Error())
+			return
+		}
+		/*
+			//TODO:time compare if x-ui get restart and there exist logging users
+			XUIRunTime, error := exec.Command("bash", "-c", " systemctl status x-ui | grep Active| tail -n 1 | awk '{print $6,$7}' ").Output()
+			if error != nil {
+				fmt.Println("getXUIRunTime error:", error.Error())
+				return
+			}
+		*/
+		var SSHLoginTimeStr string
+		SSHLoginTimeStr = common.ByteToString(SSHLoginTime)
+		//can't use string to change []byte to string,there will cause encode error
+		fmt.Printf("SSHLoginTime[%s]\r\n", SSHLoginTimeStr)
+		fmt.Printf("XUIRunTime[%s]\r\n", xuiStartTime)
+		t1, err := time.Parse("2006-01-02 15:04:05", SSHLoginTimeStr)
+		t2, err := time.Parse("2006-01-02 15:04:05", xuiStartTime)
+		if t1.Before(t2) || err != nil {
+			fmt.Printf("SSHLogin[%s] early than XUI start[%s]\r\n", SSHLoginTimeStr, xuiStartTime)
+		}
+
+		SSHLoginUserName, error := exec.Command("bash", "-c", "who | awk  '{print $1}'|tail -n 1").Output()
+		if error != nil {
+			fmt.Println("getSSHLoginUserName error:", error.Error())
+			return
+		}
+
+		SSHLoginIpAddr, error := exec.Command("bash", "-c", "who | awk  '{print $5}'|tail -n 1 | cut -d \"(\" -f2 | cut -d \")\" -f1 ").Output()
+		if error != nil {
+			fmt.Println("getSSHLoginIpAddr error:", error)
+			return
+		}
+
+		SSHLoginInfo = fmt.Sprintf("Có phiên đăng nhập mới:\r\n")
+		SSHLoginInfo += fmt.Sprintf("Tên Server: %s\r\n", name)
+		SSHLoginInfo += fmt.Sprintf("SSH User: %s", SSHLoginUserName)
+		SSHLoginInfo += fmt.Sprintf("Thời gian đăng nhập: %s", SSHLoginTime)
+		SSHLoginInfo += fmt.Sprintf("IP Đăng nhập SSH: %s", SSHLoginIpAddr)
+		SSHLoginInfo += fmt.Sprintf("Số User đăng nhập SSH hiện tại: %s", getSSHUserNumber)
+		j.SendMsgToTgbot(SSHLoginInfo)
+	}
 }
