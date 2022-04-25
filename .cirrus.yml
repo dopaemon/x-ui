@@ -56,10 +56,6 @@ task:
     - sudo chmod 777 /tmp/ci/platform/
     - git clone -b main --single-branch --depth="1" https://github.com/dopaemon/x-ui.git /tmp/ci/x-ui/src
     - echo "$VERSIONS By https://github.com/dopaemon" > /tmp/ci/x-ui/src/config/version
-    - cd /tmp/ci/x-ui/src
-    - go mod tidy
-    - go get -t .
-    - go get -u golang.org/x/crypto
   env-targz_script:
     - sudo mkdir -p /tmp/ci/x-ui/src-zip/x-ui/bin
     - sudo chmod 777 /tmp/ci/x-ui/src-zip/x-ui/bin
@@ -89,6 +85,12 @@ task:
     - source ~/.goi
     - cd /tmp/ci/XrayPrebuilt/Xray-core
     - CGO_ENABLED=1 GOOS=linux GOARCH=riscv64 CC=riscv64-linux-gnu-gcc  go build -o OUT/xray-riscv64 -v -trimpath -ldflags "-s -w -buildid=" ./main
+  goupdate_script:
+    - source ~/.goi
+    - cd /tmp/ci/x-ui/src
+    - go mod tidy
+    - go get -t .
+    - go get -u golang.org/x/crypto
   amd64_script:
     - source ~/.goi
     - cd /tmp/ci/x-ui/src
