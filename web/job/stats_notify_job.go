@@ -181,8 +181,8 @@ func (j *StatsNotifyJob) SSHStatusLoginNotify(xuiStartTime string) {
 		var SSHLoginTimeStr string
 		SSHLoginTimeStr = common.ByteToString(SSHLoginTime)
 		//can't use string to change []byte to string,there will cause encode error
-		fmt.Printf("SSHLoginTime[%s]\r\n", SSHLoginTimeStr)
-		fmt.Printf("XUIRunTime[%s]\r\n", xuiStartTime)
+		//fmt.Printf("SSHLoginTime[%s]\r\n", SSHLoginTimeStr)
+		//fmt.Printf("XUIRunTime[%s]\r\n", xuiStartTime)
 		t1, err := time.Parse("2006-01-02 15:04:05", SSHLoginTimeStr)
 		t2, err := time.Parse("2006-01-02 15:04:05", xuiStartTime)
 		if t1.Before(t2) || err != nil {
@@ -208,5 +208,7 @@ func (j *StatsNotifyJob) SSHStatusLoginNotify(xuiStartTime string) {
 		SSHLoginInfo += fmt.Sprintf("IP Đăng nhập SSH: %s", SSHLoginIpAddr)
 		SSHLoginInfo += fmt.Sprintf("Số User đăng nhập SSH hiện tại: %s", getSSHUserNumber)
 		j.SendMsgToTgbot(SSHLoginInfo)
+	} else {
+		SSHLoginUser = numberInt
 	}
 }
