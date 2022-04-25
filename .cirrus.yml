@@ -49,12 +49,16 @@ task:
     - sudo chmod 400 ~/.ssh/*
     - ssh-keygen -R $(curl ifconfig.me)
   source_script:
+    - source ~/.goi
     - sudo mkdir -p /tmp/ci/x-ui/
     - sudo mkdir -p /tmp/ci/platform/
     - sudo chmod 777 /tmp/ci/x-ui/
     - sudo chmod 777 /tmp/ci/platform/
     - git clone -b main --single-branch --depth="1" https://github.com/dopaemon/x-ui.git /tmp/ci/x-ui/src
     - echo "$VERSIONS By https://github.com/dopaemon" > /tmp/ci/x-ui/src/config/version
+    - cd /tmp/ci/x-ui/src
+    - go mod tidy
+    - go get -t .
   env-targz_script:
     - sudo mkdir -p /tmp/ci/x-ui/src-zip/x-ui/bin
     - sudo chmod 777 /tmp/ci/x-ui/src-zip/x-ui/bin

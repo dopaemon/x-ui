@@ -24,7 +24,7 @@ require (
 	github.com/xtls/xray-core v1.5.4
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	go.uber.org/atomic v1.9.0
-	golang.org/x/crypto v0.0.0-20220331220935-ae2d96664a29 // indirect
+	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4 // indirect
 	golang.org/x/net v0.0.0-20220403103023-749bd193bc2b // indirect
 	golang.org/x/text v0.3.7
 	google.golang.org/genproto v0.0.0-20220401170504-314d38edb7de // indirect
