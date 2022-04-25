@@ -9,7 +9,6 @@ require (
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/validator/v10 v10.10.1 // indirect
 	github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.5.1
-	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/nicksnyder/go-i18n/v2 v2.2.0
@@ -23,6 +22,6 @@ require (
 	go.uber.org/atomic v1.9.0
 	golang.org/x/text v0.3.7
 	google.golang.org/grpc v1.46.0
-	gorm.io/driver/sqlite v1.3.1
+	gorm.io/driver/sqlite v1.3.2
 	gorm.io/gorm v1.23.4
 )
