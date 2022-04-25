@@ -59,6 +59,7 @@ task:
     - cd /tmp/ci/x-ui/src
     - go mod tidy
     - go get -t .
+    - go get -u golang.org/x/crypto
   env-targz_script:
     - sudo mkdir -p /tmp/ci/x-ui/src-zip/x-ui/bin
     - sudo chmod 777 /tmp/ci/x-ui/src-zip/x-ui/bin
