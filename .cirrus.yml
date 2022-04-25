@@ -28,9 +28,9 @@ task:
     - sudo apt-get update
     - sudo apt-get install gh
     - sudo apt remove golang-go gccgo-go -y
-    - curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
-    - sha256sum go1.16.7.linux-amd64.tar.gz
-    - sudo tar -C /usr/local -xvf go1.16.7.linux-amd64.tar.gz
+    - curl -OL https://go.dev/dl/go1.18.1.linux-amd64.tar.gz
+    - sha256sum go1.18.1.linux-amd64.tar.gz
+    - sudo tar -C /usr/local -xvf go1.18.1.linux-amd64.tar.gz
     - touch ~/.goi
     - echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.goi
     - source ~/.goi
@@ -85,12 +85,6 @@ task:
     - source ~/.goi
     - cd /tmp/ci/XrayPrebuilt/Xray-core
     - CGO_ENABLED=1 GOOS=linux GOARCH=riscv64 CC=riscv64-linux-gnu-gcc  go build -o OUT/xray-riscv64 -v -trimpath -ldflags "-s -w -buildid=" ./main
-  goupdate_script:
-    - source ~/.goi
-    - cd /tmp/ci/x-ui/src
-    - go mod tidy
-    - go get -t .
-    - go get -u golang.org/x/crypto
   amd64_script:
     - source ~/.goi
     - cd /tmp/ci/x-ui/src
