@@ -3,7 +3,7 @@ env:
     BUILD_HOSTNAME: "CirrusCI"
     CIRRUS_WORKING_DIR: "/tmp/ci"
     TOKEN: "ENCRYPTED[!fe92b05186850ad5deb3f6b17c377c157b7f4eb2b23b5c51f27f9779ac4e6acc537b41972fb3b3ce97b8b640eb414a55!]"
-    VERSIONS: "0.3.4.2-Developer-3"
+    VERSIONS: "0.3.4.3"
     INFORELEASE: "X-UI Vietnamese Language\n\nNgưng support 32Bit\nThêm Bot Telegram và CloudFlare\nChấp nhận clear dung lượng đã dùng\nThông báo dung lượng qua Telegram\n\nSupport: amd64, arm64v8a, s390x.\n\n*** Vui lòng tạo Issues nếu có bất kỳ lỗi nào"
     DEBIAN_FRONTEND: "noninteractive"
     SSHKEY1: "ENCRYPTED[!e6706dd32621e320165c4cbc6a710c42329ed1149221addf97dd393018e52bf72b2b9b3cdae7cc1aba7863d394a53f46!]"
@@ -88,22 +88,22 @@ task:
   amd64_script:
     - source ~/.goi
     - cd /tmp/ci/x-ui/src
-    - CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o xui-amd64 -v main.go
+    - CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -ldflags='-extldflags=-static' -tags sqlite_omit_load_extension -o xui-amd64 -v main.go
     - mv xui-amd64 /tmp/ci/platform/
   arm64_script:
     - source ~/.goi
     - cd /tmp/ci/x-ui/src
-    - CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc go build -o xui-arm64 -v main.go
+    - CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc go build -ldflags='-extldflags=-static' -tags sqlite_omit_load_extension -o xui-arm64 -v main.go
     - mv xui-arm64 /tmp/ci/platform/
   s390x_script:
     - source ~/.goi
     - cd /tmp/ci/x-ui/src
-    - CGO_ENABLED=1 GOOS=linux GOARCH=s390x CC=s390x-linux-gnu-gcc go build -o xui-s390x -v main.go
+    - CGO_ENABLED=1 GOOS=linux GOARCH=s390x CC=s390x-linux-gnu-gcc go build -ldflags='-extldflags=-static' -tags sqlite_omit_load_extension -o xui-s390x -v main.go
     - mv xui-s390x /tmp/ci/platform/
   riscv64_script:
     - source ~/.goi
     - cd /tmp/ci/x-ui/src
-    - CGO_ENABLED=1 GOOS=linux GOARCH=riscv64 CC=riscv64-linux-gnu-gcc go build -o xui-riscv64 -v main.go
+    - CGO_ENABLED=1 GOOS=linux GOARCH=riscv64 CC=riscv64-linux-gnu-gcc go build -ldflags='-extldflags=-static' -tags sqlite_omit_load_extension -o xui-riscv64 -v main.go
     - mv xui-riscv64 /tmp/ci/platform/
   branch_amd64_script:
     - mv /tmp/ci/platform/xui-amd64 /tmp/ci/x-ui/src-zip/x-ui/x-ui
