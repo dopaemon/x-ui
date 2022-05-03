@@ -178,6 +178,11 @@
         align: 'center',
         width: 80,
         dataIndex: "contact",
+    }, {
+	title: "Địa chỉ Domain",
+	align: 'center',
+	width: 80,
+	dataIndex: "domain",
     }];
 
     const app = new Vue({
@@ -274,6 +279,7 @@
                     enable: dbInbound.enable,
                     expiryTime: dbInbound.expiryTime,
                     contact: dbInbound.contact,
+                    domain: dbInbound.domain,
 
                     listen: inbound.listen,
                     port: inbound.port,
@@ -293,6 +299,7 @@
                     enable: dbInbound.enable,
                     expiryTime: dbInbound.expiryTime,
                     contact: dbInbound.contact,
+                    domain: dbInbound.domain,
 
                     listen: inbound.listen,
                     port: inbound.port,

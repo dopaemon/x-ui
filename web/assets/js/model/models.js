@@ -37,6 +37,7 @@ class DBInbound {
         this.enable = true;
         this.expiryTime = 0;
 	this.contact = "";
+	this.domain = "";
 
         this.listen = "";
         this.port = 0;

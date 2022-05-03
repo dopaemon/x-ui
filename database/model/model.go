@@ -33,6 +33,7 @@ type Inbound struct {
 	Enable     bool   `json:"enable" form:"enable"`
 	ExpiryTime int64  `json:"expiryTime" form:"expiryTime"`
 	Contact    string `json:"contact" form:"contact"`
+	Domain     string `json:"domain" form:"domain"`
 
 	// config part
 	Listen         string   `json:"listen" form:"listen"`
