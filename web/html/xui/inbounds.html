@@ -49,7 +49,7 @@
                         <div slot="title">
                             <a-button type="primary" icon="plus" @click="openAddInbound"></a-button>
                         </div>
-<!--                        <a-input v-model="searchKey" placeholder="搜索" autofocus style="max-width: 300px"></a-input>-->
+                        <a-input v-model="searchKey" placeholder="Tìm kiếm" autofocus style="max-width: 300px"></a-input>
                         <a-table :columns="columns" :row-key="dbInbound => dbInbound.id"
                                  :data-source="dbInbounds"
                                  :loading="spinning" :scroll="{ x: 2000 }"
@@ -58,7 +58,7 @@
                                  @change="() => getDBInbounds()">
                             <template slot="action" slot-scope="text, dbInbound">
                                 <a-dropdown :trigger="['click']">
-                                    <a @click="e => e.preventDefault()">Server Bạn</a>
+                                    <a @click="e => e.preventDefault()">Menu</a>
                                     <a-menu slot="overlay" @click="a => clickAction(a, dbInbound)">
                                         <a-menu-item v-if="dbInbound.hasLink()" key="qrcode">
                                             <a-icon type="qrcode"></a-icon>Mã QR Scan
@@ -124,10 +124,15 @@
 <script>
 
     const columns = [{
+	title: "Tùy chọn",
+        align: 'center',
+        width: 45,
+        scopedSlots: { customRender: 'action' },
+    }, {
 	title: "ID",
         align: 'center',
         dataIndex: "id",
-        width: 30,
+        width: 10,
     }, {
 	title: "Trạng thái",
         align: 'center',
@@ -136,18 +141,8 @@
     }, {
 	title: "Tên",
         align: 'center',
-        width: 100,
+        width: 60,
         dataIndex: "remark",
-    }, {
-	title: "Tùy chọn",
-        align: 'center',
-        width: 45,
-        scopedSlots: { customRender: 'action' },
-    }, {
-	title: "Địa chỉ Domain",
-        align: 'center',
-        width: 80,
-        dataIndex: "domain",
     }, {
         title: "Giao Thức",
         align: 'center',
@@ -179,7 +174,7 @@
         width: 80,
         scopedSlots: { customRender: 'expiryTime' },
     }, {
-        title: "Địa chỉ email",
+        title: "Địa chỉ liên lạc",
         align: 'center',
         width: 80,
         dataIndex: "contact",
@@ -247,7 +242,7 @@
             },
             openAddInbound() {
                 inModal.show({
-                    title: 'Thêm thư đến',
+                    title: 'Tạo acấu hình VPN mới',
                     okText: 'Thêm vào',
                     confirm: async (inbound, dbInbound) => {
                         inModal.loading();
@@ -259,7 +254,7 @@
             openEditInbound(dbInbound) {
                 const inbound = dbInbound.toInbound();
                 inModal.show({
-                    title: 'Sửa đổi đầu vào',
+                    title: 'Sửa cấu hình VPN',
                     okText: 'Chấp Nhận',
                     inbound: inbound,
                     dbInbound: dbInbound,
@@ -311,7 +306,7 @@
             resetTraffic(dbInbound) {
                 this.$confirm({
                     title: 'Đặt Lại Luồng',
-                    content: 'Bạn có chắc chắn muốn thiết lập lại quy trình không??',
+                    content: 'Bạn có chắc chắn muốn thiết lập lại quy trình không ???',
                     okText: 'Cài lại',
                     cancelText: 'Hủy bỏ',
                     onOk: () => {
@@ -332,8 +327,8 @@
             },
             delInbound(dbInbound) {
                 this.$confirm({
-                    title: 'Xóa thư đến',
-                    content: 'Bạn có chắc chắn muốn xóa thư đến không?',
+                    title: 'Xóa cấu hình VPN',
+                    content: 'Bạn có chắc chắn muốn xóa cấu hình VPN này không ?',
                     okText: 'xóa bỏ',
                     cancelText: 'Hủy bỏ',
                     onOk: () => this.submit('/xui/inbound/del/' + dbInbound.id),
