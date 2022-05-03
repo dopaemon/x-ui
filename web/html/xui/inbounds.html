@@ -124,25 +124,30 @@
 <script>
 
     const columns = [{
-        title: "Chức Năng",
-        align: 'center',
-        width: 30,
-        scopedSlots: { customRender: 'action' },
-    }, {
-        title: "Cho phép",
-        align: 'center',
-        width: 40,
-        scopedSlots: { customRender: 'enable' },
-    }, {
-        title: "ID",
+	title: "ID",
         align: 'center',
         dataIndex: "id",
         width: 30,
     }, {
-        title: "Tên",
+	title: "Trạng thái",
+        align: 'center',
+        width: 40,
+        scopedSlots: { customRender: 'enable' },
+    }, {
+	title: "Tên",
         align: 'center',
         width: 100,
         dataIndex: "remark",
+    }, {
+	title: "Tùy chọn",
+        align: 'center',
+        width: 45,
+        scopedSlots: { customRender: 'action' },
+    }, {
+	title: "Địa chỉ Domain",
+        align: 'center',
+        width: 80,
+        dataIndex: "domain",
     }, {
         title: "Giao Thức",
         align: 'center',
@@ -178,11 +183,6 @@
         align: 'center',
         width: 80,
         dataIndex: "contact",
-    }, {
-	title: "Địa chỉ Domain",
-	align: 'center',
-	width: 80,
-	dataIndex: "domain",
     }];
 
     const app = new Vue({

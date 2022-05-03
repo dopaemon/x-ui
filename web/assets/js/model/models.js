@@ -94,7 +94,12 @@ class DBInbound {
     // }
 
     get address() {
-	let address = dbInbound.domain;
+	let address = location.hostname;
+	if (!ObjectUtil.isEmpty(this.domain)) {
+	    address = this.domain;
+	} else if (ObjectUtil.isEmpty(this.domain) && !ObjectUtil.isEmpty(this.listen) && this.listen !== "0.0.0.0") {
+            address = this.listen;
+	}
 	return address;
     }
 
