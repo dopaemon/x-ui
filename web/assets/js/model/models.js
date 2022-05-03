@@ -85,22 +85,12 @@ class DBInbound {
         return this.protocol === Protocols.HTTP;
     }
 
-    // get address() {
-    //     let address = location.hostname;
-    //     if (!ObjectUtil.isEmpty(this.listen) && this.listen !== "0.0.0.0") {
-    //         address = this.listen;
-    //     }
-    //     return address;
-    // }
-
     get address() {
-	let address = location.hostname;
-	if (!ObjectUtil.isEmpty(this.domain)) {
-	    address = this.domain;
-	} else if (ObjectUtil.isEmpty(this.domain) && !ObjectUtil.isEmpty(this.listen) && this.listen !== "0.0.0.0") {
+        let address = location.hostname;
+        if (!ObjectUtil.isEmpty(this.listen) && this.listen !== "0.0.0.0") {
             address = this.listen;
-	}
-	return address;
+        }
+        return address;
     }
 
     get _expiryTime() {
