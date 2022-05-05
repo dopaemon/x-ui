@@ -71,7 +71,7 @@
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-  3                  <!-- Sidebar Toggle (Topbar) -->
+                    <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
@@ -249,7 +249,9 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Tổng lưu lượng tải xuống</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ sizeFormat(status.netTraffic.recv) ]] </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> 
+						<span [[ sizeFormat(status.netTraffic.recv) ]] > </span>
+					    </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-cloud-download fa-2x text-gray-300"></i>
@@ -267,7 +269,9 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Tổng lưu lượng tải lên</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ sizeFormat(status.netTraffic.sent) ]] </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> 
+						[[ sizeFormat(status.netTraffic.sent) ]] 
+					    </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-cloud-upload fa-2x text-gray-300"></i>
@@ -368,25 +372,33 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="small font-weight-bold">CPU <span
-                                            class="float-right"> [[ sizeFormat(status.cpu.current) ]] </span></h4>
+                                            class="float-right"> 
+						[[ sizeFormat(status.cpu.current) ]] 
+					</span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-danger" role="progressbar" style="width: status.cpu.percent"
                                             aria-valuenow="status.cpu.percent" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">RAM <span
-                                            class="float-right"> [[ sizeFormat(status.mem.current) ]] / [[ sizeFormat(status.mem.total) ]] </span></h4>
+                                            class="float-right"> 
+						[[ sizeFormat(status.mem.current) ]] / [[ sizeFormat(status.mem.total) ]] 
+					</span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: status.mem.percent"
                                             aria-valuenow="status.mem.percent" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">SWAP <span
-                                            class="float-right"> [[ sizeFormat(status.swap.current) ]] / [[ sizeFormat(status.swap.total) ]] </span></h4>
+                                            class="float-right"> 
+						[[ sizeFormat(status.swap.current) ]] / [[ sizeFormat(status.swap.total) ]] 
+					</span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar" role="progressbar" style="width: status.swap.percent"
                                             aria-valuenow="status.swap.percent" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">DISK <span
-                                            class="float-right"> [[ sizeFormat(status.disk.current) ]] / [[ sizeFormat(status.disk.total) ]] </span></h4>
+                                            class="float-right"> 
+						[[ sizeFormat(status.disk.current) ]] / [[ sizeFormat(status.disk.total) ]] 
+					</span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-info" role="progressbar" style="width: status.disk.percent"
                                             aria-valuenow="status.disk.percent" aria-valuemin="0" aria-valuemax="100"></div>
