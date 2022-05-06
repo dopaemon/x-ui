@@ -34,7 +34,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ .base_path }}xui/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>X-UI <sup>Unofficial</sup></span></a>
             </li>
 
             <!-- Divider -->
@@ -54,6 +54,37 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+
+	    <!-- Heading -->
+            <div class="sidebar-heading">
+                Thiết Bị
+            </div>
+
+	    <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-download"></i>
+                    <span>Downloads</span>
+                </a>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Hỗ trợ thiết bị:</h6>
+                        <a class="collapse-item fa-android" href="https://play.google.com/store/apps/details?id=com.v2ray.ang&hl=vi&gl=US">Android</a>
+                        <a class="collapse-item fa-mobile" href="https://apps.apple.com/vn/app/shadowrocket/id932747118?l=vi">IOS</a>
+			<a class="collapse-item fa-windows" href="https://github.com/2dust/v2rayN/releases">Windows</a>
+			<a class="collapse-item fa-laptop" href="https://github.com/yanue/V2rayU/releases">macOS</a>
+                    </div>
+                </div>
+            </li>
+
+	    <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+	    <!-- Heading -->
+            <div class="sidebar-heading">
+               Hệ Thống
+            </div>
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -233,7 +264,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">X-UI <sup>Unofficial</sup></h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Downloads</a>
                     </div>
@@ -250,7 +281,7 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Tổng lưu lượng tải xuống</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"> 
-						<span [[ sizeFormat(status.netTraffic.recv) ]] > </span>
+						[[ sizeFormat(status.netTraffic.recv) ]]
 					    </div>
                                         </div>
                                         <div class="col-auto">
