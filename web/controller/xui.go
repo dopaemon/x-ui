@@ -9,8 +9,8 @@ type XUIController struct {
 
 	inboundController *InboundController
 	settingController *SettingController
-	fastController *FastController
-	speedtestController *SpeedtestController
+	// fastController *FastController
+	// speedtestController *SpeedtestController
 }
 
 func NewXUIController(g *gin.RouterGroup) *XUIController {
@@ -31,8 +31,8 @@ func (a *XUIController) initRouter(g *gin.RouterGroup) {
 
 	a.inboundController = NewInboundController(g)
 	a.settingController = NewSettingController(g)
-	a.fastController = NewFastController(g)
-	a.speedtestController = NewSpeedtestController(g)
+	// a.fastController = NewFastController(g)
+	// a.speedtestController = NewSpeedtestController(g)
 }
 
 func (a *XUIController) index(c *gin.Context) {
