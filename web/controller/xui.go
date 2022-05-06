@@ -9,6 +9,8 @@ type XUIController struct {
 
 	inboundController *InboundController
 	settingController *SettingController
+	fastController *FastController
+	speedtestController *SpeedtestController
 }
 
 func NewXUIController(g *gin.RouterGroup) *XUIController {
@@ -24,9 +26,13 @@ func (a *XUIController) initRouter(g *gin.RouterGroup) {
 	g.GET("/", a.index)
 	g.GET("/inbounds", a.inbounds)
 	g.GET("/setting", a.setting)
+	g.GET("/fast", a.fast)
+	g.GET("/speedtest", a.speedtest)
 
 	a.inboundController = NewInboundController(g)
 	a.settingController = NewSettingController(g)
+	a.fastController = NewFastController(g)
+	a.speedtestController = NewSpeedtestController(g)
 }
 
 func (a *XUIController) index(c *gin.Context) {
@@ -39,4 +45,12 @@ func (a *XUIController) inbounds(c *gin.Context) {
 
 func (a *XUIController) setting(c *gin.Context) {
 	html(c, "setting.html", "Cài Đặt", nil)
+}
+
+func (a *XUIController) fast(c *gin.Context) {
+        html(c, "fast.html", "fast", nil)
+}
+
+func (a *XUIController) speedtest(c *gin.Context) {
+        html(c, "speedtest.html", "speedtest", nil)
 }
