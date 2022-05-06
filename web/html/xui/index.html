@@ -305,7 +305,16 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Tổng lưu lượng tải xuống</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"> 
-						[[ sizeFormat(status.netTraffic.recv) ]]
+						<a-col :span="12">
+		                                    <a-icon type="cloud-upload"></a-icon>
+                			                    [[ sizeFormat(status.netTraffic.sent) ]]
+                                    			<a-tooltip>
+                                        		    <template slot="title">
+                                            			Tổng lưu lượng tải lên của tất cả các card mạng kể từ khi hệ thống khởi động
+                                        		    </template>
+                                        			<a-icon type="question-circle" theme="filled"></a-icon>
+                                    			</a-tooltip>
+                                		</a-col>
 					    </div>
                                         </div>
                                         <div class="col-auto">
