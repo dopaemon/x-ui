@@ -12,7 +12,7 @@
         margin-top: 10px;
     }
 </style>
-<body id="page-top app">
+<body id="page-top app" onload="showTime()">
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -211,7 +211,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                        <img class="rounded-circle" src="https://avatars.githubusercontent.com/u/43093213?s=400&u=32591b34f6d90ea9fe09714ad42795185a989566&v=4"
                                             alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
@@ -223,7 +223,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                        <img class="rounded-circle" src="https://avatars.githubusercontent.com/u/43093213?s=400&u=32591b34f6d90ea9fe09714ad42795185a989566&v=4"
                                             alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
@@ -235,7 +235,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                        <img class="rounded-circle" src="https://avatars.githubusercontent.com/u/43093213?s=400&u=32591b34f6d90ea9fe09714ad42795185a989566&v=4"
                                             alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
@@ -257,7 +257,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrator</span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                    src="https://avatars.githubusercontent.com/u/43093213?s=400&u=32591b34f6d90ea9fe09714ad42795185a989566&v=4">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -289,111 +289,80 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">X-UI <sup>Unofficial</sup></h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Downloads</a>
+                        <a href="https://github.com/dopaemon/x-ui" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-github fa-sm text-white-50"></i> Github</a>
                     </div>
 
-                    <!-- Content Row -->
+		    <!-- Content Row -->
                     <div class="row">
 
-                        <!-- Tổng lưu lượng tải xuống -->
+                        <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Tổng lưu lượng tải xuống</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> 
-						<a-col :span="12">
-		                                    <a-icon type="cloud-upload"></a-icon>
-                			                    [[ sizeFormat(status.netTraffic.sent) ]]
-                                    			<a-tooltip>
-                                        		    <template slot="title">
-                                            			Tổng lưu lượng tải lên của tất cả các card mạng kể từ khi hệ thống khởi động
-                                        		    </template>
-                                        			<a-icon type="question-circle" theme="filled"></a-icon>
-                                    			</a-tooltip>
-                                		</a-col>
-					    </div>
+                                                Tổng Lưu Lượng Tải Xuống</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ sizeFormat(status.netTraffic.recv) ]] </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-cloud-download fa-2x text-gray-300"></i>
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Tổng lưu lượng tải lên -->
+                        <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Tổng lưu lượng tải lên</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> 
-						[[ sizeFormat(status.netTraffic.sent) ]] 
-					    </div>
+                                                Tổng Lưu Lượng Tải Lên</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ sizeFormat(status.netTraffic.sent) ]] </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-cloud-upload fa-2x text-gray-300"></i>
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                    <!-- Content Row -->
-
-                    <div class="row">
-
-                    </div>
-
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Content Column -->
-                        <div class="col-lg-4">
-
-                            <!-- Project Card Example -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
-                                </div>
+			<!-- Pending Requests Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
-                                    <h4 class="small font-weight-bold">CPU <span
-                                            class="float-right"> 
-						[[ sizeFormat(status.cpu.current) ]] 
-					</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: status.cpu.percent"
-                                            aria-valuenow="status.cpu.percent" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Thời Gian</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> <div id="myClockDisplay" class="clock"> </div> </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        </div>
                                     </div>
-                                    <h4 class="small font-weight-bold">RAM <span
-                                            class="float-right"> 
-						[[ sizeFormat(status.mem.current) ]] / [[ sizeFormat(status.mem.total) ]] 
-					</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: status.mem.percent"
-                                            aria-valuenow="status.mem.percent" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">SWAP <span
-                                            class="float-right"> 
-						[[ sizeFormat(status.swap.current) ]] / [[ sizeFormat(status.swap.total) ]] 
-					</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar" role="progressbar" style="width: status.swap.percent"
-                                            aria-valuenow="status.swap.percent" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">DISK <span
-                                            class="float-right"> 
-						[[ sizeFormat(status.disk.current) ]] / [[ sizeFormat(status.disk.total) ]] 
-					</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: status.disk.percent"
-                                            aria-valuenow="status.disk.percent" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pending Requests Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Hôm Nay</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> <div id="myDateDisplay"> </div> </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -480,6 +449,38 @@
     <script src="{{ .base_path }}assets/js/util/utils.js?{{ .cur_ver }}"></script>
     <script src="{{ .base_path }}assets/js/model/xray.js?{{ .cur_ver }}"></script>
     <script src="{{ .base_path }}assets/js/model/models.js?{{ .cur_ver }}"></script>
+
+     <script type="text/javascript">
+	function showTime() {
+  	    var timediv = document.getElementById("myClockDisplay");
+            var datediv = document.getElementById("myDateDisplay");
+            var dt = new Date();
+            var d = dt.getDate();
+            var m = dt.getMonth() + 1;
+            var y = dt.getFullYear();
+            var hh = dt.getHours();
+            var mm = dt.getMinutes();
+            var ss = dt.getSeconds();
+            var session = "SA";
+            if (hh == 0) {
+                hh = 12;
+            }
+
+            if (hh > 12) {
+                hh = hh - 12;
+                session = "CH";
+            }
+
+            d = (d < 10) ? "0" + d : d;
+            m = (m < 10) ? "0" + m : m;
+            hh = (hh < 10) ? "0" + hh : hh;
+            mm = (mm < 10) ? "0" + mm : mm;
+            ss = (ss < 10) ? "0" + ss : ss;
+            timediv.textContent = hh + " Giờ " + mm + " Phút " + ss + " Giây | " + session;
+            datediv.textContent = "Ngày " + d + " Tháng " + m + " Năm " + y;
+            setTimeout(showTime, 1000);
+        }
+     </script>
 
 {{template "js" .}}
 </body>
