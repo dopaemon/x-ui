@@ -51,7 +51,7 @@
           @close="siderDrawer.close()"
           :visible="siderDrawer.visible" :wrap-style="{ padding: 0 }"
 	  style="max-width: 0px; flex: 0 0 0px; min-width: 0px; width: 0px">
-    <div class="drawer-handle" @click="siderDrawer.change()" slot="handle">
+    <!-- <div class="drawer-handle" @click="siderDrawer.change()" slot="handle"> -->
         <a-icon :type="siderDrawer.visible ? 'close' : 'menu-fold'"></a-icon>
     </div>
     <a-menu theme="light" mode="inline" :selected-keys="['{{ .request_uri }}']"

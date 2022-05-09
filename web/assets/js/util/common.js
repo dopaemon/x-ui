@@ -20,6 +20,29 @@ function sizeFormat(size) {
     }
 }
 
+function checkFormat(size) {
+    if (size < ONE_KB) {
+        return size.toFixed(0);
+    } else if (size < ONE_MB) {
+        return (size / ONE_KB).toFixed(2);
+    } else if (size < ONE_GB) {
+        return (size / ONE_MB).toFixed(2);
+    } else if (size < ONE_TB) {
+        return (size / ONE_GB).toFixed(2);
+    } else if (size < ONE_PB) {
+        return (size / ONE_TB).toFixed(2);
+    } else {
+        return (size / ONE_PB).toFixed(2);
+    }
+}
+
+function truncate(value) {
+    if (value < 0) {
+        return Math.ceil(value);
+    }
+    return Math.floor(value);
+}
+
 function base64(str) {
     return Base64.encode(str);
 }

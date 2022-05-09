@@ -29,7 +29,7 @@
                     </button> -->
 
 			<!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
+                        <li class="nav-item dropdown" style="list-style: none;">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrator</span>
@@ -39,7 +39,7 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="{{ .base_path }}xui/inbounds">
+                                <a class="dropdown-item" href="{{ .base_path }}xui">
                                     <i class="fas fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
                                     X-UI <sup>Unofficial</sup>
                                 </a>
@@ -138,59 +138,49 @@
 		    <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
 			    <h1 class="h3 mb-0 text-gray-800">X-UI <sup> Unofficial</sup></h1>
-                        <!-- <a href="https://github.com/dopaemon/x-ui.git" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-github-alt fa-sm text-white-50"></i> Github</a> -->
+                            <a href="https://github.com/dopaemon/x-ui.git" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-github-alt fa-sm text-white-50"></i>Github <sup>dopaemon</sup></a>
                     </div>
-		    <div class="card shadow mb-4">
-                         <!-- Card Header - Accordion -->
-                         <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                             <h6 class="m-0 font-weight-bold text-primary">Thông tin hệ thống</h6>
-                         </a>
-                         <!-- Card Content - Collapse -->
-                         <div class="collapse show" id="collapseCardExample">
-                         <div class="card-body">
-			 <a-row>
-                            <a-col :sm="24" :md="12">
-                                <a-row>
-                                    <a-col :span="12" style="text-align: center">
-                                        <a-progress type="dashboard" status="normal"
-                                                    :stroke-color="status.cpu.color"
-                                                    :percent="status.cpu.percent"></a-progress>
-                                        <div>CPU</div>
-                                    </a-col>
-                                    <a-col :span="12" style="text-align: center">
-                                        <a-progress type="dashboard" status="normal"
-                                                    :stroke-color="status.mem.color"
-                                                    :percent="status.mem.percent"></a-progress>
-                                        <div>
-                                            RAM: [[ sizeFormat(status.mem.current) ]] / [[ sizeFormat(status.mem.total) ]]
-                                        </div>
-                                    </a-col>
-                                </a-row>
-                            </a-col>
-                            <a-col :sm="24" :md="12">
-                                <a-row>
-                                    <a-col :span="12" style="text-align: center">
-                                        <a-progress type="dashboard" status="normal"
-                                                    :stroke-color="status.swap.color"
-                                                    :percent="status.swap.percent"></a-progress>
-                                        <div>
-                                            swap: [[ sizeFormat(status.swap.current) ]] / [[ sizeFormat(status.swap.total) ]]
-                                        </div>
-                                    </a-col>
-                                    <a-col :span="12" style="text-align: center">
-                                        <a-progress type="dashboard" status="normal"
-                                                    :stroke-color="status.disk.color"
-                                                    :percent="status.disk.percent"></a-progress>
-                                        <div>
-                                            Ổ Cứng: [[ sizeFormat(status.disk.current) ]] / [[ sizeFormat(status.disk.total) ]]
-                                        </div>
-                                      </a-col>
-                                  </a-row>
-                               </a-col>
-                            </a-row>
-                          </div>
-                       </div>
-                   </div>
+
+
+
+			    <!-- Project Card Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Thông tin hệ thống</h6>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="small font-weight-bold">CPU <span
+                                            class="float-right"> [[ status.cpu.percent ]]% / 100% </span></h4>
+                                    <div class="mb-4">
+					<template>
+					  <a-progress :percent="status.cpu.percent" style="width: 95%" status="active" size="big"/>
+					</template>
+                                    </div>
+                                    <h4 class="small font-weight-bold">RAM <span
+                                            class="float-right"> [[ sizeFormat(status.mem.current) ]] / [[ sizeFormat(status.mem.total) ]] </span></h4>
+                                    <div class="mb-4">
+					<template>
+                                          <a-progress :percent="status.mem.percent" style="width: 95%" status="active" size="big"/>
+                                        </template>
+                                    </div>
+                                    <h4 class="small font-weight-bold">SWAP <span
+                                            class="float-right"> [[ sizeFormat(status.swap.current) ]] / [[ sizeFormat(status.swap.total) ]] </span></h4>
+                                    <div class="mb-4">
+					<template>
+                                          <a-progress :percent="status.swap.percent" style="width: 95%" status="active" size="big"/>
+                                        </template>
+                                    </div>
+                                    <h4 class="small font-weight-bold">DISK <span
+                                            class="float-right"> [[ sizeFormat(status.disk.current) ]] / [[ sizeFormat(status.disk.total) ]] </span></h4>
+                                    <div class="mb-4">
+					<template>
+                                          <a-progress :percent="status.disk.percent" style="width: 95%" status="active" size="big"/>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+
+
                 </a-row>
             </transition>
             <transition name="list" appear>
@@ -237,8 +227,8 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Giờ hoạt động</div>
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Thời gian hoạt động</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ formatSecond(status.uptime) ]] </div>
                                         </div>
                                         <div class="col-auto">
@@ -255,12 +245,12 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Tải hệ thống</div>
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                System Loader</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ status.loads[0] ]] | [[ status.loads[1] ]] | [[ status.loads[2] ]] </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-boil fa-2x text-gray-300"></i>
+                                            <i class="fas fa-cogs fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -273,7 +263,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
                                                 Số kết nối TCP/UDP</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ status.tcpCount ]] / [[ status.udpCount ]] </div>
                                         </div>
@@ -291,7 +281,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                                 Tốc Độ Tải Lên | Xuống</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ sizeFormat(status.netIO.up) ]] / S | [[ sizeFormat(status.netIO.down) ]] / S</div>
                                         </div>
@@ -447,10 +437,20 @@
      }
 </script>
 
+<script type="text/javascript">
+	document.getElementById("CPUInfo").value = Math.trunc(status.cpu.percent);
+        document.getElementById("RAMInfo").value = Math.trunc("status.mem.percent");
+
+	document.getElementById("CPUInfo").style.width = Math.trunc(status.cpu.percent) + "%";
+	document.getElementById("RAMInfo").style.width = Math.trunc("status.mem.percent") + "%";
+
+	alert(Math.trunc(status.cpu.percent) + "%");
+
+</script>
+
 
 {{template "js" .}}
 <script>
-
     const State = {
         Running: "running",
         Stop: "stop",
@@ -599,7 +599,6 @@
             }
         },
     });
-
 </script>
 </body>
 </html>
