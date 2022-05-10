@@ -504,7 +504,7 @@ ssl_cert_issue() {
         read -p "Nhập domain của bạn ở đây:" CF_Domain
         LOGD "Domain của bạn được đặt thành:${CF_Domain}"
         LOGD "Nhập API: "
-        read -p "Nhập API key ở đây: " CF_GlobalKeyA
+        read -p "Nhập API key ở đây: " CF_GlobalKey
         LOGD "Khóa API của bạn là: ${CF_GlobalKey}"
         LOGD "Vui lòng đặt địa chỉ email đã đăng ký: "
         read -p "Nhập Email của bạn: " CF_AccountEmail
@@ -523,9 +523,7 @@ ssl_cert_issue() {
         else
             LOGI "Chứng chỉ được cấp thành công, quá trình cài đặt đang diễn ra..."
         fi
-        ~/.acme.sh/acme.sh --installcert -d ${CF_Domain} -d *.${CF_Domain} --ca-file /root/cert/ca.cer \
-        --cert-file /root/cert/${CF_Domain}.cer --key-file /root/cert/${CF_Domain}.key \
-        --fullchain-file /root/cert/fullchain.cer
+        ~/.acme.sh/acme.sh --installcert -d ${CF_Domain} -d *.${CF_Domain} --ca-file /root/cert/ca.cer --cert-file /root/cert/${CF_Domain}.cer --key-file /root/cert/${CF_Domain}.key --fullchain-file /root/cert/fullchain.cer
         if [ $? -ne 0 ]; then
             LOGE "Cài đặt chứng chỉ không thành công, tập lệnh đã thoát"
             exit 1
