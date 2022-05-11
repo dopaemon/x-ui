@@ -97,7 +97,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Thiết lập Dashboard</h6>
                     </a>
                     <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseCardExample">
+                    <div class="collapse" id="collapseCardExample">
                         <div class="card-body">
 			    <a-list item-layout="horizontal" style="background: white">
                                 <setting-list-item type="text" title="Giám sát bảng điều khiển IP" desc="Để trống theo mặc định để nghe tất cả IP，Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.webListen"></setting-list-item>
@@ -109,6 +109,108 @@
                         </div>
                     </div>
                 </div>
+
+		<!-- Collapsable Card Example -->
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                        role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Thiết lập tài khoản</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse" id="collapseCardExample">
+                        <div class="card-body">
+			<a-form style="background: white; padding: 20px">
+                                <a-form-item label="tên người dùng ban đầu">
+                                    <a-input v-model="user.oldUsername" style="max-width: 300px"></a-input>
+                                </a-form-item>
+                                <a-form-item label="Mật khẩu cũ">
+                                    <a-input type="password" v-model="user.oldPassword"
+                                             style="max-width: 300px"></a-input>
+                                </a-form-item>
+                                <a-form-item label="tên đăng nhập mới">
+                                    <a-input v-model="user.newUsername" style="max-width: 300px"></a-input>
+                                </a-form-item>
+                                <a-form-item label="mật khẩu mới">
+                                    <a-input type="password" v-model="user.newPassword"
+                                             style="max-width: 300px"></a-input>
+                                </a-form-item>
+                                <a-form-item>
+                                    <a-button type="primary" @click="updateUser">Chấp Nhận Thay Đổi Để Không Bị Mất Tài Khoản</a-button>
+                                </a-form-item>
+                            </a-form>
+                            </a-list>
+                        </div>
+                    </div>
+                </div>
+
+		<!-- Collapsable Card Example -->
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                        role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Thiết lập XRay</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse" id="collapseCardExample">
+                        <div class="card-body">
+			    <a-list item-layout="horizontal" style="background: white">
+                                <setting-list-item type="textarea" title="Mẫu cấu hình xray" desc="Tạo tệp cấu hình xray cuối cùng dựa trên mẫu này ，Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.xrayTemplateConfig"></setting-list-item>
+                            </a-list>
+                        </div>
+                    </div>
+                </div>
+
+		<!-- Collapsable Card Example -->
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                        role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Thiết lập bot Telegram</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse" id="collapseCardExample">
+                        <div class="card-body">
+                            <a-list item-layout="horizontal" style="background: white">
+				<setting-list-item type="switch" title="Bật bot Telegram" desc="Khởi động lại bảng điều khiển để có hiệu lực"  v-model="allSetting.tgBotEnable"></setting-list-item>
+                                <setting-list-item type="text" title="TOKEN Bot" desc="Khởi động lại bảng điều khiển để có hiệu lực"  v-model="allSetting.tgBotToken"></setting-list-item>
+                                <setting-list-item type="number" title="ChatId Telegram" desc="Khởi động lại bảng điều khiển để có hiệu lực"  v-model.number="allSetting.tgBotChatId"></setting-list-item>
+                                <setting-list-item type="text" title="Thời gian thông báo Telegram" desc="Cách sử dụng: &#13;&#10; - @ hourly : để thông báo hàng giờ &#13;&#10; - 30 * * * * * : ₫ể thông báo sau mỗi 30 phút &#13;&#10; - @ every 1h30m : thông báo sau 1 giờ và 30 phút"  v-model="allSetting.tgRunTime"></setting-list-item>
+                            </a-list>
+                        </div>
+                    </div>
+                </div>
+
+		<!-- Collapsable Card Example -->
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                        role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Múi giờ</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse" id="collapseCardExample">
+                        <div class="card-body">
+			    <a-list item-layout="horizontal" style="background: white">
+                                <setting-list-item type="text" title="Múi giờ" desc="Các tác vụ đã lên lịch chạy theo thời gian trong múi giờ，Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.timeLocation"></setting-list-item>
+                            </a-list>
+                        </div>
+                    </div>
+                </div>
+
+		<a href="#" @click="updateAllSetting" class="btn btn-success btn-icon-split">
+                  <span class="icon text-white-50">
+                     <i class="fas fa-check"></i>
+                  </span>
+                  <span class="text">Lưu Settings Data</span>
+                </a>
+
+		<a href="#" @click="restartPanel" class="btn btn-danger btn-icon-split">
+                  <span class="icon text-white-50">
+                     <i class="fas fa-arrow-right"></i>
+                  </span>
+                  <span class="text">Khởi động lại hệ thống</span>
+                </a>
 
                 <!-- <a-space direction="vertical">
                     <a-space direction="horizontal">
