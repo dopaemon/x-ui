@@ -82,16 +82,35 @@
 		    <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
 			    <h1 class="h3 mb-0 text-gray-800">X-UI <sup> Unofficial</sup></h1>
-                        <a href="https://github.com/dopaemon/x-ui.git" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-github-alt fa-sm text-white-50"></i> Github <sup>Unofficial</sup></a> -->
+                        <a href="https://github.com/dopaemon/x-ui.git" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-github-alt fa-sm text-white-50"></i> Github <sup>Unofficial</sup></a>
                     </div>
 		</a-row>
 		</transition>
 
 		<transition name="list" appear>
 		<a-row style="margin-left:24px; margin-right:24px;">
+		<!-- Collapsable Card Example -->
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Accordion -->
+                    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                        role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                        <h6 class="m-0 font-weight-bold text-primary">Thiết lập Dashboard</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse show" id="collapseCardExample">
+                        <div class="card-body">
+			    <a-list item-layout="horizontal" style="background: white">
+                                <setting-list-item type="text" title="Giám sát bảng điều khiển IP" desc="Để trống theo mặc định để nghe tất cả IP，Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.webListen"></setting-list-item>
+                                <setting-list-item type="number" title="Port truy cập bảng điều khiển" desc="Khởi động lại bảng điều khiển để có hiệu lực" v-model.number="allSetting.webPort"></setting-list-item>
+                                <setting-list-item type="text" title="Đường dẫn tệp khóa công khai của chứng chỉ bảng điều khiển" desc="Điền vào một '/' Đường dẫn tuyệt đối ở đầu，Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.webCertFile"></setting-list-item>
+                                <setting-list-item type="text" title="Đường dẫn tệp khóa chứng chỉ bảng điều khiển" desc="Điền vào một '/' Đường dẫn tuyệt đối ở đầu，Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.webKeyFile"></setting-list-item>
+                                <setting-list-item type="text" title="bảng điều khiển url Đường dẫn gốc" desc="Phải bắt đầu với '/' Bắt đầu ， với '/' kết thúc ， Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.webBasePath"></setting-list-item>
+                            </a-list>
+                        </div>
+                    </div>
+                </div>
 
-
-                <a-space direction="vertical">
+                <!-- <a-space direction="vertical">
                     <a-space direction="horizontal">
                         <a-button type="primary" :disabled="saveBtnDisable" @click="updateAllSetting">Lưu cấu hình</a-button>
                         <a-button type="danger" :disabled="!saveBtnDisable" @click="restartPanel">Khởi động lại bảng điều khiển</a-button>
@@ -146,7 +165,7 @@
                             </a-list>
                         </a-tab-pane>
                     </a-tabs>
-                </a-space>
+                </a-space> -->
 		</a-row>
                 </transition>
 
@@ -154,7 +173,7 @@
             </a-spin>
 
 	    <!-- Footer -->
-            <footer class="sticky-footer bg-white" style="margin-top: 24px; margin-left: 0px; margin-right: 0px; margin-bottom: 0px;">
+            <footer class="sticky-footer shadow bg-white" style="margin-top: 24px; margin-left: 0px; margin-right: 0px; margin-bottom: 0px;">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Copyright &copy; X-UI Unofficial</span>
