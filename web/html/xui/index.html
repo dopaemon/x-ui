@@ -142,12 +142,34 @@
                     </div>
 
 
-
-			    <!-- Project Card Example -->
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Thông tin hệ thống</h6>
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Thông Tin Thiết Bị</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    <span>Downloads </span>
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Downloads:</div>
+					    <div class="dropdown-divider">Android</div>
+					    <a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.v2ray.ang&hl=vi&gl=US">v2rayNG</a>
+					    <a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.github.kr328.clash&hl=vi&gl=US">Clash</a>
+					    <a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.github.shadowsocks&hl=en_US&gl=US">Shadowrocket</a>
+					    <div class="dropdown-divider">IOS</div>
+					    <a class="dropdown-item" href="https://apps.apple.com/vn/app/shadowrocket/id932747118?l=vi">Shadowrocket</a>
+                                            <div class="dropdown-divider">macOS</div>
+					    <a class="dropdown-item" href="https://github.com/yanue/V2rayU/releases/latest/download/V2rayU.dmg">V2rayU</a>
+					    <div class="dropdown-divider">Windows</div>
+                                            <a class="dropdown-item" href="https://github.com/2dust/v2rayN/releases/latest/download/v2rayN.zip">V2rayN</a>
+                                        </div>
+                                    </div>
                                 </div>
+                                <!-- Card Body -->
                                 <div class="card-body">
                                     <h4 class="small font-weight-bold">CPU <span
                                             class="float-right"> [[ status.cpu.percent ]]% / 100% </span></h4>

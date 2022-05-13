@@ -121,22 +121,22 @@
                     <div class="collapse" id="Settings2">
                         <div class="card-body">
 			<a-form style="background: white; padding: 20px">
-                                <a-form-item label="tên người dùng ban đầu">
+                                <a-form-item label="Tài khoản cũ">
                                     <a-input v-model="user.oldUsername" style="max-width: 300px"></a-input>
                                 </a-form-item>
                                 <a-form-item label="Mật khẩu cũ">
                                     <a-input type="password" v-model="user.oldPassword"
                                              style="max-width: 300px"></a-input>
                                 </a-form-item>
-                                <a-form-item label="tên đăng nhập mới">
+                                <a-form-item label="Tài khoản mới">
                                     <a-input v-model="user.newUsername" style="max-width: 300px"></a-input>
                                 </a-form-item>
-                                <a-form-item label="mật khẩu mới">
+                                <a-form-item label="Mật khẩu mới">
                                     <a-input type="password" v-model="user.newPassword"
                                              style="max-width: 300px"></a-input>
                                 </a-form-item>
                                 <a-form-item>
-                                    <a-button type="primary" @click="updateUser">Chấp Nhận Thay Đổi Để Không Bị Mất Tài Khoản</a-button>
+                                    <a-button type="primary" @click="updateUser">Xác Nhận</a-button>
                                 </a-form-item>
                             </a-form>
                             </a-list>
