@@ -20,407 +20,1055 @@
     <a-layout id="content-layout">
         <a-layout-content>
             <a-spin :spinning="spinning" :delay="200" :tip="loadingTip"/>
-	    <!-- Topbar -->
-	    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <!-- <button id="collapseMenuForcus" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button> -->
-
-			<!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown" style="list-style: none;">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrator</span>
-                                <img class="img-profile rounded-circle"
-                                    src="https://avatars.githubusercontent.com/u/43093213?s=400&u=32591b34f6d90ea9fe09714ad42795185a989566&v=4">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="{{ .base_path }}xui">
-                                    <i class="fas fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    X-UI <sup>Unofficial</sup>
-                                </a>
-                                <a class="dropdown-item" href="{{ .base_path }}xui/inbounds">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Server VPN
-                                </a>
-                                <a class="dropdown-item" href="{{ .base_path }}xui/setting">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Cài đặt
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Đăng xuất
-                                </a>
-                            </div>
+      <!-- loader Start -->
+      <div id="loading">
+         <div id="loading-center">
+            <div class="loader">
+               <div class="cube">
+                  <div class="sides">
+                     <div class="top"></div>
+                     <div class="right"></div>
+                     <div class="bottom"></div>
+                     <div class="left"></div>
+                     <div class="front"></div>
+                     <div class="back"></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- loader END -->
+      <!-- Wrapper Start -->
+      <div class="wrapper">
+         <!-- Sidebar  -->
+         <div class="iq-sidebar">
+            <div class="iq-sidebar-logo d-flex justify-content-between">
+               <a href="index.html">
+               <img src="{{ .base_path }}assets/images/logo.png" class="img-fluid" alt="">
+               <span>Sofbox</span>
+               </a>
+               <div class="iq-menu-bt align-self-center">
+                  <div class="wrapper-menu">
+                     <div class="line-menu half start"></div>
+                     <div class="line-menu"></div>
+                     <div class="line-menu half end"></div>
+                  </div>
+               </div>
+            </div>
+            <div id="sidebar-scrollbar">
+               <nav class="iq-sidebar-menu">
+                  <ul id="iq-sidebar-toggle" class="iq-menu">
+                     <li class="iq-menu-title"><i class="ri-separator"></i><span>Main</span></li>
+                     <li class="active">
+                        <a href="#dashboard" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-home-4-line"></i><span>Dashboard</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="dashboard" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                           <li class="active"><a href="index.html">Dashboard 1</a></li>
+                           <li><a href="dashboard1.html">Dashboard 2</a></li>
+                        </ul>
+                     </li>
+                     <li>
+                        <a href="#mailbox" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-mail-line"></i><span>Email</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="mailbox" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                           <li><a href="app/index.html">Inbox</a></li>
+                           <li><a href="app/email-compose.html">Email Compose</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="todo.html" class="iq-waves-effect"><i class="ri-chat-check-line"></i><span>Todo</span></a></li>
+                     <li>
+                        <a href="#user-info" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-user-line"></i><span>User</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="user-info" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                           <li><a href="profile.html">User Profile</a></li>
+                           <li><a href="profile-edit.html">User Edit</a></li>
+                           <li><a href="add-user.html">User Add</a></li>
+                           <li><a href="user-list.html">User List</a></li>
+                        </ul>
+                     </li>
+                     <li><a href="calendar.html" class="iq-waves-effect"><i class="ri-calendar-2-line"></i><span>Calendar</span></a></li>
+                     <li><a href="chat.html" class="iq-waves-effect"><i class="ri-message-line"></i><span>Chat</span></a></li>
+                     <li class="iq-menu-title"><i class="ri-separator"></i><span>Components</span></li>                    
+                     <li>
+                        <a href="#ui-elements" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-pencil-ruler-line"></i><span>UI Elements</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="ui-elements" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                           <li><a href="ui-colors.html">colors</a></li>
+                           <li><a href="ui-typography.html">Typography</a></li>
+                           <li><a href="ui-alerts.html">Alerts</a></li>
+                           <li><a href="ui-badges.html">Badges</a></li>
+                           <li><a href="ui-breadcrumb.html">Breadcrumb</a></li>
+                           <li><a href="ui-buttons.html">Buttons</a></li>
+                           <li><a href="ui-cards.html">Cards</a></li>
+                           <li><a href="ui-carousel.html">Carousel</a></li>
+                           <li><a href="ui-embed-video.html">Video</a></li>
+                           <li><a href="ui-grid.html">Grid</a></li>
+                           <li><a href="ui-images.html">Images</a></li>
+                           <li><a href="ui-list-group.html">list Group</a></li>
+                           <li><a href="ui-media-object.html">Media</a></li>
+                           <li><a href="ui-modal.html">Modal</a></li>
+                           <li><a href="ui-notifications.html">Notifications</a></li>
+                           <li><a href="ui-pagination.html">Pagination</a></li>
+                           <li><a href="ui-popovers.html">Popovers</a></li>
+                           <li><a href="ui-progressbars.html">Progressbars</a></li>
+                           <li><a href="ui-tabs.html">Tabs</a></li>
+                           <li><a href="ui-tooltips.html">Tooltips</a></li>
+                        </ul>
+                     </li>
+                     <li>
+                        <a href="#forms" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-profile-line"></i><span>Forms</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="forms" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                           <li><a href="form-layout.html">Form Elements</a></li>
+                           <li><a href="form-validation.html">Form Validation</a></li>
+                           <li><a href="form-switch.html">Form Switch</a></li>
+                           <li><a href="form-chechbox.html">Form Checkbox</a></li>
+                           <li><a href="form-radio.html">Form Radio</a></li>
+                        </ul>
+                     </li>
+                     <li>
+                        <a href="#tables" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-table-line"></i><span>Table</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="tables" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                           <li><a href="tables-basic.html">Basic Tables</a></li>
+                           <li><a href="data-table.html">Data Table</a></li>
+                           <li><a href="table-editable.html">Editable Table</a></li>
+                        </ul>
+                     </li>
+                     <li>
+                        <a href="#icons" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-list-check"></i><span>Icons</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="icons" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                           <li><a href="icon-dripicons.html">Dripicons</a></li>
+                           <li><a href="icon-fontawesome-5.html">Font Awesome 5</a></li>
+                           <li><a href="icon-lineawesome.html">line Awesome</a></li>
+                           <li><a href="icon-remixicon.html">Remixicon</a></li>
+                           <li><a href="icon-unicons.html">unicons</a></li>
+                        </ul>
+                     </li>
+                     <li class="iq-menu-title"><i class="ri-separator"></i><span>Pages</span></li>
+                     <li>
+                        <a href="#authentication" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-pages-line"></i><span>Authentication</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="authentication" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                           <li><a href="sign-in.html">Login</a></li>
+                           <li><a href="sign-up.html">Register</a></li>
+                           <li><a href="pages-recoverpw.html">Recover Password</a></li>
+                           <li><a href="pages-confirm-mail.html">Confirm Mail</a></li>
+                           <li><a href="pages-lock-screen.html">Lock Screen</a></li>
+                        </ul>
+                     </li>
+                     <li>
+                        <a href="#menu-level" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i class="ri-record-circle-line"></i><span>Menu Level</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="menu-level" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                           <li><a href="#"><i class="ri-record-circle-line"></i>Menu 1</a></li>
+                            
+                        </ul>
+                     </li>
+                  </ul>
+               </nav>
+               <div class="p-3"></div>
+            </div>
+         </div>
+         <!-- TOP Nav Bar -->
+         <div class="iq-top-navbar">
+            <div class="iq-navbar-custom">
+               <div class="iq-sidebar-logo">
+                  <div class="top-logo">
+                     <a href="index.html" class="logo">
+                     <img src="{{ .base_path }}assets/images/logo.png" class="img-fluid" alt="">
+                     <span>Sofbox</span>
+                     </a>
+                  </div>
+               </div>
+               <div class="navbar-breadcrumb">
+                  <h5 class="mb-0">Dashboard</h5>
+                  <nav aria-label="breadcrumb">
+                     <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Home</li>
+                     </ul>
+                  </nav>
+               </div>
+               <nav class="navbar navbar-expand-lg navbar-light p-0">
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <i class="ri-menu-3-line"></i>
+                  </button>
+                  <div class="iq-menu-bt align-self-center">
+                     <div class="wrapper-menu">
+                        <div class="line-menu half start"></div>
+                        <div class="line-menu"></div>
+                        <div class="line-menu half end"></div>
+                     </div>
+                  </div>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                     <ul class="navbar-nav ml-auto navbar-list">
+                        <li class="nav-item">
+                           <a class="search-toggle iq-waves-effect" href="#"><i class="ri-search-line"></i></a>
+                           <form action="#" class="search-box">
+                              <input type="text" class="text search-input" placeholder="Type here to search..." />
+                           </form>
                         </li>
-
-			<div class="topbar-divider d-none d-sm-block"></div>
-
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-			Thông Tin Xray Core: 
-                            <a-tag :color="status.xray.color">[[ status.xray.state ]]</a-tag>
-                            <a-tooltip v-if="status.xray.state === State.Error">
-                                <template slot="title">
-                                    <p v-for="line in status.xray.errorMsg.split('\n')">[[ line ]]</p>
-                                </template>
-                                <a-icon type="question-circle" theme="filled"></a-icon>
-                            </a-tooltip>
-                            <a-tag color="green" @click="openSelectV2rayVersion">[[ status.xray.version ]]</a-tag>
-                            <a-tag color="blue" @click="openSelectV2rayVersion">Chuyển đổi phiên bản</a-tag>
-                    </form>
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-box-open fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <!-- <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div> -->
-
-				    <div class="col-md-12 mb-4">
-                                        <div class="card border-left-primary shadow h-100 py-2">
-                                            <div class="card-body">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                            Thông tin Xray-Core</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-					    	        <a-tag :color="status.xray.color">[[ status.xray.state ]]</a-tag>
-						        <a-tooltip v-if="status.xray.state === State.Error">
-                                		                <template slot="title">
-                                                                    <p v-for="line in status.xray.errorMsg.split('\n')">[[ line ]]</p>
-                                                                </template>
-                                                            <a-icon type="question-circle" theme="filled"></a-icon>
-                                                        </a-tooltip>
-						           <a-tag color="green" @click="openSelectV2rayVersion">[[ status.xray.version ]]</a-tag>
-                            			           <a-tag color="blue" @click="openSelectV2rayVersion">Chuyển đổi phiên bản</a-tag>
-					               </div>
-                                                    </div>
-                                                    <div class="col-auto">
-                                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                        <li class="nav-item dropdown">
+                           <a href="#" class="search-toggle iq-waves-effect">
+                              <i class="ri-mail-line"></i>
+                              <span class="badge badge-pill badge-primary badge-up count-mail">3</span>
+                           </a>
+                           <div class="iq-sub-dropdown">
+                              <div class="iq-card iq-card-block iq-card-stretch iq-card-height shadow-none m-0">
+                                 <div class="iq-card-body p-0 ">
+                                    <div class="bg-primary p-3">
+                                       <h5 class="mb-0 text-white">All Messages<small class="badge  badge-light float-right pt-1">5</small></h5>
                                     </div>
-
-                                </form>
-                            </div>
+                                    <a href="#" class="iq-sub-card" >
+                                       <div class="media align-items-center">
+                                          <div class="">
+                                             <img class="avatar-40 rounded" src="{{ .base_path }}assets/images/user/01.jpg" alt="">
+                                          </div>
+                                          <div class="media-body ml-3">
+                                             <h6 class="mb-0 ">Nik Emma Watson</h6>
+                                             <small class="float-left font-size-12">13 Jun</small>
+                                          </div>
+                                       </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                       <div class="media align-items-center">
+                                          <div class="">
+                                             <img class="avatar-40 rounded" src="{{ .base_path }}assets/images/user/02.jpg" alt="">
+                                          </div>
+                                          <div class="media-body ml-3">
+                                             <h6 class="mb-0 ">Lorem Ipsum Watson</h6>
+                                             <small class="float-left font-size-12">20 Apr</small>
+                                          </div>
+                                       </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                       <div class="media align-items-center">
+                                          <div class="">
+                                             <img class="avatar-40 rounded" src="{{ .base_path }}assets/images/user/03.jpg" alt="">
+                                          </div>
+                                          <div class="media-body ml-3">
+                                             <h6 class="mb-0 ">Why do we use it?</h6>
+                                             <small class="float-left font-size-12">30 Jun</small>
+                                          </div>
+                                       </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                       <div class="media align-items-center">
+                                          <div class="">
+                                             <img class="avatar-40 rounded" src="{{ .base_path }}assets/images/user/04.jpg" alt="">
+                                          </div>
+                                          <div class="media-body ml-3">
+                                             <h6 class="mb-0 ">Variations Passages</h6>
+                                             <small class="float-left font-size-12">12 Sep</small>
+                                          </div>
+                                       </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                       <div class="media align-items-center">
+                                          <div class="">
+                                             <img class="avatar-40 rounded" src="{{ .base_path }}assets/images/user/05.jpg" alt="">
+                                          </div>
+                                          <div class="media-body ml-3">
+                                             <h6 class="mb-0 ">Lorem Ipsum generators</h6>
+                                             <small class="float-left font-size-12">5 Dec</small>
+                                          </div>
+                                       </div>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
                         </li>
-                    </ul>
-                </nav>
-                <!-- End of Topbar -->
-            <transition name="list" appear>
-                <a-row style="margin-left:24px; margin-right:24px;">
-		    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-			    <h1 class="h3 mb-0 text-gray-800">X-UI <sup> Unofficial</sup></h1>
-                            <a href="https://github.com/dopaemon/x-ui.git" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-github-alt fa-sm text-white-50"></i>Github <sup>dopaemon</sup></a>
-                    </div>
+                        <li class="nav-item">
+                           <a href="#" class="iq-waves-effect"><i class="ri-shopping-cart-2-line"></i></a>
+                        </li>
+                        <li class="nav-item">
+                           <a href="#" class="search-toggle iq-waves-effect">
+                              <i class="ri-notification-2-line"></i>
+                              <span class="bg-danger dots"></span>
+                           </a>
+                           <div class="iq-sub-dropdown">
+                              <div class="iq-card iq-card-block iq-card-stretch iq-card-height shadow-none m-0">
+                                 <div class="iq-card-body p-0 ">
+                                    <div class="bg-danger p-3">
+                                       <h5 class="mb-0 text-white">All Notifications<small class="badge  badge-light float-right pt-1">4</small></h5>
+                                    </div>
+                                    <a href="#" class="iq-sub-card" >
+                                       <div class="media align-items-center">
+                                          <div class="media-body ml-3">
+                                             <h6 class="mb-0 ">New Order Recieved</h6>
+                                             <small class="float-right font-size-12">23 hrs ago</small>
+                                             <p class="mb-0">Lorem is simply</p>
+                                          </div>
+                                       </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                       <div class="media align-items-center">
+                                          <div class="">
+                                             <img class="avatar-40 rounded" src="{{ .base_path }}assets/images/user/01.jpg" alt="">
+                                          </div>
+                                          <div class="media-body ml-3">
+                                             <h6 class="mb-0 ">Emma Watson Nik</h6>
+                                             <small class="float-right font-size-12">Just Now</small>
+                                             <p class="mb-0">95 MB</p>
+                                          </div>
+                                       </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                       <div class="media align-items-center">
+                                          <div class="">
+                                             <img class="avatar-40 rounded" src="{{ .base_path }}assets/images/user/02.jpg" alt="">
+                                          </div>
+                                          <div class="media-body ml-3">
+                                             <h6 class="mb-0 ">New customer is join</h6>
+                                             <small class="float-right font-size-12">5 days ago</small>
+                                             <p class="mb-0">Jond Nik</p>
+                                          </div>
+                                       </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card" >
+                                       <div class="media align-items-center">
+                                          <div class="">
+                                             <img class="avatar-40" src="{{ .base_path }}assets/images/small/jpg.svg" alt="">
+                                          </div>
+                                          <div class="media-body ml-3">
+                                             <h6 class="mb-0 ">Updates Available</h6>
+                                             <small class="float-right font-size-12">Just Now</small>
+                                             <p class="mb-0">120 MB</p>
+                                          </div>
+                                       </div>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+                        <li class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect" id="btnFullscreen"><i class="ri-fullscreen-line"></i></a></li>
+                     </ul>
+                  </div>
+                  <ul class="navbar-list">
+                     <li>
+                        <a href="#" class="search-toggle iq-waves-effect bg-primary text-white"><img src="{{ .base_path }}assets/images/user/1.jpg" class="img-fluid rounded" alt="user"></a>
+                        <div class="iq-sub-dropdown iq-user-dropdown">
+                           <div class="iq-card iq-card-block iq-card-stretch iq-card-height shadow-none m-0">
+                              <div class="iq-card-body p-0 ">
+                                 <div class="bg-primary p-3">
+                                    <h5 class="mb-0 text-white line-height">Hello Nik jone</h5>
+                                    <span class="text-white font-size-12">Available</span>
+                                 </div>
+                                 <a href="profile.html" class="iq-sub-card iq-bg-primary-hover">
+                                    <div class="media align-items-center">
+                                       <div class="rounded iq-card-icon iq-bg-primary">
+                                          <i class="ri-file-user-line"></i>
+                                       </div>
+                                       <div class="media-body ml-3">
+                                          <h6 class="mb-0 ">My Profile</h6>
+                                          <p class="mb-0 font-size-12">View personal profile details.</p>
+                                       </div>
+                                    </div>
+                                 </a>
+                                 <a href="profile-edit.html" class="iq-sub-card iq-bg-primary-success-hover">
+                                    <div class="media align-items-center">
+                                       <div class="rounded iq-card-icon iq-bg-success">
+                                          <i class="ri-profile-line"></i>
+                                       </div>
+                                       <div class="media-body ml-3">
+                                          <h6 class="mb-0 ">Edit Profile</h6>
+                                          <p class="mb-0 font-size-12">Modify your personal details.</p>
+                                       </div>
+                                    </div>
+                                 </a>
+                                 <a href="account-setting.html" class="iq-sub-card iq-bg-primary-danger-hover">
+                                    <div class="media align-items-center">
+                                       <div class="rounded iq-card-icon iq-bg-danger">
+                                          <i class="ri-account-box-line"></i>
+                                       </div>
+                                       <div class="media-body ml-3">
+                                          <h6 class="mb-0 ">Account settings</h6>
+                                          <p class="mb-0 font-size-12">Manage your account parameters.</p>
+                                       </div>
+                                    </div>
+                                 </a>
+                                 <a href="privacy-setting.html" class="iq-sub-card iq-bg-primary-secondary-hover">
+                                    <div class="media align-items-center">
+                                       <div class="rounded iq-card-icon iq-bg-secondary">
+                                          <i class="ri-lock-line"></i>
+                                       </div>
+                                       <div class="media-body ml-3">
+                                          <h6 class="mb-0 ">Privacy Settings</h6>
+                                          <p class="mb-0 font-size-12">Control your privacy parameters.</p>
+                                       </div>
+                                    </div>
+                                 </a>
+                                 <div class="d-inline-block w-100 text-center p-3">
+                                    <a class="iq-bg-danger iq-sign-btn" href="sign-in.html" role="button">Sign out<i class="ri-login-box-line ml-2"></i></a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </li>
+                  </ul>
+               </nav>
+            </div>
+         </div>
+         <!-- TOP Nav Bar END -->
+         <!-- Page Content  -->
+         <div id="content-page" class="content-page">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-md-6 col-lg-3">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                        <div class="iq-card-body pb-0">
+                           <div class="rounded-circle iq-card-icon iq-bg-primary"><i class="ri-exchange-dollar-fill"></i></div>
+                           <span class="float-right line-height-6">Net Worth</span>
+                           <div class="clearfix"></div>
+                           <div class="text-center">
+                              <h2 class="mb-0"><span class="counter">65</span><span>M</span></h2>
+                              <p class="mb-0 text-secondary line-height"><i class="ri-arrow-up-line text-success mr-1"></i><span class="text-success">10%</span> Increased</p>
+                           </div>
+                        </div>
+                        <div id="chart-1"></div>
+                     </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                        <div class="iq-card-body pb-0">
+                           <div class="rounded-circle iq-card-icon iq-bg-warning"><i class="ri-bar-chart-grouped-line"></i></div>
+                           <span class="float-right line-height-6">Todays Gains</span>
+                           <div class="clearfix"></div>
+                           <div class="text-center">
+                              <h2 class="mb-0"><span>$</span><span class="counter">4500</span></h2>
+                              <p class="mb-0 text-secondary line-height"><i class="ri-arrow-up-line text-success mr-1"></i><span class="text-success">20%</span> Increased</p>
+                           </div>
+                        </div>
+                        <div id="chart-2"></div>
+                     </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                        <div class="iq-card-body pb-0">
+                           <div class="rounded-circle iq-card-icon iq-bg-success"><i class="ri-group-line"></i></div>
+                           <span class="float-right line-height-6">Total Users</span>
+                           <div class="clearfix"></div>
+                           <div class="text-center">
+                              <h2 class="mb-0"><span class="counter">96.6</span><span>K</span></h2>
+                              <p class="mb-0 text-secondary line-height"><i class="ri-arrow-up-line text-success mr-1"></i><span class="text-success">30%</span> Increased</p>
+                           </div>
+                        </div>
+                        <div id="chart-3"></div>
+                     </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                        <div class="iq-card-body pb-0">
+                           <div class="rounded-circle iq-card-icon iq-bg-danger"><i class="ri-shopping-cart-line"></i></div>
+                           <span class="float-right line-height-6">Orders Received</span>
+                           <div class="clearfix"></div>
+                           <div class="text-center">
+                              <h2 class="mb-0"><span class="counter">15.5</span><span>K</span></h2>
+                              <p class="mb-0 text-secondary line-height"><i class="ri-arrow-down-line text-danger mr-1"></i><span class="text-danger">10%</span> Increased</p>
+                           </div>
+                        </div>
+                        <div id="chart-4"></div>
+                     </div>
+                  </div>
+                  <div class="col-lg-8">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">Monthly sales trend </h4>
+                           </div>
+                           <div class="iq-card-header-toolbar d-flex align-items-center">
+                              <ul class="nav nav-pills">
+                                 <li class="nav-item">
+                                    <a href="#" class="nav-link active">Latest</a>
+                                 </li>
+                                 <li class="nav-item">
+                                    <a href="#" class="nav-link">Month</a>
+                                 </li>
+                                 <li class="nav-item">
+                                    <a href="#" class="nav-link">All Time</a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="iq-card-body">
+                           <div class="d-flex justify-content-around">
+                              <div class="price-week-box mr-5">
+                                 <span>Current Week</span>
+                                 <h2>$<span class="counter">180</span> <i class="ri-funds-line text-success font-size-18"></i></h2>
+                              </div>
+                              <div class="price-week-box">
+                                 <span>Previous Week</span>
+                                 <h2>$<span class="counter">52.55</span><i class="ri-funds-line text-danger font-size-18"></i></h2>
+                              </div>
+                           </div>
+                        </div>
+                        <div id="chart-5"></div>
+                     </div>
+                  </div>
+                  <div class="col-lg-4">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height animation-card">
+                        <div class="iq-card-body p-0">
+                           <div class="an-text">
+                              <span>Quarterly Target </span>
+                              <h2 class="display-4 font-weight-bold">$<span>2M</span></h2>
+                           </div>
+                           <div class="an-img">
+                              <div class="bodymovin" data-bm-path="{{ .base_path }}assets/images/small/data.json" data-bm-renderer="svg" data-bm-loop="true"></div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-lg-8">
+                     <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">Top Grossing</h4>
+                           </div>
+                           <div class="iq-card-header-toolbar d-flex align-items-center">
+                              <div class="dropdown">
+                                 <span class="dropdown-toggle" id="dropdownMenuButton1" data-toggle="dropdown">
+                                 <i class="ri-more-2-fill"></i>
+                                 </span>
+                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>View</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill mr-2"></i>Delete</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-printer-fill mr-2"></i>Print</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-file-download-fill mr-2"></i>Download</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="iq-card-body">
+                           <div class="row">
+                              <div class="col-sm-8">
+                                 <div class="media-sellers">
+                                    <div class="media-sellers-img">
+                                       <img src="{{ .base_path }}assets/images/page-img/01.jpg" class="mr-3 rounded" alt="">
+                                    </div>
+                                    <div class="media-sellers-media-info">
+                                       <h5 class="mb-0"><a class="text-dark" href="#">Android Tablet</a></h5>
+                                       <p class="mb-1">Android 10 supported tablet with best features.</p>
+                                       <div class="sellers-dt">
+                                          <span class="font-size-12">Vendor: <a href="#"> iqonicdesign</a></span>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-sm-2 text-center mt-3">
+                                 <h5 class="mb-0">20,019</h5>
+                                 <span>Sales</span>
+                              </div>
+                              <div class="col-sm-2 text-center mt-3">
+                                 <ul class="list-inline mb-0 list-star">
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                 </ul>
+                                 <span>Rating</span>
+                              </div>
+                           </div>
+                           <div class="row mt-4">
+                              <div class="col-sm-8">
+                                 <div class="media-sellers">
+                                    <div class="media-sellers-img">
+                                       <img src="{{ .base_path }}assets/images/page-img/02.jpg" class="mr-3 rounded" alt="">
+                                    </div>
+                                    <div class="media-sellers-media-info">
+                                       <h5 class="mb-0"><a class="text-dark" href="#">Apple Watch</a></h5>
+                                       <p class="mb-1">Latest model of apple watch for productivity.</p>
+                                       <div class="sellers-dt">
+                                          <span class="font-size-12">Vendor: <a href="#">Apple</a></span>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-sm-2 text-center mt-3">
+                                 <h5 class="mb-0">56,112</h5>
+                                 <span>Sales</span>
+                              </div>
+                              <div class="col-sm-2 text-center mt-3">
+                                 <ul class="list-inline mb-0 list-star">
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                 </ul>
+                                 <span>Rating</span>
+                              </div>
+                           </div>
+                           <div class="row mt-4">
+                              <div class="col-sm-8">
+                                 <div class="media-sellers">
+                                    <div class="media-sellers-img">
+                                       <img src="{{ .base_path }}assets/images/page-img/03.jpg" class="mr-3 rounded" alt="">
+                                    </div>
+                                    <div class="media-sellers-media-info">
+                                       <h5 class="mb-0"><a class="text-dark" href="#">I-Phone & I-Mac</a></h5>
+                                       <p class="mb-1">Best ever combo package for work and personal use.</p>
+                                       <div class="sellers-dt">
+                                          <span class="font-size-12">Vendor: <a href="#"> Iqonic devices</a></span>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-sm-2 text-center mt-3">
+                                 <h5 class="mb-0">9,895</h5>
+                                 <span>Sales</span>
+                              </div>
+                              <div class="col-sm-2 text-center mt-3">
+                                 <ul class="list-inline mb-0 list-star">
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                    <li class="list-inline-item text-warning"><i class="ri-star-fill"></i></li>
+                                 </ul>
+                                 <span>Rating</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-lg-6">
+                           <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                              <div class="iq-card-header d-flex justify-content-between">
+                                 <div class="iq-header-title">
+                                    <h4 class="card-title">Support Tickets</h4>
+                                 </div>
+                                 <div class="iq-card-header-toolbar d-flex align-items-center">
+                                    <div class="dropdown">
+                                       <span class="dropdown-toggle dropdown-bg" id="dropdownMenuButton2" data-toggle="dropdown">View all</span>
+                                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                          <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>View</a>
+                                          <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill mr-2"></i>Delete</a>
+                                          <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
+                                          <a class="dropdown-item" href="#"><i class="ri-printer-fill mr-2"></i>Print</a>
+                                          <a class="dropdown-item" href="#"><i class="ri-file-download-fill mr-2"></i>Download</a>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="iq-card-body">
+                                 <div class="media-support">
+                                    <div class="media-support-header mb-2">
+                                       <div class="media-support-user-img mr-3">
+                                          <img class="rounded-circle" src="{{ .base_path }}assets/images/user/1.jpg" alt="">
+                                       </div>
+                                       <div class="media-support-info mt-2">
+                                          <h6 class="mb-0"><a href="#" class="">Nik Jordan</a></h6>
+                                          <small>2 day ago</small>
+                                       </div>
+                                       <div class="mt-3">
+                                          <span class="badge badge-success">Pending</span>
+                                       </div>
+                                    </div>
+                                    <div class="media-support-body">
+                                       <p class="mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                    </div>
+                                 </div>
+                                 <hr class="mt-4 mb-4">
+                                 <div class="media-support">
+                                    <div class="media-support-header mb-2">
+                                       <div class="media-support-user-img mr-3">
+                                          <img class="rounded-circle" src="{{ .base_path }}assets/images/user/02.jpg" alt="">
+                                       </div>
+                                       <div class="media-support-info mt-2">
+                                          <h6 class="mb-0"><a href="#" class="">Lily Wozniak</a></h6>
+                                          <small>2 day ago</small>
+                                       </div>
+                                       <div class="mt-3">
+                                          <span class="badge badge-warning text-white">Working</span>
+                                       </div>
+                                    </div>
+                                    <div class="media-support-body">
+                                       <p class="mb-0">It is a long established fact that a reader will be distracted by the readable layout.</p>
+                                    </div>
+                                 </div>
+                                 <hr class="mt-4 mb-4">
+                                 <div class="media-support">
+                                    <div class="media-support-header mb-2">
+                                       <div class="media-support-user-img mr-3">
+                                          <img class="rounded-circle" src="{{ .base_path }}assets/images/user/03.jpg" alt="">
+                                       </div>
+                                       <div class="media-support-info mt-2">
+                                          <h6 class="mb-0"><a href="#" class="">Samuel Path</a></h6>
+                                          <small>2 day ago</small>
+                                       </div>
+                                       <div class="mt-3">
+                                          <span class="badge badge-primary">Open</span>
+                                       </div>
+                                    </div>
+                                    <div class="media-support-body">
+                                       <p class="mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                    </div>
+                                 </div>
+                                 <hr class="mt-4 mb-4">
+                                 <div class="media-support">
+                                    <div class="media-support-header mb-2">
+                                       <div class="media-support-user-img mr-3">
+                                          <img class="rounded-circle" src="{{ .base_path }}assets/images/user/04.jpg" alt="">
+                                       </div>
+                                       <div class="media-support-info mt-2">
+                                          <h6 class="mb-0"><a href="#" class="">Mia Mai</a></h6>
+                                          <small>2 day ago</small>
+                                       </div>
+                                       <div class="mt-3">
+                                          <span class="badge badge-danger">Closed</span>
+                                       </div>
+                                    </div>
+                                    <div class="media-support-body">
+                                       <p class="mb-0">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-lg-6">
+                           <div class="iq-card">
+                              <div class="iq-card-header d-flex justify-content-between">
+                                 <div class="iq-header-title">
+                                    <h4 class="card-title">Cash flow</h4>
+                                 </div>
+                                 <div class="iq-card-header-toolbar d-flex align-items-center">
+                                    <div class="dropdown">
+                                       <span class="dropdown-toggle text-primary" id="dropdownMenuButton3" data-toggle="dropdown">
+                                       <i class="ri-more-2-fill"></i>
+                                       </span>
+                                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                          <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>View</a>
+                                          <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill mr-2"></i>Delete</a>
+                                          <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
+                                          <a class="dropdown-item" href="#"><i class="ri-printer-fill mr-2"></i>Print</a>
+                                          <a class="dropdown-item" href="#"><i class="ri-file-download-fill mr-2"></i>Download</a>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div id="bar-chart-6"></div>
+                           </div>
+                           <div class="iq-card">
+                              <div class="iq-card-body p-0">
+                                 <div class="row align-items-center no-gutters">
+                                    <div class="col-lg-6">
+                                       <div class="p-4">
+                                          <div class=" d-flex align-items-center">
+                                             <a href="#" class="iq-icon-box rounded-circle iq-bg-primary">
+                                             <i class="ri-facebook-fill"></i>
+                                             </a>
+                                             <h4 class="mb-0"><span class="counter">200</span>k<small class="d-block font-size-14">Posts</small></h4>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                       <div id="wave-chart-7"></div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="iq-card">
+                              <div class="iq-card-body p-0">
+                                 <div class="row align-items-center no-gutters">
+                                    <div class="col-lg-6">
+                                       <div class="p-4">
+                                          <div class=" d-flex align-items-center">
+                                             <a href="#" class="iq-icon-box rounded-circle iq-bg-success">
+                                             <i class="ri-twitter-fill"></i>
+                                             </a>
+                                             <h4 class="mb-0"><span class="counter">400</span>k<small class="d-block font-size-14">Tweets</small></h4>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                       <div id="wave-chart-8"></div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-4">
+                     <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">Activity timeline</h4>
+                           </div>
+                           <div class="iq-card-header-toolbar d-flex align-items-center">
+                              <div class="dropdown">
+                                 <span class="dropdown-toggle text-primary" id="dropdownMenuButton4" data-toggle="dropdown">
+                                 View All
+                                 </span>
+                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>View</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill mr-2"></i>Delete</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-printer-fill mr-2"></i>Print</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-file-download-fill mr-2"></i>Download</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="iq-card-body">
+                           <ul class="iq-timeline">
+                              <li>
+                                 <div class="timeline-dots"></div>
+                                 <h6 class="float-left mb-1">Client Login</h6>
+                                 <small class="float-right mt-1">24 November 2019</small>
+                                 <div class="d-inline-block w-100">
+                                    <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
+                                 </div>
+                              </li>
+                              <li>
+                                 <div class="timeline-dots border-success"></div>
+                                 <h6 class="float-left mb-1">Scheduled Maintenance</h6>
+                                 <small class="float-right mt-1">23 November 2019</small>
+                                 <div class="d-inline-block w-100">
+                                    <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
+                                 </div>
+                              </li>
+                              <li>
+                                 <div class="timeline-dots border-danger"></div>
+                                 <h6 class="float-left mb-1">Dev Meetup</h6>
+                                 <small class="float-right mt-1">20 November 2019</small>
+                                 <div class="d-inline-block w-100">
+                                    <p>Bonbon macaroon jelly beans <a href="#">gummi bears</a>gummi bears jelly lollipop apple</p>
+                                    <div class="iq-media-group">
+                                       <a href="#" class="iq-media">
+                                       <img class="img-fluid avatar-40 rounded-circle" src="{{ .base_path }}assets/images/user/05.jpg" alt="">
+                                       </a>
+                                       <a href="#" class="iq-media">
+                                       <img class="img-fluid avatar-40 rounded-circle" src="{{ .base_path }}assets/images/user/06.jpg" alt="">
+                                       </a>
+                                       <a href="#" class="iq-media">
+                                       <img class="img-fluid avatar-40 rounded-circle" src="{{ .base_path }}assets/images/user/07.jpg" alt="">
+                                       </a>
+                                       <a href="#" class="iq-media">
+                                       <img class="img-fluid avatar-40 rounded-circle" src="{{ .base_path }}assets/images/user/08.jpg" alt="">
+                                       </a>
+                                       <a href="#" class="iq-media">
+                                       <img class="img-fluid avatar-40 rounded-circle" src="{{ .base_path }}assets/images/user/09.jpg" alt="">
+                                       </a>
+                                       <a href="#" class="iq-media">
+                                       <img class="img-fluid avatar-40 rounded-circle" src="{{ .base_path }}assets/images/user/10.jpg" alt="">
+                                       </a>
+                                    </div>
+                                 </div>
+                              </li>
+                              <li>
+                                 <div class="timeline-dots border-primary"></div>
+                                 <h6 class="float-left mb-1">Client Call</h6>
+                                 <small class="float-right mt-1">19 November 2019</small>
+                                 <div class="d-inline-block w-100">
+                                    <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
+                                 </div>
+                              </li>
+                              <li>
+                                 <div class="timeline-dots border-warning"></div>
+                                 <h6 class="float-left mb-1">Mega event</h6>
+                                 <small class="float-right mt-1">15 November 2019</small>
+                                 <div class="d-inline-block w-100">
+                                    <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
+                                 </div>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="iq-card">
+                        <img src="{{ .base_path }}assets/images/small/img-1.jpg" class="img-fluid w-100 rounded" alt="#">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">How to setup E-store</h4>
+                           </div>
+                           <div class="iq-card-header-toolbar d-flex align-items-center">
+                              <div class="dropdown">
+                                 <span class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown">
+                                 <i class="ri-settings-5-fill"></i>
+                                 </span>
+                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>View</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill mr-2"></i>Delete</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="iq-card-body">
+                           <span class="font-size-16">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span>
+                           <small class="text-muted mt-3 d-inline-block w-100">Saturday, 7 December 2019</small>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-12">
+                     <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 class="card-title">Order Summary</h4>
+                           </div>
+                           <div class="iq-card-header-toolbar d-flex align-items-center">
+                              <div class="dropdown">
+                                 <span class="dropdown-toggle text-primary" id="dropdownMenuButton5" data-toggle="dropdown">
+                                 <i class="ri-more-2-fill"></i>
+                                 </span>
+                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#"><i class="ri-eye-fill mr-2"></i>View</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-delete-bin-6-fill mr-2"></i>Delete</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-pencil-fill mr-2"></i>Edit</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-printer-fill mr-2"></i>Print</a>
+                                    <a class="dropdown-item" href="#"><i class="ri-file-download-fill mr-2"></i>Download</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="iq-card-body">
+                           <div class="table-responsive">
+                              <table class="table mb-0 table-borderless">
+                                 <thead>
+                                    <tr>
+                                       <th scope="col">Package No.</th>
+                                       <th scope="col">Date</th>
+                                       <th scope="col">Delivery</th>
+                                       <th scope="col">Status</th>
+                                       <th scope="col">Location</th>
+                                       <th scope="col">Progress</th>
 
-
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Thông Tin Thiết Bị</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    <span>Downloads </span>
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-					    <div class="dropdown-header">Android:</div>
-					    <a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.v2ray.ang&hl=vi&gl=US">v2rayNG</a>
-					    <a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.github.kr328.clash&hl=vi&gl=US">Clash</a>
-					    <a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.github.shadowsocks&hl=en_US&gl=US">Shadowrocket</a>
-					    <div class="dropdown-divider"></div>
-					    <div class="dropdown-header">IOS:</div>
-					    <a class="dropdown-item" href="https://apps.apple.com/vn/app/shadowrocket/id932747118?l=vi">Shadowrocket</a>
-                                            <div class="dropdown-divider"></div>
-					    <div class="dropdown-header">macOS:</div>
-					    <a class="dropdown-item" href="https://github.com/yanue/V2rayU/releases/latest/download/V2rayU.dmg">V2rayU</a>
-					    <div class="dropdown-divider"></div>
-					    <div class="dropdown-header">Windows:</div>
-                                            <a class="dropdown-item" href="https://github.com/2dust/v2rayN/releases/latest/download/v2rayN.zip">V2rayN</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <h4 class="small font-weight-bold">CPU <span
-                                            class="float-right"> [[ status.cpu.percent ]]% / 100% </span></h4>
-                                    <div class="mb-4">
-					<template>
-					  <a-progress :percent="status.cpu.percent" style="width: 95%" status="active" size="big"/>
-					</template>
-                                    </div>
-                                    <h4 class="small font-weight-bold">RAM <span
-                                            class="float-right"> [[ sizeFormat(status.mem.current) ]] / [[ sizeFormat(status.mem.total) ]] </span></h4>
-                                    <div class="mb-4">
-					<template>
-                                          <a-progress :percent="status.mem.percent" style="width: 95%" status="active" size="big"/>
-                                        </template>
-                                    </div>
-                                    <h4 class="small font-weight-bold">SWAP <span
-                                            class="float-right"> [[ sizeFormat(status.swap.current) ]] / [[ sizeFormat(status.swap.total) ]] </span></h4>
-                                    <div class="mb-4">
-					<template>
-                                          <a-progress :percent="status.swap.percent" style="width: 95%" status="active" size="big"/>
-                                        </template>
-                                    </div>
-                                    <h4 class="small font-weight-bold">DISK <span
-                                            class="float-right"> [[ sizeFormat(status.disk.current) ]] / [[ sizeFormat(status.disk.total) ]] </span></h4>
-                                    <div class="mb-4">
-					<template>
-                                          <a-progress :percent="status.disk.percent" style="width: 95%" status="active" size="big"/>
-                                        </template>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                </a-row>
-            </transition>
-            <transition name="list" appear>
-                <a-row style="margin-left:10px; margin-right:10px;">
-		    <a-col :sm="24" :md="12">
-			<div class="col-md-12 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Thời Gian</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> <div id="myClockDisplay" class="clock"> </div> </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr>
+                                       <td>#0879985</td>
+                                       <td>26/12/2019</td>
+                                       <td>30/12/2019</td>
+                                       <td>
+                                          <div class="badge badge-pill badge-success">Moving</div>
+                                       </td>
+                                       <td>Victoria 8007 Australia</td>
+                                       <td>
+                                          <div class="iq-progress-bar">
+                                             <span class="bg-success" data-percent="90"></span>
+                                          </div>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td>#0879984</td>
+                                       <td>23/12/2019</td>
+                                       <td>27/12/2019</td>
+                                       <td>
+                                          <div class="badge badge-pill badge-warning text-white">Pending</div>
+                                       </td>
+                                       <td>Athens 2745 Greece</td>
+                                       <td>
+                                          <div class="iq-progress-bar">
+                                             <span class="bg-warning" data-percent="70"></span>
+                                          </div>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td>#0879983</td>
+                                       <td>18/12/2019</td>
+                                       <td>21/12/2019</td>
+                                       <td>
+                                          <div class="badge badge-pill badge-danger">Canceled</div>
+                                       </td>
+                                       <td>Victoria 8007 Australia</td>
+                                       <td>
+                                          <div class="iq-progress-bar">
+                                             <span class="bg-danger" data-percent="48"></span>
+                                          </div>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td>#0879982</td>
+                                       <td>14/12/2019</td>
+                                       <td>20/12/2019</td>
+                                       <td>
+                                          <div class="badge badge-pill badge-info">Working</div>
+                                       </td>
+                                       <td>Delhi 0014 India</td>
+                                       <td>
+                                          <div class="iq-progress-bar">
+                                             <span class="bg-info" data-percent="90"></span>
+                                          </div>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <td>#0879981</td>
+                                       <td>10/12/2019</td>
+                                       <td>18/12/2019</td>
+                                       <td>
+                                          <div class="badge badge-pill badge-success">Moving</div>
+                                       </td>
+                                       <td>Alabama 2741 USA</td>
+                                       <td>
+                                          <div class="iq-progress-bar">
+                                             <span class="bg-success" data-percent="45"></span>
+                                          </div>
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
                         </div>
-		    </a-col>
-		    <a-col :sm="24" :md="12">
-			<div class="col-md-12 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Hôm Nay</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> <div id="myDateDisplay"> </div> </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-		    </a-col>
-                    <a-col :sm="24" :md="12">
-                        <div class="col-md-12 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Thời gian hoạt động</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ formatSecond(status.uptime) ]] </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-user-clock fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a-col>
-                    <a-col :sm="24" :md="12">
-			<div class="col-md-12 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                System Loader</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ status.loads[0] ]] | [[ status.loads[1] ]] | [[ status.loads[2] ]] </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-cogs fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a-col>
-                    <a-col :sm="24" :md="12">
-			<div class="col-md-12 mb-4">
-                            <div class="card border-left-secondary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
-                                                Số kết nối TCP/UDP</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ status.tcpCount ]] / [[ status.udpCount ]] </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-network-wired fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a-col>
-                    <a-col :sm="24" :md="12">
-			<div class="col-md-12 mb-4">
-                            <div class="card border-left-dark shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
-                                                Tốc Độ Tải Lên | Xuống</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ sizeFormat(status.netIO.up) ]] / S | [[ sizeFormat(status.netIO.down) ]] / S</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-upload fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a-col>
-                    <a-col :sm="24" :md="12">
-			<div class="col-md-12 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Tổng lưu lượng hệ thống từ khi bật</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Lên: [[ sizeFormat(status.netTraffic.sent) ]] | Xuống: [[ sizeFormat(status.netTraffic.recv) ]] </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-cloud fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a-col>
-		    <a-col :sm="24" :md="12">
-			<div class="col-md-12 mb-4">
-                            <div class="card bg-success text-white shadow h-100 py-2">
-                                <div class="card-body">
-                                    X-UI Unofficial
-                                    <div class="text-white-50 small"><a href="https://github.com/dopaemon/x-ui.git">@dopaemon</a></div>
-                                </div>
-                            </div>
-                        </div>
-		    </a-col>
-                </a-row>
-            </transition>
-
-	    <!-- Footer -->
-            <footer class="sticky-footer shadow bg-white" style="margin-left: 0px; margin-right: 0px; margin-bottom: 0px;">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; X-UI Unofficial</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- Wrapper END -->
+      <!-- Footer -->
+      <footer class="bg-white iq-footer">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-lg-6">
+                  <ul class="list-inline mb-0">
+                     <li class="list-inline-item"><a href="privacy-policy.html">Privacy Policy</a></li>
+                     <li class="list-inline-item"><a href="terms-of-service.html">Terms of Use</a></li>
+                  </ul>
+               </div>
+               <div class="col-lg-6 text-right">
+                  Copyright 2020 <a href="#">Sofbox</a> All Rights Reserved.
+               </div>
+            </div>
+         </div>
+      </footer>
 
         </a-layout-content>
     </a-layout>
-    <a-modal id="version-modal" v-model="versionModal.visible" title="Chuyển Phiên Bản"
-             :closable="true" @ok="() => versionModal.visible = false"
-             ok-text="Đồng ý" cancel-text="Hủy bỏ">
-        <h2>Nhấp vào phiên bản bạn muốn chuyển đổi</h2>
-        <h2>Vui lòng chọn cẩn thận, phiên bản cũ có thể không tương thích với cấu hình</h2>
-        <template v-for="version, index in versionModal.versions">
-            <a-tag :color="index % 2 == 0 ? 'blue' : 'green'"
-                   style="margin: 10px" @click="switchV2rayVersion(version)">
-                [[ version ]]
-            </a-tag>
-        </template>
-    </a-modal>
 </a-layout>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Bạn thực sự muốn đăng xuất ???</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Khi chọn "Đăng xuất" bạn sẻ quay lại màn hình đăng nhập.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Trở lại</button>
-                    <a class="btn btn-primary" href="{{ .base_path }}logout">Đăng xuất</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Menu Forcus -->
-    <div id="collapseMenuForcus" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Menu X-UI Unofficial:</h6>
-               <a class="collapse-item active" href="#">Line 1</a>
-               <a class="collapse-item" href="#">Line 2</a>
-               <a class="collapse-item" href="#">Line 3</a>
-               <a class="collapse-item" href="#">Line 4</a>
-        </div>
-    </div>
-
-<!-- Bootstrap core JavaScript-->
-<script src="{{ .base_path }}assets/vendor/jquery/jquery.min.js"></script>
-<script src="{{ .base_path }}assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="{{ .base_path }}assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="{{ .base_path }}assets/js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="{{ .base_path }}assets/vendor/chart.js/Chart.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="{{ .base_path }}assets/js/demo/chart-area-demo.js"></script>
-<script src="{{ .base_path }}assets/js/demo/chart-pie-demo.js"></script>
+      <!-- Footer END -->
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="{{ .base_path }}assets/js/jquery.min.js"></script>
+      <script src="{{ .base_path }}assets/js/popper.min.js"></script>
+      <script src="{{ .base_path }}assets/js/bootstrap.min.js"></script>
+      <!-- Appear JavaScript -->
+      <script src="{{ .base_path }}assets/js/jquery.appear.js"></script>
+      <!-- Countdown JavaScript -->
+      <script src="{{ .base_path }}assets/js/countdown.min.js"></script>
+      <!-- Counterup JavaScript -->
+      <script src="{{ .base_path }}assets/js/waypoints.min.js"></script>
+      <script src="{{ .base_path }}assets/js/jquery.counterup.min.js"></script>
+      <!-- Wow JavaScript -->
+      <script src="{{ .base_path }}assets/js/wow.min.js"></script>
+      <!-- Apexcharts JavaScript -->
+      <script src="{{ .base_path }}assets/js/apexcharts.js"></script>
+      <!-- Slick JavaScript -->
+      <script src="{{ .base_path }}assets/js/slick.min.js"></script>
+      <!-- Select2 JavaScript -->
+      <script src="{{ .base_path }}assets/js/select2.min.js"></script>
+      <!-- Owl Carousel JavaScript -->
+      <script src="{{ .base_path }}assets/js/owl.carousel.min.js"></script>
+      <!-- Magnific Popup JavaScript -->
+      <script src="{{ .base_path }}assets/js/jquery.magnific-popup.min.js"></script>
+      <!-- Smooth Scrollbar JavaScript -->
+      <script src="{{ .base_path }}assets/js/smooth-scrollbar.js"></script>
+      <!-- lottie JavaScript -->
+      <script src="{{ .base_path }}assets/js/lottie.js"></script>
+      <!-- Chart Custom JavaScript -->
+      <script src="{{ .base_path }}assets/js/chart-custom.js"></script>
+      <!-- Custom JavaScript -->
+      <script src="{{ .base_path }}assets/js/custom.js"></script>
 
 <!-- Date Time JS -->
 <script type="text/javascript">
