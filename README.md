@@ -13,17 +13,24 @@ Linux:
 - s390x
 - Riscv64
 ```
-# Cài Đặt Bằng Script [ Đọc lưu ý phía dưới ]
+## Cài Đặt Bằng Script [ Đọc lưu ý phía dưới ]
 ```
 Tắt Unikey trước khi chạy Script. Tránh trình trạng Sai Mật Khẩu
 ```
-## Theme SBAdmin 2
+## Theme SBAdmin 2 [ Stable ]
 [Demo Theme](https://startbootstrap.github.io/startbootstrap-sb-admin-2/)
 ```
 sudo -s
 ```
 ```
 bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh) 0.3.4.4-SBAdmin
+```
+## Cài đặt bản Latest [ Có thể không ổn định ]
+```
+sudo -s
+```
+```
+bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh)
 ```
 ## ⚠️⚠️⚠️ Làm ơn không dùng cách này để install x-ui
 ```
