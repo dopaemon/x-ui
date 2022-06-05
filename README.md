@@ -20,8 +20,10 @@ Tắt Unikey trước khi chạy Script. Tránh trình trạng Sai Mật Khẩu
 ```
 sudo -s
 ```
+## Theme SBAdmin 2
+[Demo](https://startbootstrap.github.io/startbootstrap-sb-admin-2/)
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh) 0.3.4.4-SBAdmin
 ```
 ## ⚠️⚠️⚠️ Làm ơn không dùng cách này để install x-ui
 ```
