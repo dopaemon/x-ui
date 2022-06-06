@@ -1,26 +1,22 @@
 <!DOCTYPE html>
 <html lang="vi">
-{{template "head" .}}
-<style>
-    @media (min-width: 769px) {
-        .ant-layout-content {
-            margin-left: 0px;
-	    margin-right:0px; 
-	    margin-top:0px;
-        }
-    }
-
-    .ant-col-sm-24 {
-        margin-top: 10px;
-    }
-</style>
-<body onload="showTime()">
-<a-layout id="app" v-cloak>
-    {{ template "commonSider" . }}
-    <a-layout id="content-layout">
-        <a-layout-content>
-            <a-spin :spinning="spinning" :delay="200" :tip="loadingTip"/>
-
+   <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>dopaemon - Trần Nguyễn Tuấn Anh</title>
+      <!-- Favicon -->
+      <link rel="shortcut icon" href="{{ .base_path }}assets/images/favicon.ico" />
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="{{ .base_path }}assets/css/bootstrap.min.css">
+      <!-- Typography CSS -->
+      <link rel="stylesheet" href="{{ .base_path }}assets/css/typography.css">
+      <!-- Style CSS -->
+      <link rel="stylesheet" href="{{ .base_path }}assets/css/style.css">
+      <!-- Responsive CSS -->
+      <link rel="stylesheet" href="{{ .base_path }}assets/css/responsive.css">
+   </head>
+<body>
       <!-- loader Start -->
       <div id="loading">
          <div id="loading-center">
@@ -219,10 +215,6 @@
          </div>
       </footer>
 
-        </a-layout-content>
-    </a-layout>
-</a-layout>
-
       <!-- Footer END -->
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -256,44 +248,5 @@
       <script src="{{ .base_path }}assets/js/chart-custom.js"></script>
       <!-- Custom JavaScript -->
       <script src="{{ .base_path }}assets/js/custom.js"></script>
-
-<!-- Date Time JS -->
-<script type="text/javascript">
-    function showTime() {
-        var timediv = document.getElementById("myClockDisplay");
-        var datediv = document.getElementById("myDateDisplay");
-        var dt = new Date();
-        var d = dt.getDate();
-        var m = dt.getMonth() + 1;
-        var y = dt.getFullYear();
-        var hh = dt.getHours();
-        var mm = dt.getMinutes();
-        var ss = dt.getSeconds();
-	var hht = 0;
-        var session = "Sáng";
-        if (hh == 0) {
-            hh = 12;
-        }
-
-        if (hh > 12) {
-            hh = hh - 12;
-	    hht = hh;
-            session = "Chiều";
-        }
-
-        if (hht > 6) {
-	    session = "Tối";
-        }
-
-        d = (d < 10) ? "0" + d : d;
-        m = (m < 10) ? "0" + m : m;
-        hh = (hh < 10) ? "0" + hh : hh;
-        mm = (mm < 10) ? "0" + mm : mm;
-        ss = (ss < 10) ? "0" + ss : ss;
-        timediv.textContent = hh + " Giờ " + mm + " Phút " + ss + " Giây | " + session;
-        datediv.textContent = "Ngày " + d + " Tháng " + m + " Năm " + y;
-        setTimeout(showTime, 1000);
-     }
-</script>
 </body>
 </html>
