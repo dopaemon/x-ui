@@ -28,9 +28,9 @@ task:
     - sudo apt-get update
     - sudo apt-get install gh
     - sudo apt remove golang-go gccgo-go -y
-    - curl -OL https://go.dev/dl/go1.18.1.linux-amd64.tar.gz
-    - sha256sum go1.18.1.linux-amd64.tar.gz
-    - sudo tar -C /usr/local -xvf go1.18.1.linux-amd64.tar.gz
+    - curl -OL https://go.dev/dl/go1.18.3.linux-amd64.tar.gz
+    - sha256sum go1.18.3.linux-amd64.tar.gz
+    - sudo tar -C /usr/local -xvf go1.18.3.linux-amd64.tar.gz
     - touch ~/.goi
     - echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.goi
     - source ~/.goi
