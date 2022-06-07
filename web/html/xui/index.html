@@ -312,9 +312,9 @@
                   </div>
                </div>
                <div class="row">
-                  <div class="col-lg-12">
+                  <div class="col-lg-6">
                      <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                               <div class="iq-card-header d-flex justify-content-between">
                                  <div class="iq-header-title">
@@ -381,9 +381,9 @@
                      </div>
                   </div>
 
-		  <div class="col-lg-12">
+		  <div class="col-lg-6">
                      <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                               <div class="iq-card-header d-flex justify-content-between">
                                  <div class="iq-header-title">
@@ -391,7 +391,15 @@
                                  </div>
                               </div>
                               <div class="iq-card-body">
-
+	                        <a-modal id="version-modal" v-model="versionModal.visible" title="Chuyển Phiên Bản" :closable="true" @ok="() => versionModal.visible = false" ok-text="Đồng ý" cancel-text="Hủy bỏ">
+                                      <h2>Nhấp vào phiên bản bạn muốn chuyển đổi</h2>
+                                      <h2>Vui lòng chọn cẩn thận, phiên bản cũ có thể không tương thích với cấu hình</h2>
+                                      <template v-for="version, index in versionModal.versions">
+                                         <a-tag :color="index % 2 == 0 ? 'blue' : 'green'" style="margin: 10px" @click="switchV2rayVersion(version)">
+                                            [[ version ]]
+                                         </a-tag>
+                                      </template>
+                                </a-modal>
                               </div>
                            </div>
                         </div>
