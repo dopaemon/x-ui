@@ -68,7 +68,9 @@ task:
   xray_source_script:
     - sudo mkdir -p /tmp/ci/XrayPrebuilt
     - sudo chmod 777 /tmp/ci/XrayPrebuilt
-    - git clone -b main --single-branch https://github.com/XTLS/Xray-core.git /tmp/ci/XrayPrebuilt/Xray-core
+    - git clone -b main --single-branch https://github.com/XTLS/Xray-core.git /tmp/ci/XrayPrebuilt/Xray-core 
+    - cd /tmp/ci/XrayPrebuilt/Xray-core
+    - git clone https://github.com/SagerNet/sing-shadowsocks.git
   xray_build_amd64_script:
     - source ~/.goi
     - cd /tmp/ci/XrayPrebuilt/Xray-core
