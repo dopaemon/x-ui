@@ -28,7 +28,7 @@ var defaultValueMap = map[string]string{
 	"webKeyFile":         "",
 	"secret":             random.Seq(32),
 	"webBasePath":        "/",
-	"webLangPath":        "/?lang=en_US",
+	"webLangPath":        "?lang=en_US",
 	"timeLocation":       "Asia/Ho_Chi_Minh",
 	"tgBotEnable":        "false",
 	"tgBotToken":         "",
