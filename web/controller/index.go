@@ -36,7 +36,7 @@ func (a *IndexController) initRouter(g *gin.RouterGroup) {
 
 func (a *IndexController) index(c *gin.Context) {
 	if session.IsLogin(c) {
-		c.Redirect(http.StatusTemporaryRedirect, "xui/")
+		c.Redirect(http.StatusTemporaryRedirect, "xui" + c.GetString("lang_path"))
 		return
 	}
 	html(c, "login.html", "X-UI Login", nil)

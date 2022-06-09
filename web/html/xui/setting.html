@@ -186,13 +186,14 @@
                     <!-- Card Header - Accordion -->
                     <a href="#Settings5" class="d-block card-header py-3" data-toggle="collapse"
                         role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                        <h6 class="m-0 font-weight-bold text-primary">Múi giờ</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Cá Nhân</h6>
                     </a>
                     <!-- Card Content - Collapse -->
                     <div class="collapse" id="Settings5">
                         <div class="card-body">
 			    <a-list item-layout="horizontal" style="background: white">
                                 <setting-list-item type="text" title="Múi giờ" desc="Các tác vụ đã lên lịch chạy theo thời gian trong múi giờ，Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.timeLocation"></setting-list-item>
+				<setting-list-item type="text" title="Ngôn ngữ" desc="Chọn ngôn ngữ mặc định, Khởi động lại bảng điều khiển để có hiệu lực" v-model="allSetting.webLangPath"></setting-list-item>
                             </a-list>
                         </div>
                     </div>
