@@ -1039,7 +1039,7 @@ class Inbound extends XrayCommonClass {
             address = server;
         }
         if (settings.method == SSMethods.SS_2022_BLAKE3_AES_128_GCM || settings.method == SSMethods.SS_2022_BLAKE3_AES_256_GCM || settings.method == SSMethods.SS_2022_BLAKE3_CHACHA20_POLY1305) {
-            return `ss://${settings.method}:${settings.password}@${address}:${this.port}#${encodeURIComponent(remark)}`;
+            return `ss://${settings.method}:${settings.password}@${address}:${this.port}/#${encodeURIComponent(remark)}`;
         } else {
             return 'ss://' + safeBase64(settings.method + ':' + settings.password + '@' + address + ':' + this.port)
                 + '#' + encodeURIComponent(remark);
