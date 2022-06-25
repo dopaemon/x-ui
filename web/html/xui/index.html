@@ -150,7 +150,8 @@
          <div id="content-page" class="content-page">
             <div class="container-fluid">
                <div class="row">
-                  <div class="col-lg-12">
+
+                  <div class="col-lg-6">
                      <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                            <div class="iq-header-title">
@@ -311,11 +312,23 @@
                         </br>
                      </div>
                   </div>
+                  <div class="col-lg-4">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height animation-card">
+                        <div class="iq-card-body p-0">
+                           <div class="an-text">
+                              <span>X-UI Unofficial </span>
+                           </div>
+                           <div class="an-img">
+                              <div class="bodymovin" data-bm-path="{{ .base_path }}assets/images/small/data.json" data-bm-renderer="svg" data-bm-loop="true"></div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
                </div>
                <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-lg-8">
                      <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-6">
                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                               <div class="iq-card-header d-flex justify-content-between">
                                  <div class="iq-header-title">
@@ -376,31 +389,6 @@
                                        <p class="mb-0">Tối ưu, Dịch, Cập nhật Giao Diện mới cho X-UI, Merge Pull, Cherry Pick commit từ các nguồn X-UI khác. Giúp người Việt Nam tiếp cận với X-UI đơn giản nhất.</p>
                                     </div>
                                  </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-
-		  <div class="col-lg-6">
-                     <div class="row">
-                        <div class="col-lg-12">
-                           <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                              <div class="iq-card-header d-flex justify-content-between">
-                                 <div class="iq-header-title">
-                                    <h5 class="card-title">Xray Update Release</h4>
-                                 </div>
-                              </div>
-                              <div class="iq-card-body">
-	                        <a-modal id="version-modal" v-model="versionModal.visible" title="Chuyển Phiên Bản" :closable="true" @ok="() => versionModal.visible = false" ok-text="Đồng ý" cancel-text="Hủy bỏ">
-                                      <h2>Nhấp vào phiên bản bạn muốn chuyển đổi</h2>
-                                      <h2>Vui lòng chọn cẩn thận, phiên bản cũ có thể không tương thích với cấu hình</h2>
-                                      <template v-for="version, index in versionModal.versions">
-                                         <a-tag :color="index % 2 == 0 ? 'blue' : 'green'" style="margin: 10px" @click="switchV2rayVersion(version)">
-                                            [[ version ]]
-                                         </a-tag>
-                                      </template>
-                                </a-modal>
                               </div>
                            </div>
                         </div>

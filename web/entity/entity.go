@@ -32,7 +32,6 @@ type AllSetting struct {
 	WebCertFile        string `json:"webCertFile" form:"webCertFile"`
 	WebKeyFile         string `json:"webKeyFile" form:"webKeyFile"`
 	WebBasePath        string `json:"webBasePath" form:"webBasePath"`
-	WebLangPath        string `json:"webLangPath" form:"webLangPath"`
 	TgBotEnable        bool   `json:"tgBotEnable" form:"tgBotEnable"`
 	TgBotToken         string `json:"tgBotToken" form:"tgBotToken"`
 	TgBotChatId        int    `json:"tgBotChatId" form:"tgBotChatId"`
@@ -65,18 +64,9 @@ func (s *AllSetting) CheckValid() error {
 	if !strings.HasPrefix(s.WebBasePath, "/") {
 		s.WebBasePath = "/" + s.WebBasePath
 	}
-
 	if !strings.HasSuffix(s.WebBasePath, "/") {
 		s.WebBasePath += "/"
 	}
-
-	if !strings.HasPrefix(s.WebLangPath, "/") {
-		s.WebLangPath = "/" + s.WebLangPath
-	}
-
-	if !strings.HasSuffix(s.WebLangPath, "/") {
-                s.WebLangPath += "/"
-        }
 
 	xrayConfig := &xray.Config{}
 	err := json.Unmarshal([]byte(s.XrayTemplateConfig), xrayConfig)

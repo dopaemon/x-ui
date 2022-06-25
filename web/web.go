@@ -173,16 +173,10 @@ func (s *Server) initRouter() (*gin.Engine, error) {
 	}
 	assetsBasePath := basePath + "assets/"
 
-	langPath, err := s.settingService.GetLangPath()
-	if err != nil {
-		return nil, err
-	}
-
 	store := cookie.NewStore(secret)
 	engine.Use(sessions.Sessions("session", store))
 	engine.Use(func(c *gin.Context) {
 		c.Set("base_path", basePath)
-		c.Set("lang_path", langPath)
 	})
 	engine.Use(func(c *gin.Context) {
 		uri := c.Request.RequestURI
