@@ -7,6 +7,12 @@
     ],
     "tag": "api"
   },
+  "dns": {
+    "servers": [
+        "8.8.8.8"
+    ],
+    "queryStrategy": "UseIPv4"
+ },
   "inbounds": [
     {
       "listen": "127.0.0.1",
@@ -20,13 +26,21 @@
   ],
   "outbounds": [
     {
+      "tag": "direct",
       "protocol": "freedom",
-      "settings": {}
+      "settings": {
+        "domainStrategy": "UseIPv4"
+      }
+      
     },
     {
+      "tag": "blocked",
       "protocol": "blackhole",
-      "settings": {},
-      "tag": "blocked"
+      "settings": {
+        "response": {
+          "type": "http"
+        }
+      }  
     }
   ],
   "policy": {
@@ -36,27 +50,51 @@
     }
   },
   "routing": {
+    "domainStrategy": "IPIfNonMatch",
     "rules": [
       {
+        "type": "field",
+        "ip": [
+            "8.8.8.8"
+        ],
+        "outboundTag": "direct"
+      },
+      {
+        "type": "field",
+        "domain": [
+            "geosite:cn",
+            "geosite:category-ads-all"
+        ],
+        "outboundTag": "blocked"
+      },
+      {
+        "type": "field",
+        "domain": [
+          "pincong.rocks" 
+        ],
+        "outboundTag": "blocked"
+      },
+      {
+        "type": "field",
         "inboundTag": [
           "api"
         ],
-        "outboundTag": "api",
-        "type": "field"
+        "outboundTag": "api"
       },
       {
+        "type": "field",
         "ip": [
-          "geoip:private"
+          "geoip:private",
+          "geoip:cn"
         ],
-        "outboundTag": "blocked",
-        "type": "field"
+        "outboundTag": "blocked"
       },
       {
+        "type": "field",
         "outboundTag": "blocked",
         "protocol": [
           "bittorrent"
-        ],
-        "type": "field"
+        ]
       }
     ]
   },
