@@ -65,6 +65,7 @@
                            <li class="active"><a href="{{ .base_path }}xui">Trang Chủ</a></li>
                            <li><a href="{{ .base_path }}xui/inbounds">Danh Sách VPN</a></li>
 	  		   <li><a href="{{ .base_path }}xui/setting">Cài Đặt</a></li>
+			   <li><a href="{{ .base_path }}logout">Đăng xuất</a></li>
                         </ul>
                      </li>
                   </ul>
@@ -93,54 +94,13 @@
                   </nav>
                </div>
                <nav class="navbar navbar-expand-lg navbar-light p-0">
-                  <div class="iq-menu-bt align-self-center">
+                  <div class="iq-menu-bt align-self-center" style="right: 1%; top: 15px">
                      <div class="wrapper-menu">
                         <div class="line-menu half start"></div>
                         <div class="line-menu"></div>
                         <div class="line-menu half end"></div>
                      </div>
                   </div>
-                  <!-- <div class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect" id="btnFullscreen"><i class="ri-fullscreen-line"></i></a></div> -->
-                  <ul class="navbar-list" style="margin-inline-start: auto;">
-                     <li>
-                        <a href="#" class="search-toggle iq-waves-effect bg-primary text-white"><img src="https://avatars.githubusercontent.com/u/43093213?v=4" class="img-fluid rounded" alt="user"></a>
-                        <div class="iq-sub-dropdown iq-user-dropdown">
-                           <div class="iq-card iq-card-block iq-card-stretch iq-card-height shadow-none m-0">
-                              <div class="iq-card-body p-0 ">
-                                 <div class="bg-primary p-3">
-                                    <h5 class="mb-0 text-white line-height">dopaemon</h5>
-                                    <span class="text-white font-size-12">Maintainer</span>
-                                 </div>
-                                 <a href="{{ .base_path }}xui/infome" class="iq-sub-card iq-bg-primary-hover">
-                                    <div class="media align-items-center">
-                                       <div class="rounded iq-card-icon iq-bg-primary">
-                                          <i class="ri-file-user-line"></i>
-                                       </div>
-                                       <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">Thông Tin</h6>
-                                          <p class="mb-0 font-size-12">Xem thêm thông tin liên lạc của tôi.</p>
-                                       </div>
-                                    </div>
-                                 </a>
-                                 <a href="{{ .base_path }}xui/setting" class="iq-sub-card iq-bg-primary-success-hover">
-                                    <div class="media align-items-center">
-                                       <div class="rounded iq-card-icon iq-bg-success">
-                                          <i class="ri-profile-line"></i>
-                                       </div>
-                                       <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">Cài Đặt</h6>
-                                          <p class="mb-0 font-size-12">Tùy chỉnh X-UI.</p>
-                                       </div>
-                                    </div>
-                                 </a>
-                                 <div class="d-inline-block w-100 text-center p-3">
-                                    <a class="iq-bg-danger iq-sign-btn" href="{{ .base_path }}logout" role="button">Đăng Xuất<i class="ri-login-box-line ml-2"></i></a>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </li>
-                  </ul>
                </nav>
             </div>
          </div>
@@ -150,6 +110,12 @@
             <div class="container-fluid">
                <div class="row">
                   <div class="col-lg-12">
+		     <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="{{ .base_path }}xui"><i class="ri-home-4-line mr-1 float-left"></i>Dashboard</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Trang Chủ</li>
+                        </ol>
+                     </nav>
                      <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                            <div class="iq-header-title">
@@ -380,7 +346,6 @@
                         </div>
                      </div>
                   </div>
-
 		  <div class="col-lg-6">
                      <div class="row">
                         <div class="col-lg-12">
@@ -416,8 +381,8 @@
             <div class="row">
                <div class="col-lg-6">
                   <ul class="list-inline mb-0">
-                     <li class="list-inline-item"><a href="https://google.com">Google</a></li>
-                     <li class="list-inline-item"><a href="https://github.com">Github</a></li>
+                     <li class="list-inline-item"><a href="https://github.com/vaxilu/x-ui.git">X-UI Official</a></li>
+                     <li class="list-inline-item"><a href="https://github.com/dopaemon/x-ui.git">X-UI Unofficial</a></li>
                   </ul>
                </div>
                <div class="col-lg-6 text-right">

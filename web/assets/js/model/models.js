@@ -165,7 +165,6 @@ class AllSetting {
         this.webCertFile = "";
         this.webKeyFile = "";
         this.webBasePath = "/";
-	this.webLangPath = "/?lang=en_US";
         this.tgBotEnable = false;
         this.tgBotToken = "";
         this.tgBotChatId = 0;

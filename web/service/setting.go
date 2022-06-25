@@ -28,7 +28,6 @@ var defaultValueMap = map[string]string{
 	"webKeyFile":         "",
 	"secret":             random.Seq(32),
 	"webBasePath":        "/",
-	"webLangPath":        "?lang=en_US",
 	"timeLocation":       "Asia/Ho_Chi_Minh",
 	"tgBotEnable":        "false",
 	"tgBotToken":         "",
@@ -266,20 +265,6 @@ func (s *SettingService) GetBasePath() (string, error) {
 		basePath += "/"
 	}
 	return basePath, nil
-}
-
-func (s *SettingService) GetLangPath() (string, error) {
-	langPath, err := s.getString("webLangPath")
-	if err != nil {
-		return "", err
-	}
-	if !strings.HasPrefix(langPath, "/") {
-		langPath = "/" + langPath
-	}
-	if !strings.HasSuffix(langPath, "/") {
-		langPath += "/"
-	}
-	return langPath, nil
 }
 
 func (s *SettingService) GetTimeLocation() (*time.Location, error) {

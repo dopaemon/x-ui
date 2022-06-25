@@ -21,197 +21,175 @@
         <a-layout-content>
             <a-spin :spinning="spinning" :delay="500" tip="loading">
 
-	      <!-- Topbar -->
-	      <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <!-- <button id="collapseMenuForcus" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button> -->
-
-			<!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown" style="list-style: none;">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrator</span>
-                                <img class="img-profile rounded-circle"
-                                    src="https://avatars.githubusercontent.com/u/43093213?s=400&u=32591b34f6d90ea9fe09714ad42795185a989566&v=4">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="{{ .base_path }}xui">
-                                    <i class="fas fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    X-UI <sup>Unofficial</sup>
-                                </a>
-                                <a class="dropdown-item" href="{{ .base_path }}xui/inbounds">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Server VPN
-                                </a>
-                                <a class="dropdown-item" href="{{ .base_path }}xui/setting">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Cài đặt
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Đăng xuất
-                                </a>
-                            </div>
-                        </li>
-
-			<div class="topbar-divider d-none d-sm-block"></div>
-
-                </nav>
-                <!-- End of Topbar -->
-
-                <transition name="list" appear>
-		<a-row style="margin-left:24px; margin-right:24px;">
-
-		    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-			    <h1 class="h3 mb-0 text-gray-800">X-UI <sup> Unofficial</sup></h1>
-                        <a href="https://github.com/dopaemon/x-ui.git" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-github-alt fa-sm text-white-50"></i> Github <sup>Unofficial</sup></a>
-                    </div>
-
-                    <a-tag v-if="false" color="red" style="margin-bottom: 10px">
-			Vui lòng truy cập cài đặt bảng điều khiển càng sớm càng tốt để sửa đổi tên người dùng và mật khẩu, nếu không có thể có nguy cơ rò rỉ thông tin tài khoản.
-                    </a-tag>
-		</a-row>
-                </transition>
-                <transition name="list" appear>
-		<a-row style="margin-left:10px; margin-right:10px;">
-		     <a-col :sm="24" :md="12">
-			<div class="col-md-12 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Tổng Data Thông Qua VPN</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">↑ [[ sizeFormat(total.up) ]] | ↓ [[ sizeFormat(total.down) ]] </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+      <!-- loader Start -->
+      <div id="loading">
+         <div id="loading-center">
+            <div class="loader">
+               <div class="cube">
+                  <div class="sides">
+                     <div class="top"></div>
+                     <div class="right"></div>
+                     <div class="bottom"></div>
+                     <div class="left"></div>
+                     <div class="front"></div>
+                     <div class="back"></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- loader END -->
+      <!-- Wrapper Start -->
+      <div class="wrapper">
+         <!-- Sidebar  -->
+         <div class="iq-sidebar">
+            <div class="iq-sidebar-logo d-flex justify-content-between">
+               <a href="{{ .base_path }}xui">
+                <img src="{{ .base_path }}assets/images/logo.png" class="img-fluid" alt="">
+               </a>
+               <div class="iq-menu-bt align-self-center">
+                  <div class="wrapper-menu">
+                     <div class="line-menu half start"></div>
+                     <div class="line-menu"></div>
+                     <div class="line-menu half end"></div>
+                  </div>
+               </div>
+            </div>
+            <div id="sidebar-scrollbar">
+               <nav class="iq-sidebar-menu">
+                  <ul id="iq-sidebar-toggle" class="iq-menu">
+                     <li class="iq-menu-title"><i class="ri-separator"></i><span>X-UI Unofficial</span></li>
+                     <li class="active">
+                        <a href="#dashboard" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-home-4-line"></i><span>Dashboard</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                        <ul id="dashboard" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                           <li><a href="{{ .base_path }}xui">Trang Chủ</a></li>
+                           <li class="active"><a href="{{ .base_path }}xui/inbounds">Danh Sách VPN</a></li>
+	  		   <li><a href="{{ .base_path }}xui/setting">Cài Đặt</a></li>
+			   <li><a href="{{ .base_path }}logout">Đăng xuất</a></li>
+                        </ul>
+                     </li>
+                  </ul>
+               </nav>
+               <div class="p-3"></div>
+            </div>
+         </div>
+         <!-- TOP Nav Bar -->
+         <div class="iq-top-navbar">
+            <div class="iq-navbar-custom">
+               <div class="iq-sidebar-logo">
+                  <div class="top-logo">
+                     <a href="{{ .base_path }}xui" class="logo">
+                     <img src="{{ .base_path }}assets/images/logo.png" class="img-fluid" alt="">
+                     <span></span>
+                     </a>
+                  </div>
+               </div>
+               <div class="navbar-breadcrumb">
+                  <h5 class="mb-0">X-UI Unofficial</h5>
+                  <nav aria-label="breadcrumb">
+                     <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ .base_path }}xui">Trang Chủ</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Trang Chủ</li>
+                     </ul>
+                  </nav>
+               </div>
+               <nav class="navbar navbar-expand-lg navbar-light p-0">
+                  <div class="iq-menu-bt align-self-center" style="right: 1%; top: 15px">
+                     <div class="wrapper-menu">
+                        <div class="line-menu half start"></div>
+                        <div class="line-menu"></div>
+                        <div class="line-menu half end"></div>
+                     </div>
+                  </div>
+               </nav>
+            </div>
+         </div>
+         <!-- TOP Nav Bar END -->
+         <!-- Page Content  -->
+         <div id="content-page" class="content-page">
+            <div class="container-fluid">
+               <div class="row">
+		  <div class="col-lg-12">
+		     <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="{{ .base_path }}xui"><i class="ri-home-4-line mr-1 float-left"></i>Dashboard</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Danh Sách VPN</li>
+                        </ol>
+                     </nav>
+		  </div>
+		  <div class="col-md-6 col-lg-3">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                        <div class="iq-card-body pb-0">
+                           <div class="rounded-circle iq-card-icon iq-bg-primary"><i class="fas fa-clock"></i></div>
+                           <span class="float-right line-height-6">Tổng Data Qua VPN</span>
+                           <div class="clearfix"></div>
+                           <div class="text-center">
+                              <h5 class="mb-0"> ↑ [[ sizeFormat(total.up) ]] | ↓ [[ sizeFormat(total.down) ]] </h5>
+                           </div>
                         </div>
-		    </a-col>
-		    <a-col :sm="24" :md="12">
-			<div class="col-md-12 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Tổng Data Đã Dùng</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ sizeFormat(total.up + total.down) ]] </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        </br>
+                     </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                        <div class="iq-card-body pb-0">
+                           <div class="rounded-circle iq-card-icon iq-bg-warning"><i class="ri-bar-chart-grouped-line"></i></div>
+                           <span class="float-right line-height-6">Tổng Data Đã Dùng</span>
+                           <div class="clearfix"></div>
+                           <div class="text-center">
+                              <h5 class="mb-0"> [[ sizeFormat(total.up + total.down) ]] </h5>
+                           </div>
                         </div>
-		    </a-col>
-		    <a-col :sm="24" :md="12">
-			<div class="col-md-12 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Tổng Số Server</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> [[ dbInbounds.length ]] </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        </br>
+                     </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                        <div class="iq-card-body pb-0">
+                           <div class="rounded-circle iq-card-icon iq-bg-success"><i class="ri-group-line"></i></div>
+                           <span class="float-right line-height-6">Tổng Số Server</span>
+                           <div class="clearfix"></div>
+                           <div class="text-center">
+                              <h5 class="mb-0"> [[ dbInbounds.length ]] </h5>
+                           </div>
                         </div>
-		    </a-col>
-		    <a-col :sm="24" :md="12">
-			<div class="col-md-12 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Đặt Lại Dung Lượng</div>
-                                            <div class="h6 mb-0 font-weight-bold text-gray-800">
-
-					    <div class="my-2"></div>
-                                                <a href="#" @click="resetallTraffic(dbInbounds)" class="btn btn-danger btn-icon-split btn-sm">
-                                                  <span class="icon text-white-50">
-                                                       <i class="fas fa-trash"></i>
-                                                  </span>
-                                                <span class="text">Xóa Toàn Bộ Data</span>
-                                                </a>
-
-					    </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-backspace fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        </br>
+                     </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height overflow-hidden">
+                        <div class="iq-card-body pb-0">
+                           <div class="rounded-circle iq-card-icon iq-bg-danger"><i class="ri-shopping-cart-line"></i></div>
+                           <span class="float-right line-height-6">Xóa Toàn Bộ Data</span>
+                           <div class="clearfix"></div>
+                           <div class="text-center">
+                              <h5 class="mb-0"> <button type="button" @click="resetallTraffic(dbInbounds)" class="btn btn-danger rounded-pill mb-3">Reset Data</button> </h5>
+                           </div>
                         </div>
-		     </a-col> 
-                <!--    <a-card hoverable style="margin-bottom: 20px;">
-                        <a-row>
-                            <a-col :xs="24" :sm="24" :lg="12">
-                                Tổng Lưu Lượng Data ↑|↓：
-                                <a-tag color="green">[[ sizeFormat(total.up) ]] / [[ sizeFormat(total.down) ]]</a-tag>
-                            </a-col>
-                            <a-col :xs="24" :sm="24" :lg="12">
-                                Tổng Cộng:
-                                <a-tag color="green">[[ sizeFormat(total.up + total.down) ]]</a-tag>
-                            </a-col>
-                            <a-col :xs="24" :sm="24" :lg="12">
-                                Số Server：
-                                <a-tag color="green">[[ dbInbounds.length ]]</a-tag>
-                            </a-col>
-                            <a-col :xs="24" :sm="24" :lg="12">
-                                <a-button @click="resetallTraffic(dbInbounds)">Đặt lại tất cả lưu lượng</a-button>
-                            </a-col>
-                        </a-row>
-                    </a-card> -->
-		</a-row>
-                </transition>
-                <transition name="list" appear>
-		<a-row style="margin-left:24px; margin-right:24px;">
+                        </br>
+                     </div>
+                  </div>
 
-			    <!-- Dropdown Card Example -->
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Danh Sách Server</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Menu:</div>
-                                            <a class="dropdown-item" @click="openAddInbound" href="#">Tạo Server</a>
-                                            <a class="dropdown-item" @click="resetallTraffic(dbInbounds)" href="#">Đặt Lại Dung Lượng</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">None</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-
-                        <a-table :columns="columns" :row-key="dbInbound => dbInbound.id"
+                  <div class="col-lg-12">
+                     <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h5 class="card-title">Danh Sách Server</h4>
+                           </div>
+                           <div class="iq-card-header-toolbar d-flex align-items-center">
+                              <div class="dropdown">
+                                 <span class="dropdown-toggle text-primary" id="dropdownMenuButton3" data-toggle="dropdown">
+                                     <i class="ri-more-2-fill"></i>
+                                 </span>
+                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <a-tag class="dropdown-item" @click="openAddInbound" href="#">Tạo server VPN</a-tag>
+				    <a-tag class="dropdown-item" @click="resetallTraffic(dbInbounds)" href="#">Reset Lưu Lượng</a-tag>
+                                  </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="mb-4 iq-card-body">
+		   	<a-table :columns="columns" :row-key="dbInbound => dbInbound.id"
                                  :data-source="dbInbounds"
                                  :loading="spinning" :scroll="{ x: 1500 }"
                                  :pagination="false"
@@ -275,64 +253,69 @@
                                 <a-tag v-else color="green">Vô thời hạn</a-tag>
                             </template>
                         </a-table>
-
-		       </div>
-                    </div>
-
-		</a-row>
-                </transition>
-            </a-spin>
-
-	    <!-- Footer -->
-            <footer class="sticky-footer bg-white" style="margin-top: 24px; margin-left: 0px; margin-right: 0px; margin-bottom: 0px;">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; X-UI Unofficial</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
-            <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Bạn thực sự muốn đăng xuất ???</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                   <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Khi chọn "Đăng xuất" bạn sẻ quay lại màn hình đăng nhập.</div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Trở lại</button>
-                            <a class="btn btn-primary" href="{{ .base_path }}logout">Đăng xuất</a>
-                        </div>
-                    </div>
-                </div>
-             </div>
+			</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- Wrapper END -->
+      <!-- Footer -->
+      <footer class="bg-white iq-footer">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-lg-6">
+                  <ul class="list-inline mb-0">
+                     <li class="list-inline-item"><a href="https://github.com/vaxilu/x-ui.git">X-UI Official</a></li>
+                     <li class="list-inline-item"><a href="https://github.com/dopaemon/x-ui.git">X-UI Unofficial</a></li>
+                  </ul>
+               </div>
+               <div class="col-lg-6 text-right">
+                  Copyright 2022 <a href="https://github.com/dopaemon/x-ui">X-UI Unofficial</a> All Rights Reserved.
+               </div>
+            </div>
+         </div>
+      </footer>
 
         </a-layout-content>
     </a-layout>
-
-<!-- Bootstrap core JavaScript-->
-<script src="{{ .base_path }}assets/vendor/jquery/jquery.min.js"></script>
-<script src="{{ .base_path }}assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="{{ .base_path }}assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="{{ .base_path }}assets/js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="{{ .base_path }}assets/vendor/chart.js/Chart.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="{{ .base_path }}assets/js/demo/chart-area-demo.js"></script>
-<script src="{{ .base_path }}assets/js/demo/chart-pie-demo.js"></script>
-
 </a-layout>
+
+      <!-- Footer END -->
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="{{ .base_path }}assets/js/jquery.min.js"></script>
+      <script src="{{ .base_path }}assets/js/popper.min.js"></script>
+      <script src="{{ .base_path }}assets/js/bootstrap.min.js"></script>
+      <!-- Appear JavaScript -->
+      <script src="{{ .base_path }}assets/js/jquery.appear.js"></script>
+      <!-- Countdown JavaScript -->
+      <script src="{{ .base_path }}assets/js/countdown.min.js"></script>
+      <!-- Counterup JavaScript -->
+      <script src="{{ .base_path }}assets/js/waypoints.min.js"></script>
+      <script src="{{ .base_path }}assets/js/jquery.counterup.min.js"></script>
+      <!-- Wow JavaScript -->
+      <script src="{{ .base_path }}assets/js/wow.min.js"></script>
+      <!-- Apexcharts JavaScript -->
+      <script src="{{ .base_path }}assets/js/apexcharts.js"></script>
+      <!-- Slick JavaScript -->
+      <script src="{{ .base_path }}assets/js/slick.min.js"></script>
+      <!-- Select2 JavaScript -->
+      <script src="{{ .base_path }}assets/js/select2.min.js"></script>
+      <!-- Owl Carousel JavaScript -->
+      <script src="{{ .base_path }}assets/js/owl.carousel.min.js"></script>
+      <!-- Magnific Popup JavaScript -->
+      <script src="{{ .base_path }}assets/js/jquery.magnific-popup.min.js"></script>
+      <!-- Smooth Scrollbar JavaScript -->
+      <script src="{{ .base_path }}assets/js/smooth-scrollbar.js"></script>
+      <!-- lottie JavaScript -->
+      <script src="{{ .base_path }}assets/js/lottie.js"></script>
+      <!-- Chart Custom JavaScript -->
+      <script src="{{ .base_path }}assets/js/chart-custom.js"></script>
+      <!-- Custom JavaScript -->
+      <script src="{{ .base_path }}assets/js/custom.js"></script>
+
 {{template "js" .}}
 <script>
 
@@ -450,7 +433,7 @@
             },
             openAddInbound() {
                 inModal.show({
-                    title: 'Tạo acấu hình VPN mới',
+                    title: 'Tạo cấu hình VPN mới',
                     okText: 'Thêm vào',
                     confirm: async (inbound, dbInbound) => {
                         inModal.loading();

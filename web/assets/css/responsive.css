@@ -16,7 +16,7 @@ NOTE: This file contains the styling for responsive Template.
 	.chat-sidebar-name > h6 {font-size: 14px;}
 	.chat-sidebar-name span{font-size: 12px;}
 }
-@media(max-width:1699px) {
+@media(max-width:100%) {
 	.email-form .select2-container { width: 100% !important; }
 	.sign-in-page { height: 100%; }
 	.sign-in-detail { height: 100%; }

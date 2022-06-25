@@ -17,17 +17,17 @@
     </a-form-item>
     <a-form-item>
         <span slot="label">
-            Domain Name
+            IP Tổng
             <a-tooltip>
                 <template slot="title">
-                    Nhập domain hoặc IP Server
+                    Nhập domain hoặc IP Server, Hoặc để trống.
                 </template>
                 <a-icon type="question-circle" theme="filled"></a-icon>
             </a-tooltip>
         </span>
         <a-input v-model.trim="inbound.listen"></a-input>
     </a-form-item>
-    <a-form-item label="Cổng">
+    <a-form-item label="Port">
         <a-input type="number" v-model.number="inbound.port"></a-input>
     </a-form-item>
     <a-form-item>

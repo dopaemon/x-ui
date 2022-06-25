@@ -30,7 +30,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh)
 sudo -s
 ```
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh) Dev
 ```
 ## ⚠️⚠️⚠️ Làm ơn không dùng cách này để install x-ui
 ```
