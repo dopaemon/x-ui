@@ -3,7 +3,7 @@ env:
     BUILD_HOSTNAME: "CirrusCI"
     CIRRUS_WORKING_DIR: "/tmp/ci"
     TOKEN: "ENCRYPTED[!fe92b05186850ad5deb3f6b17c377c157b7f4eb2b23b5c51f27f9779ac4e6acc537b41972fb3b3ce97b8b640eb414a55!]"
-    VERSIONS: "0.3.4.5-Sofbox"
+    VERSIONS: "Dev"
     INFORELEASE: "X-UI Vietnamese Language\n\nNgưng support 32Bit\nThêm Bot Telegram và CloudFlare\nChấp nhận clear dung lượng đã dùng\nThông báo dung lượng qua Telegram\n\nSupport: amd64, arm64v8a, s390x.\n\n*** Vui lòng tạo Issues nếu có bất kỳ lỗi nào"
     DEBIAN_FRONTEND: "noninteractive"
     SSHKEY1: "ENCRYPTED[!e6706dd32621e320165c4cbc6a710c42329ed1149221addf97dd393018e52bf72b2b9b3cdae7cc1aba7863d394a53f46!]"
@@ -13,8 +13,8 @@ env:
 
 task:
   name: Compile X-UI
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'main'
-  skip: $CIRRUS_BRANCH != 'main'
+  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'master'
+  skip: $CIRRUS_BRANCH != 'master'
   container:
     image: dopaemon/bionic:latest
     cpu: 4
@@ -54,7 +54,7 @@ task:
     - sudo mkdir -p /tmp/ci/platform/
     - sudo chmod 777 /tmp/ci/x-ui/
     - sudo chmod 777 /tmp/ci/platform/
-    - git clone -b main --single-branch --depth="1" https://github.com/dopaemon/x-ui.git /tmp/ci/x-ui/src
+    - git clone -b master --single-branch --depth="1" https://github.com/dopaemon/x-ui.git /tmp/ci/x-ui/src
     - echo "$VERSIONS By https://github.com/dopaemon" > /tmp/ci/x-ui/src/config/version
   env-targz_script:
     - sudo mkdir -p /tmp/ci/x-ui/src-zip/x-ui/bin
@@ -71,49 +71,15 @@ task:
     - git clone -b main --single-branch https://github.com/XTLS/Xray-core.git /tmp/ci/XrayPrebuilt/Xray-core 
     - cd /tmp/ci/XrayPrebuilt/
     - git clone https://github.com/SagerNet/sing-shadowsocks.git
-  xray_build_amd64_script:
-    - source ~/.goi
-    - cd /tmp/ci/XrayPrebuilt/Xray-core
-    - CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o OUT/xray-amd64 -v -trimpath -ldflags "-s -w -buildid=" ./main
   xray_build_arm64_script:
     - source ~/.goi
     - cd /tmp/ci/XrayPrebuilt/Xray-core
     - CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc  go build -o OUT/xray-arm64 -v -trimpath -ldflags "-s -w -buildid=" ./main
-  xray_build_s390x_script:
-    - source ~/.goi
-    - cd /tmp/ci/XrayPrebuilt/Xray-core
-    - CGO_ENABLED=1 GOOS=linux GOARCH=s390x CC=s390x-linux-gnu-gcc  go build -o OUT/xray-s390x -v -trimpath -ldflags "-s -w -buildid=" ./main
-  xray_build_riscv64_script:
-    - source ~/.goi
-    - cd /tmp/ci/XrayPrebuilt/Xray-core
-    - CGO_ENABLED=1 GOOS=linux GOARCH=riscv64 CC=riscv64-linux-gnu-gcc  go build -o OUT/xray-riscv64 -v -trimpath -ldflags "-s -w -buildid=" ./main
-  amd64_script:
-    - source ~/.goi
-    - cd /tmp/ci/x-ui/src
-    - CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -ldflags='-extldflags=-static' -tags sqlite_omit_load_extension -o xui-amd64 -v main.go
-    - mv xui-amd64 /tmp/ci/platform/
   arm64_script:
     - source ~/.goi
     - cd /tmp/ci/x-ui/src
     - CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc go build -ldflags='-extldflags=-static' -tags sqlite_omit_load_extension -o xui-arm64 -v main.go
     - mv xui-arm64 /tmp/ci/platform/
-  s390x_script:
-    - source ~/.goi
-    - cd /tmp/ci/x-ui/src
-    - CGO_ENABLED=1 GOOS=linux GOARCH=s390x CC=s390x-linux-gnu-gcc go build -ldflags='-extldflags=-static' -tags sqlite_omit_load_extension -o xui-s390x -v main.go
-    - mv xui-s390x /tmp/ci/platform/
-  riscv64_script:
-    - source ~/.goi
-    - cd /tmp/ci/x-ui/src
-    - CGO_ENABLED=1 GOOS=linux GOARCH=riscv64 CC=riscv64-linux-gnu-gcc go build -ldflags='-extldflags=-static' -tags sqlite_omit_load_extension -o xui-riscv64 -v main.go
-    - mv xui-riscv64 /tmp/ci/platform/
-  branch_amd64_script:
-    - mv /tmp/ci/platform/xui-amd64 /tmp/ci/x-ui/src-zip/x-ui/x-ui
-    - mv /tmp/ci/XrayPrebuilt/Xray-core/OUT/xray-amd64 /tmp/ci/x-ui/src-zip/x-ui/bin/xray-linux-amd64
-    - cd /tmp/ci/x-ui/src-zip/x-ui
-    - git init && git add -vA && git commit -sm "Release: X-UI $VERSIONS AMD64" && git remote add origin git@github.com:dopaemon/x-ui.git
-    - git checkout -b "X-UI-$VERSIONS-AMD64"
-    - echo "yes" | git push -uf origin "X-UI-$VERSIONS-AMD64"
   branch_arm64_script:
     - rm -rvf /tmp/ci/x-ui/src-zip/x-ui/.git
     - rm -rvf /tmp/ci/x-ui/src-zip/x-ui/x-ui
@@ -122,66 +88,24 @@ task:
     - mv /tmp/ci/XrayPrebuilt/Xray-core/OUT/xray-arm64 /tmp/ci/x-ui/src-zip/x-ui/bin/xray-linux-arm64
     - cd /tmp/ci/x-ui/src-zip/x-ui
     - git init && git add -vA && git commit -sm "Release: X-UI $VERSIONS ARM64" && git remote add origin git@github.com:dopaemon/x-ui.git
-    - git checkout -b "X-UI-$VERSIONS-ARM64"
-    - echo "yes" | git push -uf origin "X-UI-$VERSIONS-ARM64"
-  branch_s390x_script:
-    - rm -rvf /tmp/ci/x-ui/src-zip/x-ui/.git
-    - rm -rvf /tmp/ci/x-ui/src-zip/x-ui/x-ui
-    - rm -rvf /tmp/ci/x-ui/src-zip/x-ui/bin/xray-linux-*
-    - mv /tmp/ci/platform/xui-s390x /tmp/ci/x-ui/src-zip/x-ui/x-ui
-    - mv /tmp/ci/XrayPrebuilt/Xray-core/OUT/xray-s390x /tmp/ci/x-ui/src-zip/x-ui/bin/xray-linux-s390x
-    - cd /tmp/ci/x-ui/src-zip/x-ui
-    - git init && git add -vA && git commit -sm "Release: X-UI $VERSIONS S390X" && git remote add origin git@github.com:dopaemon/x-ui.git
-    - git checkout -b "X-UI-$VERSIONS-S390X"
-    - echo "yes" | git push -uf origin "X-UI-$VERSIONS-S390X"
-  branch_riscv64_script:
-    - rm -rvf /tmp/ci/x-ui/src-zip/x-ui/.git
-    - rm -rvf /tmp/ci/x-ui/src-zip/x-ui/x-ui
-    - rm -rvf /tmp/ci/x-ui/src-zip/x-ui/bin/xray-linux-*
-    - mv /tmp/ci/platform/xui-riscv64 /tmp/ci/x-ui/src-zip/x-ui/x-ui
-    - mv /tmp/ci/XrayPrebuilt/Xray-core/OUT/xray-riscv64 /tmp/ci/x-ui/src-zip/x-ui/bin/xray-linux-riscv64
-    - cd /tmp/ci/x-ui/src-zip/x-ui
-    - git init && git add -vA && git commit -sm "Release: X-UI $VERSIONS RISCV64" && git remote add origin git@github.com:dopaemon/x-ui.git
-    - git checkout -b "X-UI-$VERSIONS-RISCV64"
-    - echo "yes" | git push -uf origin "X-UI-$VERSIONS-RISCV64"
+    - git checkout -b "X-UI-Dev-ARM64"
+    - echo "yes" | git push -uf origin "X-UI-Dev-ARM64"
   github_script:
     - sudo rm -rf /tmp/ci/*
     - sudo chmod 777 /tmp/ci
-    - mkdir -p /tmp/ci/amd64
     - mkdir -p /tmp/ci/arm64
-    - mkdir -p /tmp/ci/s390x
-    - mkdir -p /tmp/ci/riscv64
-    - git clone -b "X-UI-$VERSIONS-AMD64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/amd64/x-ui
-    - cd /tmp/ci/amd64/
-    - rm -rvf x-ui/.git
-    - tar -czvf x-ui-linux-amd64.tar.gz x-ui
-    - cd /
-    - git clone -b "X-UI-$VERSIONS-ARM64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/arm64/x-ui
+    - git clone -b "X-UI-Dev-ARM64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/arm64/x-ui
     - cd /tmp/ci/arm64/
     - rm -rvf x-ui/.git
     - tar -czvf x-ui-linux-arm64.tar.gz x-ui
-    - cd /
-    - git clone -b "X-UI-$VERSIONS-S390X" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/s390x/x-ui
-    - cd /tmp/ci/s390x/
-    - rm -rvf x-ui/.git
-    - tar -czvf x-ui-linux-s390x.tar.gz x-ui
-    - cd /
-    - git clone -b "X-UI-$VERSIONS-RISCV64" --single-branch https://github.com/dopaemon/x-ui.git /tmp/ci/riscv64/x-ui
-    - cd /tmp/ci/riscv64/
-    - rm -rvf x-ui/.git
-    - tar -czvf x-ui-linux-riscv64.tar.gz x-ui
-    - cd /
   release_script:
     - cd /tmp/ci
-    - git clone -b main --single-branch https://github.com/dopaemon/x-ui.git
+    - git clone -b master --single-branch https://github.com/dopaemon/x-ui.git
     - mkdir -p /tmp/ci/out/
-    - mv /tmp/ci/amd64/x-ui-linux-amd64.tar.gz /tmp/ci/out/
     - mv /tmp/ci/arm64/x-ui-linux-arm64.tar.gz /tmp/ci/out/
-    - mv /tmp/ci/s390x/x-ui-linux-s390x.tar.gz /tmp/ci/out/
-    - mv /tmp/ci/riscv64/x-ui-linux-riscv64.tar.gz /tmp/ci/out/
     - gh config set git_protocol ssh --host github.com
     - touch mytoken.txt
     - echo "$TOKEN" > mytoken.txt
     - gh auth login --with-token < mytoken.txt
-    - bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/release.sh)
+    - bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/master/release.sh)
     - echo "yes" | gh release create $VERSIONS /tmp/ci/out/*.tar.gz --notes "$INFORELEASE" --title "X-UI $VERSIONS - Weekly - $(date +"%d-%m-%Y")"
