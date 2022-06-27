@@ -175,9 +175,9 @@
                                        </template>
                                        <a-icon type="question-circle" theme="filled"></a-icon>
                                </a-tooltip>
-                               <a-tag color="green">[[ status.xray.version ]]</a-tag>
+                               <a-tag color="green" @click="openSelectV2rayVersion">[[ status.xray.version ]]</a-tag>
                                </br>
-                               <!-- <a-tag color="blue" @click="openSelectV2rayVersion">Chuyển đổi phiên bản</a-tag> -->
+                               <a-tag color="blue" @click="openSelectV2rayVersion">Chuyển đổi phiên bản</a-tag>
                              </div>
                            </div>
                         </div>
@@ -366,6 +366,16 @@
             </div>
          </div>
       </div>
+      <a-modal id="version-modal" v-model="versionModal.visible" title="Chuyển Phiên Bản" :closable="true" @ok="() => versionModal.visible = false" ok-text="Đồng ý" cancel-text="Hủy bỏ">
+        <h2>Nhấp vào phiên bản bạn muốn chuyển đổi</h2>
+        <h2>Vui lòng chọn cẩn thận, phiên bản cũ có thể không tương thích với cấu hình</h2>
+        <template v-for="version, index in versionModal.versions">
+          <a-tag :color="index % 2 == 0 ? 'blue' : 'green'" style="margin: 10px" @click="switchV2rayVersion(version)">
+             [[ version ]]
+          </a-tag>
+        </template>
+      </a-modal>
+
       <!-- Wrapper END -->
       <!-- Footer -->
       <footer class="bg-white iq-footer">
