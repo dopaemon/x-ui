@@ -88,7 +88,7 @@
                   <h5 class="mb-0">X-UI Unofficial</h5>
                   <nav aria-label="breadcrumb">
                      <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ .base_path }}xui">Trang Chủ</a></li>
+                        <li class="breadcrumb-item"><a href="{{ .base_path }}xui">Dashboard</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Trang Chủ</li>
                      </ul>
                   </nav>
@@ -175,9 +175,9 @@
                                        </template>
                                        <a-icon type="question-circle" theme="filled"></a-icon>
                                </a-tooltip>
-                               <a-tag color="green">[[ status.xray.version ]]</a-tag>
+                               <a-tag color="green" @click="openSelectV2rayVersion">[[ status.xray.version ]]</a-tag>
                                </br>
-                               <!-- <a-tag color="blue" @click="openSelectV2rayVersion">Chuyển đổi phiên bản</a-tag> -->
+                               <a-tag color="blue" @click="openSelectV2rayVersion">Chuyển đổi phiên bản</a-tag>
                              </div>
                            </div>
                         </div>
@@ -352,19 +352,11 @@
                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                               <div class="iq-card-header d-flex justify-content-between">
                                  <div class="iq-header-title">
-                                    <h5 class="card-title">Xray Update Release</h4>
+                                    <h5 class="card-title">X-UI Unofficial Commited</h4>
                                  </div>
                               </div>
                               <div class="iq-card-body">
-	                        <a-modal id="version-modal" v-model="versionModal.visible" title="Chuyển Phiên Bản" :closable="true" @ok="() => versionModal.visible = false" ok-text="Đồng ý" cancel-text="Hủy bỏ">
-                                      <h2>Nhấp vào phiên bản bạn muốn chuyển đổi</h2>
-                                      <h2>Vui lòng chọn cẩn thận, phiên bản cũ có thể không tương thích với cấu hình</h2>
-                                      <template v-for="version, index in versionModal.versions">
-                                         <a-tag :color="index % 2 == 0 ? 'blue' : 'green'" style="margin: 10px" @click="switchV2rayVersion(version)">
-                                            [[ version ]]
-                                         </a-tag>
-                                      </template>
-                                </a-modal>
+				<iframe src="{{ .base_path }}xui/infome" width="100%" height="444" frameBorder="0">Browser not compatible.</iframe>
                               </div>
                            </div>
                         </div>
@@ -374,6 +366,16 @@
             </div>
          </div>
       </div>
+      <a-modal id="version-modal" v-model="versionModal.visible" title="Chuyển Phiên Bản" :closable="true" @ok="() => versionModal.visible = false" ok-text="Đồng ý" cancel-text="Hủy bỏ">
+        <h2>Nhấp vào phiên bản bạn muốn chuyển đổi</h2>
+        <h2>Vui lòng chọn cẩn thận, phiên bản cũ có thể không tương thích với cấu hình</h2>
+        <template v-for="version, index in versionModal.versions">
+          <a-tag :color="index % 2 == 0 ? 'blue' : 'green'" style="margin: 10px" @click="switchV2rayVersion(version)">
+             [[ version ]]
+          </a-tag>
+        </template>
+      </a-modal>
+
       <!-- Wrapper END -->
       <!-- Footer -->
       <footer class="bg-white iq-footer">

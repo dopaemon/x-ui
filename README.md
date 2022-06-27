@@ -23,7 +23,7 @@ Tắt Unikey trước khi chạy Script. Tránh trình trạng Sai Mật Khẩu
 sudo -s
 ```
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh) 0.3.4.5-Sofbox
+bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh) 0.3.4.6-Sofbox
 ```
 ## Theme SBAdmin 2 [ Stable ]
 [Demo Theme](https://startbootstrap.github.io/startbootstrap-sb-admin-2/)
