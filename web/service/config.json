@@ -9,7 +9,7 @@
   },
   "dns": {
     "servers": [
-        "8.8.8.8"
+        "1.1.1.1"
     ],
     "queryStrategy": "UseIPv4"
  },
@@ -55,7 +55,7 @@
       {
         "type": "field",
         "ip": [
-            "8.8.8.8"
+            "1.1.1.1"
         ],
         "outboundTag": "direct"
       },
@@ -63,14 +63,16 @@
         "type": "field",
         "domain": [
             "geosite:cn",
-            "geosite:category-ads-all"
+            "geosite:category-ads-all",
+            "geosite:win-spy",
+            "geosite:win-extra"
         ],
-        "outboundTag": "blocked"
+        "outboundTag": "Reject"
       },
       {
         "type": "field",
         "domain": [
-          "pincong.rocks" 
+          "pincong.rocks"
         ],
         "outboundTag": "blocked"
       },
