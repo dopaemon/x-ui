@@ -1,250 +1,84 @@
-<!DOCTYPE html>
-<html lang="vi">
-   <head>
-      <!-- Required meta tags -->
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>dopaemon - Trần Nguyễn Tuấn Anh</title>
-      <!-- Favicon -->
-      <link rel="shortcut icon" href="{{ .base_path }}assets/images/favicon.ico" />
-      <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="{{ .base_path }}assets/css/bootstrap.min.css">
-      <!-- Typography CSS -->
-      <link rel="stylesheet" href="{{ .base_path }}assets/css/typography.css">
-      <!-- Style CSS -->
-      <link rel="stylesheet" href="{{ .base_path }}assets/css/style.css">
-      <!-- Responsive CSS -->
-      <link rel="stylesheet" href="{{ .base_path }}assets/css/responsive.css">
-   </head>
+<head>
+</head>
 <body>
-      <!-- loader Start -->
-      <div id="loading">
-         <div id="loading-center">
-            <div class="loader">
-               <div class="cube">
-                  <div class="sides">
-                     <div class="top"></div>
-                     <div class="right"></div>
-                     <div class="bottom"></div>
-                     <div class="left"></div>
-                     <div class="front"></div>
-                     <div class="back"></div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- loader END -->
-      <!-- Wrapper Start -->
-      <div class="wrapper">
-         <!-- Sidebar  -->
-         <div class="iq-sidebar">
-            <div class="iq-sidebar-logo d-flex justify-content-between">
-               <a href="{{ .base_path }}xui">
-                <img src="{{ .base_path }}assets/images/logo.png" class="img-fluid" alt="">
-               </a>
-               <div class="iq-menu-bt align-self-center">
-                  <div class="wrapper-menu">
-                     <div class="line-menu half start"></div>
-                     <div class="line-menu"></div>
-                     <div class="line-menu half end"></div>
-                  </div>
-               </div>
-            </div>
-            <div id="sidebar-scrollbar">
-               <nav class="iq-sidebar-menu">
-                  <ul id="iq-sidebar-toggle" class="iq-menu">
-                     <li class="iq-menu-title"><i class="ri-separator"></i><span>X-UI Unofficial</span></li>
-                     <li class="active">
-                        <a href="#dashboard" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-home-4-line"></i><span>Dashboard</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="dashboard" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                           <li><a href="{{ .base_path }}xui">Trang Chủ</a></li>
-                           <li><a href="{{ .base_path }}xui/inbounds">Danh Sách VPN</a></li>
-	  		   <li><a href="{{ .base_path }}xui/setting">Cài Đặt</a></li>
-                        </ul>
-                     </li>
-                  </ul>
-               </nav>
-               <div class="p-3"></div>
-            </div>
-         </div>
-         <!-- TOP Nav Bar -->
-         <div class="iq-top-navbar">
-            <div class="iq-navbar-custom">
-               <div class="iq-sidebar-logo">
-                  <div class="top-logo">
-                     <a href="{{ .base_path }}xui" class="logo">
-                     <img src="{{ .base_path }}assets/images/logo.png" class="img-fluid" alt="">
-                     <span></span>
-                     </a>
-                  </div>
-               </div>
-               <div class="navbar-breadcrumb">
-                  <h5 class="mb-0">X-UI Unofficial</h5>
-                  <nav aria-label="breadcrumb">
-                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ .base_path }}xui">Trang Chủ</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Trang Chủ</li>
-                     </ul>
-                  </nav>
-               </div>
-               <nav class="navbar navbar-expand-lg navbar-light p-0">
-                  <div class="iq-menu-bt align-self-center">
-                     <div class="wrapper-menu">
-                        <div class="line-menu half start"></div>
-                        <div class="line-menu"></div>
-                        <div class="line-menu half end"></div>
-                     </div>
-                  </div>
-                  <!-- <div class="nav-item iq-full-screen"><a href="#" class="iq-waves-effect" id="btnFullscreen"><i class="ri-fullscreen-line"></i></a></div> -->
-                  <ul class="navbar-list">
-                     <li>
-                        <a href="#" class="search-toggle iq-waves-effect bg-primary text-white"><img src="https://avatars.githubusercontent.com/u/43093213?v=4" class="img-fluid rounded" alt="user"></a>
-                        <div class="iq-sub-dropdown iq-user-dropdown">
-                           <div class="iq-card iq-card-block iq-card-stretch iq-card-height shadow-none m-0">
-                              <div class="iq-card-body p-0 ">
-                                 <div class="bg-primary p-3">
-                                    <h5 class="mb-0 text-white line-height">dopaemon</h5>
-                                    <span class="text-white font-size-12">Maintainer</span>
-                                 </div>
-                                 <a href="{{ .base_path }}xui/infome" class="iq-sub-card iq-bg-primary-hover">
-                                    <div class="media align-items-center">
-                                       <div class="rounded iq-card-icon iq-bg-primary">
-                                          <i class="ri-file-user-line"></i>
-                                       </div>
-                                       <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">Thông Tin</h6>
-                                          <p class="mb-0 font-size-12">Xem thêm thông tin liên lạc của tôi.</p>
-                                       </div>
-                                    </div>
-                                 </a>
-                                 <a href="{{ .base_path }}xui/setting" class="iq-sub-card iq-bg-primary-success-hover">
-                                    <div class="media align-items-center">
-                                       <div class="rounded iq-card-icon iq-bg-success">
-                                          <i class="ri-profile-line"></i>
-                                       </div>
-                                       <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">Cài Đặt</h6>
-                                          <p class="mb-0 font-size-12">Tùy chỉnh X-UI.</p>
-                                       </div>
-                                    </div>
-                                 </a>
-                                 <div class="d-inline-block w-100 text-center p-3">
-                                    <a class="iq-bg-danger iq-sign-btn" href="{{ .base_path }}logout" role="button">Đăng Xuất<i class="ri-login-box-line ml-2"></i></a>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </li>
-                  </ul>
-               </nav>
-            </div>
-         </div>
-         <!-- TOP Nav Bar END -->
-         <!-- Page Content  -->
-         <div id="content-page" class="content-page">
-            <div class="container-fluid">
-               <div class="row">
-                  <div class="col-sm-12">
-                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-body profile-page p-0">
-                           <div class="profile-header">
-                              <div class="cover-container">
-                                 <img src="https://static.vecteezy.com/system/resources/previews/001/838/338/non_2x/colorful-abstract-liquid-background-vector.jpg" alt="profile-bg" class="rounded img-fluid w-100"> 
-                                 <ul class="header-nav d-flex flex-wrap justify-end p-0 m-0">
-                                 </ul>
-                              </div>
-                              <div class="profile-info p-4">
-                                 <div class="row">
-                                    <div class="col-sm-12 col-md-6">
-                                       <div class="user-detail pl-5">
-                                          <div class="d-flex flex-wrap align-items-center">
-                                             <div class="profile-img pr-4">
-                                                <img src="https://avatars.githubusercontent.com/u/43093213?v=4" alt="profile-img" class="avatar-130 img-fluid" />
-                                             </div>
-                                             <div class="profile-detail d-flex align-items-center">
-                                                <h3>dopaemon</h3>
-                                                <p class="m-0 pl-3"> - Trần Nguyễn Tuấn Anh - </p>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6">
-                                       <ul class="nav nav-pills d-flex align-items-end float-right profile-feed-items p-0 m-0">
-                                          <li>
-                                             <button onclick="window.location.href='https://github.com/dopaemon';" class="btn btn-primary btn-block">Github</button>
-                                          </li>
-                                          <li>
-                                             <button onclick="window.location.href='https://fb.me/KernelPanix';" class="btn btn-primary btn-block">Facebook</button>
-                                           </li>
-                                          <li>
-                                             <button onclick="window.location.href='https://m.me/KernelPanix';" class="btn btn-primary btn-block">Messenger</button>
-                                          </li>
-                                          <li>
-                                             <button onclick="window.location.href='https://t.me/KernelPanix';" class="btn btn-primary btn-block">Telegram</button>
-                                          </li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- Wrapper END -->
-      <!-- Footer -->
-      <footer class="bg-white iq-footer">
-         <div class="container-fluid">
-            <div class="row">
-               <div class="col-lg-6">
-                  <ul class="list-inline mb-0">
-                     <li class="list-inline-item"><a href="https://google.com">Google</a></li>
-                     <li class="list-inline-item"><a href="https://github.com">Github</a></li>
-                  </ul>
-               </div>
-               <div class="col-lg-6 text-right">
-                  Copyright 2022 <a href="https://github.com/dopaemon/x-ui">X-UI Unofficial</a> All Rights Reserved.
-               </div>
-            </div>
-         </div>
-      </footer>
-
-      <!-- Footer END -->
-      <!-- Optional JavaScript -->
-      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-      <script src="{{ .base_path }}assets/js/jquery.min.js"></script>
-      <script src="{{ .base_path }}assets/js/popper.min.js"></script>
-      <script src="{{ .base_path }}assets/js/bootstrap.min.js"></script>
-      <!-- Appear JavaScript -->
-      <script src="{{ .base_path }}assets/js/jquery.appear.js"></script>
-      <!-- Countdown JavaScript -->
-      <script src="{{ .base_path }}assets/js/countdown.min.js"></script>
-      <!-- Counterup JavaScript -->
-      <script src="{{ .base_path }}assets/js/waypoints.min.js"></script>
-      <script src="{{ .base_path }}assets/js/jquery.counterup.min.js"></script>
-      <!-- Wow JavaScript -->
-      <script src="{{ .base_path }}assets/js/wow.min.js"></script>
-      <!-- Apexcharts JavaScript -->
-      <script src="{{ .base_path }}assets/js/apexcharts.js"></script>
-      <!-- Slick JavaScript -->
-      <script src="{{ .base_path }}assets/js/slick.min.js"></script>
-      <!-- Select2 JavaScript -->
-      <script src="{{ .base_path }}assets/js/select2.min.js"></script>
-      <!-- Owl Carousel JavaScript -->
-      <script src="{{ .base_path }}assets/js/owl.carousel.min.js"></script>
-      <!-- Magnific Popup JavaScript -->
-      <script src="{{ .base_path }}assets/js/jquery.magnific-popup.min.js"></script>
-      <!-- Smooth Scrollbar JavaScript -->
-      <script src="{{ .base_path }}assets/js/smooth-scrollbar.js"></script>
-      <!-- lottie JavaScript -->
-      <script src="{{ .base_path }}assets/js/lottie.js"></script>
-      <!-- Chart Custom JavaScript -->
-      <script src="{{ .base_path }}assets/js/chart-custom.js"></script>
-      <!-- Custom JavaScript -->
-      <script src="{{ .base_path }}assets/js/custom.js"></script>
+							  <script>
+								fetch('https://api.github.com/repos/dopaemon/x-ui/commits?per_page=10')
+								.then(res => res.json())
+								.then(res => {
+									document.getElementById('message').innerHTML = res[0].commit.message
+								})
+								</script>
+								<pre id="message">Loading</pre>
+								<script>
+								fetch('https://api.github.com/repos/dopaemon/x-ui/commits?per_page=10')
+								.then(res => res.json())
+								.then(res => {
+									document.getElementById('messagee').innerHTML = res[1].commit.message
+								})
+								</script>
+								<pre id="messagee">Loading</pre>
+								<script>
+								fetch('https://api.github.com/repos/dopaemon/x-ui/commits?per_page=10')
+								.then(res => res.json())
+								.then(res => {
+									document.getElementById('messageee').innerHTML = res[2].commit.message
+								})
+								</script>
+								<pre id="messageee">Loading</pre>
+								<script>
+								fetch('https://api.github.com/repos/dopaemon/x-ui/commits?per_page=10')
+								.then(res => res.json())
+								.then(res => {
+									document.getElementById('messageeee').innerHTML = res[3].commit.message
+								})
+								</script>
+								<pre id="messageeee">Loading</pre>
+								<script>
+								fetch('https://api.github.com/repos/dopaemon/x-ui/commits?per_page=10')
+								.then(res => res.json())
+								.then(res => {
+									document.getElementById('messageeeee').innerHTML = res[4].commit.message
+								})
+								</script>
+								<pre id="messageeeee">Loading</pre>
+								<script>
+								fetch('https://api.github.com/repos/dopaemon/x-ui/commits?per_page=10')
+								.then(res => res.json())
+								.then(res => {
+									document.getElementById('messageeeeee').innerHTML = res[5].commit.message
+								})
+								</script>
+								<pre id="messageeeeee">Loading</pre>
+								<script>
+								fetch('https://api.github.com/repos/dopaemon/x-ui/commits?per_page=10')
+								.then(res => res.json())
+								.then(res => {
+									document.getElementById('messageeeeeee').innerHTML = res[6].commit.message
+								})
+								</script>
+								<pre id="messageeeeeee">Loading</pre>
+								<script>
+								fetch('https://api.github.com/repos/dopaemon/x-ui/commits?per_page=10')
+								.then(res => res.json())
+								.then(res => {
+									document.getElementById('messageeeeeeee').innerHTML = res[7].commit.message
+								})
+								</script>
+								<pre id="messageeeeeeee">Loading</pre>
+								<script>
+								fetch('https://api.github.com/repos/dopaemon/x-ui/commits?per_page=10')
+								.then(res => res.json())
+								.then(res => {
+									document.getElementById('messageeeeeeeee').innerHTML = res[8].commit.message
+								})
+								</script>
+								<pre id="messageeeeeeeee">Loading</pre>
+								<script>
+								fetch('https://api.github.com/repos/dopaemon/x-ui/commits?per_page=10')
+								.then(res => res.json())
+								.then(res => {
+									document.getElementById('messageeeeeeeeee').innerHTML = res[9].commit.message
+								})
+								</script>
+								<pre id="messageeeeeeeeee">Loading</pre>
 </body>
-</html>
