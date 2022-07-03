@@ -113,11 +113,13 @@ class XrayCommonClass {
 }
 
 class TcpStreamSettings extends XrayCommonClass {
-    constructor(type = 'none',
+    constructor(acceptProxyProtocol = false,
+        type = 'none',
         request = new TcpStreamSettings.TcpRequest(),
         response = new TcpStreamSettings.TcpResponse(),
     ) {
         super();
+        this.acceptProxyProtocol = acceptProxyProtocol;
         this.type = type;
         this.request = request;
         this.response = response;
@@ -128,7 +130,7 @@ class TcpStreamSettings extends XrayCommonClass {
         if (!header) {
             header = {};
         }
-        return new TcpStreamSettings(
+        return new TcpStreamSettings(json.acceptProxyProtocol,
             header.type,
             TcpStreamSettings.TcpRequest.fromJson(header.request),
             TcpStreamSettings.TcpResponse.fromJson(header.response),
@@ -137,6 +139,7 @@ class TcpStreamSettings extends XrayCommonClass {
 
     toJson() {
         return {
+            acceptProxyProtocol: this.acceptProxyProtocol,
             header: {
                 type: this.type,
                 request: this.type === 'http' ? this.request.toJson() : undefined,
@@ -296,8 +299,9 @@ class KcpStreamSettings extends XrayCommonClass {
 }
 
 class WsStreamSettings extends XrayCommonClass {
-    constructor(path = '/', headers = []) {
+    constructor(acceptProxyProtocol = false, path = '/', headers = []) {
         super();
+        this.acceptProxyProtocol = acceptProxyProtocol;
         this.path = path;
         this.headers = headers;
     }
@@ -321,6 +325,7 @@ class WsStreamSettings extends XrayCommonClass {
 
     static fromJson(json = {}) {
         return new WsStreamSettings(
+            json.acceptProxyProtocol,
             json.path,
             XrayCommonClass.toHeaders(json.headers),
         );
@@ -328,6 +333,7 @@ class WsStreamSettings extends XrayCommonClass {
 
     toJson() {
         return {
+            acceptProxyProtocol: this.acceptProxyProtocol,
             path: this.path,
             headers: XrayCommonClass.toV2Headers(this.headers, false),
         };
@@ -414,10 +420,11 @@ class GrpcStreamSettings extends XrayCommonClass {
 
 class TlsStreamSettings extends XrayCommonClass {
     constructor(serverName = '',
-        certificates = [new TlsStreamSettings.Cert()]) {
+        certificates = [new TlsStreamSettings.Cert()], alpn = []) {
         super();
         this.server = serverName;
         this.certs = certificates;
+        this.alpn = alpn;
     }
 
     addCert(cert) {
@@ -436,6 +443,7 @@ class TlsStreamSettings extends XrayCommonClass {
         return new TlsStreamSettings(
             json.serverName,
             certs,
+            json.alpn
         );
     }
 
@@ -443,6 +451,7 @@ class TlsStreamSettings extends XrayCommonClass {
         return {
             serverName: this.server,
             certificates: TlsStreamSettings.toJsonArray(this.certs),
+            alpn: this.alpn
         };
     }
 }
