@@ -113,10 +113,10 @@ class XrayCommonClass {
 }
 
 class TcpStreamSettings extends XrayCommonClass {
-	constructor(type = 'none',
-                request = new TcpStreamSettings.TcpRequest(),
-                response = new TcpStreamSettings.TcpResponse(),
-                ) {
+    constructor(type = 'none',
+        request = new TcpStreamSettings.TcpRequest(),
+        response = new TcpStreamSettings.TcpResponse(),
+    ) {
         super();
         this.type = type;
         this.request = request;
@@ -414,7 +414,7 @@ class GrpcStreamSettings extends XrayCommonClass {
 
 class TlsStreamSettings extends XrayCommonClass {
     constructor(serverName = '',
-		certificates = [new TlsStreamSettings.Cert()]) {
+        certificates = [new TlsStreamSettings.Cert()]) {
         super();
         this.server = serverName;
         this.certs = certificates;
@@ -632,7 +632,7 @@ class Inbound extends XrayCommonClass {
         if (isTls) {
             this.stream.security = 'tls';
         } else {
-	    if (this.protocol === Protocols.TROJAN) {
+            if (this.protocol === Protocols.TROJAN) {
                 this.xtls = true;
             } else {
                 this.stream.security = 'none';
@@ -648,7 +648,7 @@ class Inbound extends XrayCommonClass {
         if (isXTls) {
             this.stream.security = 'xtls';
         } else {
-	    if (this.protocol === Protocols.TROJAN) {
+            if (this.protocol === Protocols.TROJAN) {
                 this.tls = true;
             } else {
                 this.stream.security = 'none';
@@ -854,6 +854,7 @@ class Inbound extends XrayCommonClass {
             case Protocols.VMESS:
             case Protocols.VLESS:
             case Protocols.SHADOWSOCKS:
+            case Protocols.TROJAN:
                 return true;
             default:
                 return false;
@@ -1028,7 +1029,7 @@ class Inbound extends XrayCommonClass {
         if (!ObjectUtil.isEmpty(server)) {
             address = server;
         }
-	if (settings.method == SSMethods.BLAKE3_AES_128_GCM || settings.method == SSMethods.BLAKE3_AES_256_GCM || settings.method == SSMethods.BLAKE3_CHACHA20_POLY1305) {
+        if (settings.method == SSMethods.SS_2022_BLAKE3_AES_128_GCM || settings.method == SSMethods.SS_2022_BLAKE3_AES_256_GCM || settings.method == SSMethods.SS_2022_BLAKE3_CHACHA20_POLY1305) {
             return `ss://${settings.method}:${settings.password}@${address}:${this.port}#${encodeURIComponent(remark)}`;
         } else {
             return 'ss://' + safeBase64(settings.method + ':' + settings.password + '@' + address + ':' + this.port)
@@ -1038,7 +1039,75 @@ class Inbound extends XrayCommonClass {
 
     genTrojanLink(address = '', remark = '') {
         let settings = this.settings;
-        return `trojan://${settings.clients[0].password}@${address}:${this.port}#${encodeURIComponent(remark)}`;
+        const port = this.port;
+        const type = this.stream.network;
+        const params = new Map();
+        params.set("type", this.stream.network);
+        if (this.xtls) {
+            params.set("security", "xtls");
+        } else {
+            params.set("security", this.stream.security);
+        }
+        switch (type) {
+            case "tcp":
+                const tcp = this.stream.tcp;
+                if (tcp.type === 'http') {
+                    const request = tcp.request;
+                    params.set("path", request.path.join(','));
+                    const index = request.headers.findIndex(header => header.name.toLowerCase() === 'host');
+                    if (index >= 0) {
+                        const host = request.headers[index].value;
+                        params.set("host", host);
+                    }
+                }
+                break;
+            case "kcp":
+                const kcp = this.stream.kcp;
+                params.set("headerType", kcp.type);
+                params.set("seed", kcp.seed);
+                break;
+            case "ws":
+                const ws = this.stream.ws;
+                params.set("path", ws.path);
+                const index = ws.headers.findIndex(header => header.name.toLowerCase() === 'host');
+                if (index >= 0) {
+                    const host = ws.headers[index].value;
+                    params.set("host", host);
+                }
+                break;
+            case "http":
+                const http = this.stream.http;
+                params.set("path", http.path);
+                params.set("host", http.host);
+                break;
+            case "quic":
+                const quic = this.stream.quic;
+                params.set("quicSecurity", quic.security);
+                params.set("key", quic.key);
+                params.set("headerType", quic.type);
+                break;
+            case "grpc":
+                const grpc = this.stream.grpc;
+                params.set("serviceName", grpc.serviceName);
+                break;
+        }
+
+        if (this.stream.security === 'tls') {
+            if (!ObjectUtil.isEmpty(this.stream.tls.server)) {
+                address = this.stream.tls.server;
+                params.set("sni", address);
+            }
+        }
+        if (this.xtls) {
+            params.set("flow", this.settings.clients[0].flow);
+        }
+        const link = `trojan://${settings.clients[0].password}@${address}:${port}`;
+        const url = new URL(link);
+        for (const [key, value] of params) {
+            url.searchParams.set(key, value)
+        }
+        url.hash = encodeURIComponent(remark);
+        return url.toString();
     }
 
     genLink(address = '', remark = '') {
@@ -1365,8 +1434,8 @@ Inbound.TrojanSettings.Fallback = class extends XrayCommonClass {
 
 Inbound.ShadowsocksSettings = class extends Inbound.Settings {
     constructor(protocol,
-	method = SSMethods.BLAKE3_AES_256_GCM,
-	password = RandomUtil.randomSeq(44),
+        method = SSMethods.AES_256_GCM,
+        password = btoa(RandomUtil.randomSeq(64)),
         network = 'tcp,udp'
     ) {
         super(protocol);
