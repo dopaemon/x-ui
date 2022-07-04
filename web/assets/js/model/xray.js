@@ -151,9 +151,9 @@ class TcpStreamSettings extends XrayCommonClass {
 
 TcpStreamSettings.TcpRequest = class extends XrayCommonClass {
     constructor(version = '1.1',
-                method = 'GET',
-                path = ['/'],
-                headers = [],
+        method = 'GET',
+        path = ['/'],
+        headers = [],
     ) {
         super();
         this.version = version;
@@ -207,9 +207,9 @@ TcpStreamSettings.TcpRequest = class extends XrayCommonClass {
 
 TcpStreamSettings.TcpResponse = class extends XrayCommonClass {
     constructor(version = '1.1',
-                status = '200',
-                reason = 'OK',
-                headers = [],
+        status = '200',
+        reason = 'OK',
+        headers = [],
     ) {
         super();
         this.version = version;
@@ -247,14 +247,14 @@ TcpStreamSettings.TcpResponse = class extends XrayCommonClass {
 
 class KcpStreamSettings extends XrayCommonClass {
     constructor(mtu = 1350, tti = 20,
-                uplinkCapacity = 5,
-                downlinkCapacity = 20,
-                congestion = false,
-                readBufferSize = 2,
-                writeBufferSize = 2,
-                type = 'none',
-                seed = RandomUtil.randomSeq(10),
-                ) {
+        uplinkCapacity = 5,
+        downlinkCapacity = 20,
+        congestion = false,
+        readBufferSize = 2,
+        writeBufferSize = 2,
+        type = 'none',
+        seed = RandomUtil.randomSeq(10),
+    ) {
         super();
         this.mtu = mtu;
         this.tti = tti;
@@ -375,7 +375,7 @@ class HttpStreamSettings extends XrayCommonClass {
 
 class QuicStreamSettings extends XrayCommonClass {
     constructor(security = VmessMethods.NONE,
-                key = '', type = 'none') {
+        key = '', type = 'none') {
         super();
         this.security = security;
         this.key = key;
@@ -499,15 +499,15 @@ TlsStreamSettings.Cert = class extends XrayCommonClass {
 
 class StreamSettings extends XrayCommonClass {
     constructor(network = 'tcp',
-                security = 'none',
-                tlsSettings = new TlsStreamSettings(),
-                tcpSettings = new TcpStreamSettings(),
-                kcpSettings = new KcpStreamSettings(),
-                wsSettings = new WsStreamSettings(),
-                httpSettings = new HttpStreamSettings(),
-                quicSettings = new QuicStreamSettings(),
-                grpcSettings = new GrpcStreamSettings(),
-                ) {
+        security = 'none',
+        tlsSettings = new TlsStreamSettings(),
+        tcpSettings = new TcpStreamSettings(),
+        kcpSettings = new KcpStreamSettings(),
+        wsSettings = new WsStreamSettings(),
+        httpSettings = new HttpStreamSettings(),
+        quicSettings = new QuicStreamSettings(),
+        grpcSettings = new GrpcStreamSettings(),
+    ) {
         super();
         this.network = network;
         this.security = security;
@@ -604,13 +604,13 @@ class Sniffing extends XrayCommonClass {
 
 class Inbound extends XrayCommonClass {
     constructor(port = RandomUtil.randomIntRange(10000, 60000),
-                listen = '',
-                protocol = Protocols.VMESS,
-                settings = null,
-                streamSettings = new StreamSettings(),
-                tag = '',
-                sniffing = new Sniffing(),
-                ) {
+        listen = '',
+        protocol = Protocols.VMESS,
+        settings = null,
+        streamSettings = new StreamSettings(),
+        tag = '',
+        sniffing = new Sniffing(),
+    ) {
         super();
         this.port = port;
         this.listen = listen;
@@ -1039,7 +1039,7 @@ class Inbound extends XrayCommonClass {
             address = server;
         }
         if (settings.method == SSMethods.SS_2022_BLAKE3_AES_128_GCM || settings.method == SSMethods.SS_2022_BLAKE3_AES_256_GCM || settings.method == SSMethods.SS_2022_BLAKE3_CHACHA20_POLY1305) {
-            return `ss://${settings.method}:${settings.password}@${address}:${this.port}/#${encodeURIComponent(remark)}`;
+            return `ss://${settings.method}:${settings.password}@${address}:${this.port}#${encodeURIComponent(remark)}`;
         } else {
             return 'ss://' + safeBase64(settings.method + ':' + settings.password + '@' + address + ':' + this.port)
                 + '#' + encodeURIComponent(remark);
@@ -1306,7 +1306,7 @@ Inbound.VLESSSettings.VLESS = class extends XrayCommonClass {
     }
 };
 Inbound.VLESSSettings.Fallback = class extends XrayCommonClass {
-    constructor(name = "", alpn = '', path = '', dest = '', xver=0) {
+    constructor(name = "", alpn = '', path = '', dest = '', xver = 0) {
         super();
         this.name = name;
         this.alpn = alpn;
