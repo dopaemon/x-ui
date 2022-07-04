@@ -1,19 +1,76 @@
 <h1 align="center">X-UI Unofficial.</h1>
-<p>
-  <img alt="visited" src="https://badges.pufler.dev/visits/dopaemon/x-ui" /> <img alt="buildcheck" src="https://api.cirrus-ci.com/github/dopaemon/x-ui.svg" />
-</p>
 
 > Đây Là Phiên Bản X-UI được Việt Hoá và cập nhật Xray định kỳ. kèm các bản vá Pull.
+
+# Đọc kỹ rồi làm gì hẳng làm. Làm ơn. Install Lộn Script Không Được Ráng Chịu.
 
 ## Support Platform
 Linux:
 ```
-- amd64 ( x68_64 )
-- arm64-v8a ( aarch64 )
-- s390x
-- Riscv64
+Debian
+Ubuntu
+CentOS
+RaspberryPI OS
+Armbian
+```
+Arch:
+```
+386
+amd64
+arm
+arm64
+mips
+mips64
+mips64le
+mipsle
+riscv64
+s390x
+```
+## Cài Đặt Bằng Tay
+- Đọc kỹ rồi làm gì hẳng làm
+```
+# Thay đổi theo danh sách Arch phía trên, Cho đúng thiết bị của bạn.
+export UARCH="arm64"
+```
+- Tải bản X-UI theo Cấu trúc CPU bạn dùng tại đây [Release](https://github.com/dopaemon/x-ui/releases)
+```
+sudo -s
+```
+```
+rm x-ui/ /usr/local/x-ui/ /usr/bin/x-ui -rf
+```
+```
+tar zxvf x-ui-linux-$UARCH.tar.gz
+```
+```
+chmod +x x-ui/x-ui x-ui/bin/xray-linux-* x-ui/x-ui.sh
+```
+```
+cp x-ui/x-ui.sh /usr/bin/x-ui
+```
+```
+cp -f x-ui/x-ui.service /etc/systemd/system/
+```
+```
+mv x-ui/ /usr/local/
+```
+```
+systemctl daemon-reload
+```
+```
+systemctl enable x-ui
+```
+```
+systemctl restart x-ui
+```
+```
+Tài khoản mặc định:
+- TK: admin
+- PW: admin
+- PR: 54321
 ```
 ## Cài Đặt Bằng Script [ Đọc lưu ý phía dưới ]
+## Chỉ Support: amd64, arm64, s390x, riscv64.
 ```
 Tắt Unikey trước khi chạy Script. Tránh trình trạng Sai Mật Khẩu
 ```
