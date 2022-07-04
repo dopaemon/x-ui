@@ -3,7 +3,7 @@ env:
     BUILD_HOSTNAME: "CirrusCI"
     CIRRUS_WORKING_DIR: "/tmp/ci"
     TOKEN: "ENCRYPTED[!fe92b05186850ad5deb3f6b17c377c157b7f4eb2b23b5c51f27f9779ac4e6acc537b41972fb3b3ce97b8b640eb414a55!]"
-    VERSIONS: "0.3.4.6-Sofbox"
+    VERSIONS: "0.3.4.6.1-Sofbox"
     INFORELEASE: "X-UI Vietnamese Language\n\nThêm Bot Telegram và CloudFlare\nChấp nhận clear dung lượng đã dùng\nThông báo dung lượng qua Telegram\n\nSupport: 386, amd64, [arm32v5 v6 v7], arm64, mips, mips64, mips64le, mipsle, riscv64, s390x.\nOS: CentOS, Ubuntu, Debian, Armbian\n\n*** Vui lòng tạo Issues nếu có bất kỳ lỗi nào"
     DEBIAN_FRONTEND: "noninteractive"
     SSHKEY1: "ENCRYPTED[!e6706dd32621e320165c4cbc6a710c42329ed1149221addf97dd393018e52bf72b2b9b3cdae7cc1aba7863d394a53f46!]"
