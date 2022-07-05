@@ -250,3 +250,6 @@ task:
     - gh auth login --with-token < mytoken.txt
     - bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/release.sh)
     - echo "yes" | gh release create $VERSIONS /tmp/work/OUT/*.tar.gz --notes "$INFORELEASE" --title "X-UI $VERSIONS - Weekly - $(date +"%d-%m-%Y")"
+  check_script:
+    - sudo -s
+    - ls /usr/bin/
