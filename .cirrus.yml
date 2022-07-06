@@ -10,6 +10,7 @@ env:
     SSHKEY2: "ENCRYPTED[!a5d564aa645ea61bb70aa6ce21a8f8bb51766a8b9fc80dec8aebcf34df41a0afd66f6e7766acea683fece365311949e8!]"
     USERNAME: "ENCRYPTED[!84300cf406cc0695b827f4cbc9883c7712ab134798e1347bccac9395580fd618298d6dd1ff7897e77eea3a3203fda42b!]"
     EMAIL: "ENCRYPTED[!a03cbd7c4b2f675b5535c1199bc8bd6eb2f30db7812c7846e372b3e51d00d3c1b4de9e7654bf683c1e5728aba6bfba0e!]"
+    NGORKTOKEN: "ENCRYPTED[bb6140df5f51e60475ee168d793d74a1cf48f0ccc3c735d0604326b69f49166e9a3f1bd4b1dfee7851d81279a0fcadea]"
 
 task:
   name: Compile X-UI
@@ -20,6 +21,10 @@ task:
     cpu: 4
     memory: 8G
 
+  ngrok_background_script:
+    - sudo service ssh start
+    - ngrok authtoken $NGORKTOKEN
+    - ngrok tcp 22
   sshkey_script:
     - mkdir -p ~/.ssh
     - sudo chmod 700 ~/.ssh/
