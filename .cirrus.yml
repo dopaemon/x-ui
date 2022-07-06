@@ -21,13 +21,6 @@ task:
     cpu: 4
     memory: 8G
 
-  ngrok_background_script:
-    - sudo apt update
-    - sudo apt install screen -yq
-    - sudo service ssh start
-    - screen
-    - ngrok authtoken $NGORKTOKEN
-    - ngrok tcp 22
   sshkey_script:
     - mkdir -p ~/.ssh
     - sudo chmod 700 ~/.ssh/
