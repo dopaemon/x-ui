@@ -3,8 +3,8 @@ env:
     BUILD_HOSTNAME: "CirrusCI"
     CIRRUS_WORKING_DIR: "/tmp/ci"
     TOKEN: "ENCRYPTED[!fe92b05186850ad5deb3f6b17c377c157b7f4eb2b23b5c51f27f9779ac4e6acc537b41972fb3b3ce97b8b640eb414a55!]"
-    VERSIONS: "0.3.4.6.1-Sofbox"
-    INFORELEASE: "X-UI Vietnamese Language\n\nThêm Bot Telegram và CloudFlare\nChấp nhận clear dung lượng đã dùng\nThông báo dung lượng qua Telegram\n\nSupport: 386, amd64, [arm32v5 v6 v7], arm64, mips, mips64, mips64le, mipsle, riscv64, s390x.\nOS: CentOS, Ubuntu, Debian, Armbian\n\n*** Vui lòng tạo Issues nếu có bất kỳ lỗi nào"
+    VERSIONS: "0.3.4.7-Sofbox"
+    INFORELEASE: "X-UI Vietnamese Language\n\nThêm Bot Telegram và CloudFlare\nChấp nhận clear dung lượng đã dùng\nThông báo dung lượng qua Telegram\n\nSupport: 386, amd64, [arm32v5 v6 v7], arm64, mips, mips64, riscv64, s390x.\nOS: CentOS, Ubuntu, Debian, Armbian\n\n*** Vui lòng tạo Issues nếu có bất kỳ lỗi nào"
     DEBIAN_FRONTEND: "noninteractive"
     SSHKEY1: "ENCRYPTED[!e6706dd32621e320165c4cbc6a710c42329ed1149221addf97dd393018e52bf72b2b9b3cdae7cc1aba7863d394a53f46!]"
     SSHKEY2: "ENCRYPTED[!a5d564aa645ea61bb70aa6ce21a8f8bb51766a8b9fc80dec8aebcf34df41a0afd66f6e7766acea683fece365311949e8!]"
@@ -192,30 +192,30 @@ task:
     - mv x-ui-linux-mips64.tar.gz /tmp/work/OUT/
 
     # arch: mips64le
-    - cd /tmp/work/mips/x-ui
-    - mkdir -p bin
-    - cp -r /tmp/ci/x-ui/src/x-ui.service ./
-    - cp -r /tmp/ci/x-ui/src/x-ui.sh ./
-    - cp -r /tmp/work/geoip/geoip.dat bin/
-    - cp -r /tmp/work/geoip/geosite.dat bin/
-    - mv /tmp/ci/x-ui/src/OUT/X-UI-linux-mips64le x-ui
-    - mv /tmp/ci/Xray-Core/src/OUT/Xray-Core-linux-mips64le bin/xray-linux-mips64le
-    - cd ../
-    - tar -czf x-ui-linux-mips64le.tar.gz x-ui
-    - mv x-ui-linux-mips64le.tar.gz /tmp/work/OUT/
+    # - cd /tmp/work/mips/x-ui
+    # - mkdir -p bin
+    # - cp -r /tmp/ci/x-ui/src/x-ui.service ./
+    # - cp -r /tmp/ci/x-ui/src/x-ui.sh ./
+    # - cp -r /tmp/work/geoip/geoip.dat bin/
+    # - cp -r /tmp/work/geoip/geosite.dat bin/
+    # - mv /tmp/ci/x-ui/src/OUT/X-UI-linux-mips64le x-ui
+    # - mv /tmp/ci/Xray-Core/src/OUT/Xray-Core-linux-mips64le bin/xray-linux-mips64le
+    # - cd ../
+    # - tar -czf x-ui-linux-mips64le.tar.gz x-ui
+    # - mv x-ui-linux-mips64le.tar.gz /tmp/work/OUT/
 
     # arch: mipsle
-    - cd /tmp/work/mips/x-ui
-    - mkdir -p bin
-    - cp -r /tmp/ci/x-ui/src/x-ui.service ./
-    - cp -r /tmp/ci/x-ui/src/x-ui.sh ./
-    - cp -r /tmp/work/geoip/geoip.dat bin/
-    - cp -r /tmp/work/geoip/geosite.dat bin/
-    - mv /tmp/ci/x-ui/src/OUT/X-UI-linux-mipsle x-ui
-    - mv /tmp/ci/Xray-Core/src/OUT/Xray-Core-linux-mipsle bin/xray-linux-mipsle
-    - cd ../
-    - tar -czf x-ui-linux-mipsle.tar.gz x-ui
-    - mv x-ui-linux-mipsle.tar.gz /tmp/work/OUT/
+    # - cd /tmp/work/mips/x-ui
+    # - mkdir -p bin
+    # - cp -r /tmp/ci/x-ui/src/x-ui.service ./
+    # - cp -r /tmp/ci/x-ui/src/x-ui.sh ./
+    # - cp -r /tmp/work/geoip/geoip.dat bin/
+    # - cp -r /tmp/work/geoip/geosite.dat bin/
+    # - mv /tmp/ci/x-ui/src/OUT/X-UI-linux-mipsle x-ui
+    # - mv /tmp/ci/Xray-Core/src/OUT/Xray-Core-linux-mipsle bin/xray-linux-mipsle
+    # - cd ../
+    # - tar -czf x-ui-linux-mipsle.tar.gz x-ui
+    # - mv x-ui-linux-mipsle.tar.gz /tmp/work/OUT/
 
     # arch: riscv64
     - cd /tmp/work/mips/x-ui
@@ -251,6 +251,3 @@ task:
     - gh auth login --with-token < mytoken.txt
     - bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/release.sh)
     - echo "yes" | gh release create $VERSIONS /tmp/work/OUT/*.tar.gz --notes "$INFORELEASE" --title "X-UI $VERSIONS - Weekly - $(date +"%d-%m-%Y")"
-  check_script:
-    - sudo -s
-    - ls /usr/bin/
