@@ -80,10 +80,11 @@ Tắt Unikey trước khi chạy Script. Tránh trình trạng Sai Mật Khẩu
 sudo -s
 ```
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh) 0.3.4.6.1-Sofbox
+bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh)
 ```
 ## Theme SBAdmin 2 [ Stable ]
 [Demo Theme](https://startbootstrap.github.io/startbootstrap-sb-admin-2/)
+- Nếu bạn có 1 bản Linux đã cũ: GLIBC_2.28 not found
 ```
 sudo -s
 ```
@@ -101,10 +102,4 @@ bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh)
 ```
 sudo bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/install.sh)
 ```
-# Contributors
-
-<p>
-  <img alt="Contributors" src="https://badges.pufler.dev/contributors/dopaemon/x-ui?size=50&padding=5&bots=true" />
-</p>
-
 ## Owner: Dự án gốc nằm ở đây [**vaxilu**](https://github.com/vaxilu/x-ui) - Tôi chỉ phát triển nó cho người Việt Nam dễ tiếp cận hơn.
