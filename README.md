@@ -21,8 +21,8 @@ arm
 arm64
 mips
 mips64
-mips64le
-mipsle
+mips64le - Drop
+mipsle - Drop
 riscv64
 s390x
 ```
