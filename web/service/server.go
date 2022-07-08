@@ -12,7 +12,8 @@ import (
 	"runtime"
 	"time"
 	"x-ui/logger"
-	"x-ui/util/sys"
+
+	// "x-ui/util/sys"
 	"x-ui/xray"
 
 	"github.com/shirou/gopsutil/cpu"
@@ -144,12 +145,32 @@ func (s *ServerService) GetStatus(lastStatus *Status) *Status {
 		logger.Warning("can not find io counters")
 	}
 
-	status.TcpCount, err = sys.GetTCPCount()
+	// I want to fix this bug
+	// I don't know why, but the tcp count is not correct
+	// I think it's a bug of gopsutil
+	// I will fix it in the future
+	tcpCount, err := net.Connections("tcp")
+	if err != nil {
+		logger.Warning("get tcp connections failed:", err)
+	} else {
+		status.TcpCount = len(tcpCount)
+		// go
+	}
 	if err != nil {
 		logger.Warning("get tcp connections failed:", err)
 	}
 
-	status.UdpCount, err = sys.GetUDPCount()
+	// I want to fix this bug
+	// I don't know why, but the udp count is not correct
+	// I think it's a bug of gopsutil
+	// I will fix it in the future
+	udpCount, err := net.Connections("udp")
+	if err != nil {
+		logger.Warning("get udp connections failed:", err)
+	} else {
+		status.UdpCount = len(udpCount)
+		// gopsutil
+	}
 	if err != nil {
 		logger.Warning("get udp connections failed:", err)
 	}

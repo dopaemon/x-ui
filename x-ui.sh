@@ -37,6 +37,8 @@ elif cat /proc/version | grep -Eqi "ubuntu"; then
     release="ubuntu"
 elif cat /proc/version | grep -Eqi "centos|red hat|redhat"; then
     release="centos"
+elif cat /proc/version | grep -Eqi "fedora"; then
+    release="fedora"
 else
     LOGE "Phiên bản Linux không thể xác định, liên hệ dev！\n" && exit 1
 fi
