@@ -580,10 +580,11 @@ class StreamSettings extends XrayCommonClass {
         };
     }
 }
+
 class Sniffing extends XrayCommonClass {
-    constructor(disabled = true, destOverride = ['http', 'tls']) {
+    constructor(enabled = true, destOverride = ['http', 'tls']) {
         super();
-        this.disabled = disabled;
+        this.enabled = enabled;
         this.destOverride = destOverride;
     }
 
@@ -595,7 +596,7 @@ class Sniffing extends XrayCommonClass {
             }
         }
         return new Sniffing(
-            !!json.disabled,
+            !!json.enabled,
             destOverride,
         );
     }
