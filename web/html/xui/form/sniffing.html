@@ -10,7 +10,9 @@
                     <a-icon type="question-circle" theme="filled"></a-icon>
                 </a-tooltip>
             </span>
-    <a-switch v-model="inbound.sniffing.enabled"></a-switch>
+    <!-- i want disable sniffing default -->
+    <a-switch v-model="form.sniffing" disabled></a-switch>
+    <!-- <a-switch v-model="inbound.sniffing.enabled"></a-switch> -->
   </a-form-item>
 </a-form>
 {{end}}
