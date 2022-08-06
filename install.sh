@@ -27,38 +27,26 @@ elif cat /proc/version | grep -Eqi "ubuntu"; then
     release="ubuntu"
 elif cat /proc/version | grep -Eqi "centos|red hat|redhat"; then
     release="centos"
-elif cat /etc/issue | grep -Eqi "fedora"; then
-    release="fedora"
 else
     echo -e "${red}Phiên bản Linux bạn đang dùng không thể xác định！${plain}\n" && exit 1
 fi
 
 arch=$(arch)
 
-# i want support for 386, amd64, arm, arm64, mips, mips64, riscv64, s390x Linux
-if [[ "$arch" == "i686" ]]; then
-    arch="386"
-elif [[ "$arch" == "x86_64" ]]; then
+if [[ $arch == "x86_64" || $arch == "x64" || $arch == "amd64" ]]; then
     arch="amd64"
-elif [[ "$arch" == "aarch64" ]]; then
+elif [[ $arch == "x86" ]]; then
+    arch="x86"
+elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
     arch="arm64"
-elif [[ "$arch" == "armv7l" ]]; then
-    arch="arm"
-elif [[ "$arch" == "armv8"* ]]; then
-    arch="arm64"
-elif [[ "$arch" == "mips64le" ]]; then
-    arch="mips64le"
-elif [[ "$arch" == "mips64" ]]; then
-    arch="mips64"
-elif [[ "$arch" == "mips" ]]; then
-    arch="mips"
-elif [[ "$arch" == "s390x" ]]; then
+elif [[ $arch == "s390x" ]]; then
     arch="s390x"
+elif [[ $arch == "riscv64" ]]; then
+    arch="riscv64"
 else
     arch="amd64"
     echo -e "${red}Không thể xác định cấu trúc CPU, thử dùng Kiến Trúc amd64 ${arch}${plain}"
 fi
-
 
 echo "Kiến Trúc CPU: ${arch}"
 

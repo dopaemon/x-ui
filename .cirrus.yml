@@ -190,7 +190,7 @@ task:
     - cd ../
     - tar -czf x-ui-linux-mips64.tar.gz x-ui
     - mv x-ui-linux-mips64.tar.gz /tmp/work/OUT/
-    
+
     # arch: mips64le
     # - cd /tmp/work/mips/x-ui
     # - mkdir -p bin

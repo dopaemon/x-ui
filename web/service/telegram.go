@@ -11,10 +11,8 @@ import (
 	"x-ui/util/common"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/load"
-	"github.com/shirou/gopsutil/mem"
 )
 
 //This should be global variable,and only one instance
@@ -35,25 +33,6 @@ func (s *TelegramService) GetsystemStatus() string {
 		fmt.Println("get hostname error:", err)
 		return ""
 	}
-	// i want get cpu info Percent
-	percent, err := cpu.Percent(0, false)
-	if err != nil {
-		fmt.Println("get cpu percent error:", err)
-		return ""
-	}
-
-	// I want to print out ram used/total information
-	ram, err := mem.VirtualMemory()
-	if err != nil {
-		fmt.Println("get ram error:", err)
-		return ""
-	}
-
-	// I want to send current time
-	t := time.Now()
-	status += fmt.Sprintf("Thời gian: %s\r\n", t.Format("2006-01-02 15:04:05"))
-	status += fmt.Sprintf("CPU: %.2f%%\r\n", percent[0])
-	status += fmt.Sprintf("RAM: %.2f/%.2f GB\r\n", float64(ram.Used)/1024/1024/1024, float64(ram.Total)/1024/1024/1024)
 	status = fmt.Sprintf("Tên máy chủ: %s\r\n", name)
 	status += fmt.Sprintf("Loại hệ thống: %s\r\n", runtime.GOOS)
 	status += fmt.Sprintf("Cấu trúc hệ thống: %s\r\n", runtime.GOARCH)
