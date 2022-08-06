@@ -36,6 +36,10 @@ task:
     - sudo chmod 400 ~/.ssh/*
     - ssh-keygen -R $(curl ifconfig.me)
 
+  install_script:
+    - curl -OL https://golang.org/dl/go1.18.1.linux-amd64.tar.gz
+    - sudo tar -C /usr/local -xvf go1.18.1.linux-amd64.tar.gz
+
   source_script:
     - sudo mkdir -p /tmp/ci/x-ui/
     - sudo chmod 777 /tmp/ci/x-ui/
@@ -43,10 +47,12 @@ task:
     - echo "$VERSIONS By https://github.com/dopaemon" > /tmp/ci/x-ui/src/config/version
 
   compile_x-ui_script:
+    - export PATH=$PATH:/usr/local/go/bin
     - cd /tmp/ci/x-ui/src && mkdir -p OUT
     - compile-xui
 
   compile_XrayR_script:
+    - export PATH=$PATH:/usr/local/go/bin
     - sudo mkdir -p /tmp/ci/Xray-Core
     - sudo chmod 777 /tmp/ci/Xray-Core
     - git clone -b main --single-branch --depth="1" https://github.com/XTLS/Xray-core.git /tmp/ci/Xray-Core/src
