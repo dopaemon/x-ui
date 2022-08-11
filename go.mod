@@ -16,7 +16,7 @@ require (
 	github.com/tklauser/go-sysconf v0.3.10 // indirect
 	github.com/xtls/xray-core v1.5.9
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
-	go.uber.org/atomic v1.9.0
+	go.uber.org/atomic v1.10.0
 	golang.org/x/text v0.3.7
 	google.golang.org/grpc v1.48.0
 	gorm.io/driver/sqlite v1.3.6
