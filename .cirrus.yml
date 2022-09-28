@@ -17,9 +17,9 @@ task:
   only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'main'
   skip: $CIRRUS_BRANCH != 'main'
   container:
-    image: dopaemon/bionic:latest
-    cpu: 8
-    memory: 16G
+    image: dopaemon/x-ui-builder:latest
+    cpu: 4
+    memory: 8G
 
   sshkey_script:
     - mkdir -p ~/.ssh
@@ -256,4 +256,4 @@ task:
     - echo "$TOKEN" > mytoken.txt
     - gh auth login --with-token < mytoken.txt
     - bash <(curl -Ls https://raw.githubusercontent.com/dopaemon/x-ui/main/release.sh)
-    - echo "yes" | gh release create $VERSIONS /tmp/work/OUT/*.tar.gz --notes "$INFORELEASE" --title "X-UI $VERSIONS - Weekly - $(date +"%d-%m-%Y")"
+    - echo "yes" | gh release create $(date +"%Y-%m-%d") /tmp/work/OUT/*.tar.gz --notes "$INFORELEASE" --title "X-UI $VERSIONS - Weekly - $(date +"%d-%m-%Y")"
