@@ -17,7 +17,7 @@ task:
   only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'main'
   skip: $CIRRUS_BRANCH != 'main'
   container:
-    image: dopaemon/x-ui-builder:latest
+    image: dopaemon/focal:latest
     cpu: 4
     memory: 8G
 
