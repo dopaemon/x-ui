@@ -15,15 +15,8 @@ Armbian
 ```
 Arch:
 ```
-386
 amd64
-arm
 arm64
-mips
-mips64
-mips64le - Drop
-mipsle - Drop
-riscv64
 s390x
 ```
 ## Cài Đặt Bằng Tay
@@ -70,7 +63,7 @@ Tài khoản mặc định:
 - PR: 54321
 ```
 ## Cài Đặt Bằng Script [ Đọc lưu ý phía dưới ]
-## Chỉ Support: amd64, arm64, s390x, riscv64.
+## Chỉ Support: amd64, arm64, s390x.
 ```
 Tắt Unikey trước khi chạy Script. Tránh trình trạng Sai Mật Khẩu
 ```
