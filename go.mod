@@ -20,5 +20,5 @@ require (
 	golang.org/x/text v0.3.7
 	google.golang.org/grpc v1.49.0
 	gorm.io/driver/sqlite v1.4.1
-	gorm.io/gorm v1.23.10
+	gorm.io/gorm v1.24.0
 )
