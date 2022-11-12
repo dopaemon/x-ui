@@ -1,3 +1,5 @@
+# Move to this repo: [https://github.com/X-UI-Unofficial](https://github.com/X-UI-Unofficial)
+
 <h1 align="center">X-UI Unofficial.</h1>
 
 > Đây Là Phiên Bản X-UI được Việt Hoá và cập nhật Xray định kỳ. kèm các bản vá Pull.
