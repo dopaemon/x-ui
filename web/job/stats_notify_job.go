@@ -44,32 +44,31 @@ func (j *StatsNotifyJob) Run() {
 
 func (j *StatsNotifyJob) UserLoginNotify(username string, ip string, time string, status LoginStatus) {
 	if username == "" || ip == "" || time == "" {
-		logger.Warning("UserLoginNotify failed,invalid info")
+		logger.Warning("Thông báo đăng nhập người dùng không thành công, thông tin không hợp lệ")
 		return
 	}
 	var msg string
 	//get hostname
 	name, err := os.Hostname()
 	if err != nil {
-		fmt.Println("get hostname error:", err)
+		fmt.Println("Nhận tên máy chủ lỗi: ", err)
 		return
 	}
-	//msg = fmt.Sprintf("Có phiên ₫ăng nhập mới vào máy chủ\r\nhostname: %s\r\n", name)
 	if status == LoginSuccess {
-		msg = fmt.Sprintf("Đăng nhập thành công bảng điều khiển\r\nCPU:%s\r\n", name)
+		msg = fmt.Sprintf("Nhắc nhở đăng nhập thành công bảng điều khiển\r\nTên máy chủ: %s\r\n", name)
 	} else if status == LoginFail {
-		msg = fmt.Sprintf("đăng nhập bảng điều khiển không thành công\r\nCPU:%s\r\n", name)
+		msg = fmt.Sprintf("Nhắc nhở đăng nhập không thành công bảng điều khiển\r\nTên máy chủ: %s\r\n", name)
 	}
-	msg += fmt.Sprintf("Thời gian: %s\r\n", time)
-	msg += fmt.Sprintf("Tài khoản: %s\r\n", username)
+	msg += fmt.Sprintf("Time: %s\r\n", time)
+	msg += fmt.Sprintf("User: %s\r\n", username)
 	msg += fmt.Sprintf("IP: %s\r\n", ip)
 	j.telegramService.SendMsgToTgbot(msg)
 }
 
 func (j *StatsNotifyJob) SSHStatusLoginNotify(xuiStartTime string) {
-	getSSHUserNumber, error := exec.Command("bash", "-c", "who | awk  '{print $1}'|wc -l").Output()
+	getSSHUserNumber, error := exec.Command("bash", "-c", "who | awk  '{print $1}' | wc -l").Output()
 	if error != nil {
-		fmt.Println("getSSHUserNumber error:", error)
+		fmt.Println("gặp lỗi số người dùng SSH: ", error)
 		return
 	}
 	var numberInt int
@@ -83,23 +82,15 @@ func (j *StatsNotifyJob) SSHStatusLoginNotify(xuiStartTime string) {
 		//hostname
 		name, err := os.Hostname()
 		if err != nil {
-			fmt.Println("get hostname error:", err)
+			fmt.Println("Nhận tên máy chủ lỗi: ", err)
 			return
 		}
 		//Time compare,need if x-ui got restart while ssh already exist users
-		SSHLoginTime, error := exec.Command("bash", "-c", "who | awk  '{print $3,$4}'|tail -n 1 ").Output()
+		SSHLoginTime, error := exec.Command("bash", "-c", "who | awk  '{print $3,$4}' | tail -n 1 ").Output()
 		if error != nil {
-			fmt.Println("getLoginTime error:", error.Error())
+			fmt.Println("Nhận thời gian đăng nhập lỗi: ", error.Error())
 			return
 		}
-		/*
-			//TODO:time compare if x-ui get restart and there exist logging users
-			XUIRunTime, error := exec.Command("bash", "-c", " systemctl status x-ui | grep Active| tail -n 1 | awk '{print $6,$7}' ").Output()
-			if error != nil {
-				fmt.Println("getXUIRunTime error:", error.Error())
-				return
-			}
-		*/
 		var SSHLoginTimeStr string
 		SSHLoginTimeStr = common.ByteToString(SSHLoginTime)
 		t1, err := time.Parse("2006-01-02 15:04:05", SSHLoginTimeStr)
@@ -108,24 +99,24 @@ func (j *StatsNotifyJob) SSHStatusLoginNotify(xuiStartTime string) {
 			fmt.Printf("SSHLogin[%s] early than XUI start[%s]\r\n", SSHLoginTimeStr, xuiStartTime)
 		}
 
-		SSHLoginUserName, error := exec.Command("bash", "-c", "who | awk  '{print $1}'|tail -n 1").Output()
+		SSHLoginUserName, error := exec.Command("bash", "-c", "who | awk  '{print $1}'| tail -n 1").Output()
 		if error != nil {
-			fmt.Println("getSSHLoginUserName error:", error.Error())
+			fmt.Println("Lấy tên đăng nhập SSH lỗi: ", error.Error())
 			return
 		}
 
-		SSHLoginIpAddr, error := exec.Command("bash", "-c", "who | awk  '{print $5}'|tail -n 1 | cut -d \"(\" -f2 | cut -d \")\" -f1 ").Output()
+		SSHLoginIpAddr, error := exec.Command("bash", "-c", "who | tail -n 1 | awk -F [\\(\\)] 'NR==1 {print $2}'").Output()
 		if error != nil {
-			fmt.Println("getSSHLoginIpAddr error:", error)
+			fmt.Println("Lấy địa chỉ đăng nhập SSH lỗi: ", error)
 			return
 		}
 
-		SSHLoginInfo = fmt.Sprintf("Có phiên đăng nhập mới:\r\n")
-		SSHLoginInfo += fmt.Sprintf("Tên Server: %s\r\n", name)
-		SSHLoginInfo += fmt.Sprintf("SSH User: %s", SSHLoginUserName)
-		SSHLoginInfo += fmt.Sprintf("Thời gian đăng nhập: %s", SSHLoginTime)
-		SSHLoginInfo += fmt.Sprintf("IP Đăng nhập SSH: %s", SSHLoginIpAddr)
-		SSHLoginInfo += fmt.Sprintf("Số User đăng nhập SSH hiện tại: %s", getSSHUserNumber)
+		SSHLoginInfo = fmt.Sprintf(" SSH user login reminder:\r\n")
+		SSHLoginInfo += fmt.Sprintf("Host name: %s\r\n", name)
+		SSHLoginInfo += fmt.Sprintf("Login user: %s", SSHLoginUserName)
+		SSHLoginInfo += fmt.Sprintf("Log in time: %s", SSHLoginTime)
+		SSHLoginInfo += fmt.Sprintf("Login IP: %s", SSHLoginIpAddr)
+		SSHLoginInfo += fmt.Sprintf("Hiện đang đăng nhập số lượng người dùng: %s", getSSHUserNumber)
 		j.telegramService.SendMsgToTgbot(SSHLoginInfo)
 	} else {
 		SSHLoginUser = numberInt
@@ -137,29 +128,29 @@ func (j *StatsNotifyJob) GetsystemStatus() string {
 	//get hostname
 	name, err := os.Hostname()
 	if err != nil {
-		fmt.Println("get hostname error:", err)
+		fmt.Println("Lấy thông tin máy chủ lỗi:", err)
 		return ""
 	}
 	info = fmt.Sprintf("Tên máy chủ: %s\r\n", name)
 	//get ip address
 	var ip string
 	ip = common.GetMyIpAddr()
-	info += fmt.Sprintf("Địa Chỉ IP: %s\r\n \r\n", ip)
+	info += fmt.Sprintf("Địa chỉ IP: %s\r\n \r\n", ip)
 
 	//get traffic
 	inbouds, err := j.inboundService.GetAllInbounds()
 	if err != nil {
-		logger.Warning("StatsNotifyJob run failed:", err)
+		logger.Warning("StatsNotifyJob run failed: ", err)
 		return ""
 	}
 	//NOTE:If there no any sessions here,need to notify here
-	//TODO:分节点推送,自动转化格式
+	//TODO:Sub -node push, automatic conversion format
 	for _, inbound := range inbouds {
-		info += fmt.Sprintf("Tên VPN: %s\r\nPort :%d\r\nLưu lượng tải lên ↑: %s\r\nLưu lượng tải xuông ↓: %s\r\nTổng lưu lượng: %s\r\n", inbound.Remark, inbound.Port, common.FormatTraffic(inbound.Up), common.FormatTraffic(inbound.Down), common.FormatTraffic((inbound.Up + inbound.Down)))
+		info += fmt.Sprintf("Tên node: %s\r\n Cổng: %d\r\n Lượng tải lên ↑: %s\r\n Lượng tải xuống ↓: %s\r\n Tổng lưu lượng: %s\r\n", inbound.Remark, inbound.Port, common.FormatTraffic(inbound.Up), common.FormatTraffic(inbound.Down), common.FormatTraffic((inbound.Up + inbound.Down)))
 		if inbound.ExpiryTime == 0 {
-			info += fmt.Sprintf("Hạn sử dụng: vô thời hạn\r\n \r\n")
+			info += fmt.Sprintf("Understanding time: indefinitely\r\n \r\n")
 		} else {
-			info += fmt.Sprintf("Hạn sử dụng: %s\r\n \r\n", time.Unix((inbound.ExpiryTime/1000), 0).Format("2006-01-02 15:04:05"))
+			info += fmt.Sprintf("Ngày hết hạn: %s\r\n \r\n", time.Unix((inbound.ExpiryTime/1000), 0).Format("2006-01-02 15:04:05"))
 		}
 	}
 	return info

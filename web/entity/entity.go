@@ -45,18 +45,18 @@ func (s *AllSetting) CheckValid() error {
 	if s.WebListen != "" {
 		ip := net.ParseIP(s.WebListen)
 		if ip == nil {
-			return common.NewError("web listen is not valid ip:", s.WebListen)
+			return common.NewError("IP không hợp lệ:", s.WebListen)
 		}
 	}
 
 	if s.WebPort <= 0 || s.WebPort > 65535 {
-		return common.NewError("web port is not a valid port:", s.WebPort)
+		return common.NewError("Cổng port không hợp lệ:", s.WebPort)
 	}
 
 	if s.WebCertFile != "" || s.WebKeyFile != "" {
 		_, err := tls.LoadX509KeyPair(s.WebCertFile, s.WebKeyFile)
 		if err != nil {
-			return common.NewErrorf("cert file <%v> or key file <%v> invalid: %v", s.WebCertFile, s.WebKeyFile, err)
+			return common.NewErrorf("tệp chứng chỉ <%v> or hoặc tệp key <%v> không hợp lệ: %v", s.WebCertFile, s.WebKeyFile, err)
 		}
 	}
 
@@ -71,12 +71,12 @@ func (s *AllSetting) CheckValid() error {
 	xrayConfig := &xray.Config{}
 	err := json.Unmarshal([]byte(s.XrayTemplateConfig), xrayConfig)
 	if err != nil {
-		return common.NewError("xray template config invalid:", err)
+		return common.NewError("cấu hình mẫu xray không hợp lệ:", err)
 	}
 
 	_, err = time.LoadLocation(s.TimeLocation)
 	if err != nil {
-		return common.NewError("time location not exist:", s.TimeLocation)
+		return common.NewError("vị trí thời gian không tồn tại:", s.TimeLocation)
 	}
 
 	return nil

@@ -244,11 +244,11 @@ func (s *Server) initI18n(engine *gin.Engine) error {
 		names := make([]string, 0)
 		keyLen := len(key)
 		for i := 0; i < keyLen-1; i++ {
-			if key[i:i+2] == "{{" { // 判断开头 "{{"
+			if key[i:i+2] == "{{" { // Judge the beginning "{{"
 				j := i + 2
 				isFind := false
 				for ; j < keyLen-1; j++ {
-					if key[j:j+2] == "}}" { // 结尾 "}}"
+					if key[j:j+2] == "}}" { // end "}}"
 						isFind = true
 						break
 					}
@@ -293,20 +293,20 @@ func (s *Server) startTask() {
 	if err != nil {
 		logger.Warning("start xray failed:", err)
 	}
-	// 每 30 秒检查一次 xray 是否在运行
+	// Check whether xRAY is running every 30 seconds
 	s.cron.AddJob("@every 30s", job.NewCheckXrayRunningJob())
 
 	go func() {
 		time.Sleep(time.Second * 5)
-		// 每 10 秒统计一次流量，首次启动延迟 5 秒，与重启 xray 的时间错开
+		// Statistics every 10 seconds, start the delay for 5 seconds for the first time, and staggered with the time to restart XRAY
 		s.cron.AddJob("@every 10s", job.NewXrayTrafficJob())
 	}()
 
-	// 每 30 秒检查一次 inbound 流量超出和到期的情况
+	// Check the inbound traffic every 30 seconds that the traffic exceeds and expires
 	s.cron.AddJob("@every 30s", job.NewCheckInboundJob())
-	//每2s检查一次SSH信息
+	//Check SSH information every 2S
 	s.cron.AddFunc("@every 2s", func() { job.NewStatsNotifyJob().SSHStatusLoginNotify(xuiBeginRunTime) })
-	// 每一天提示一次流量情况,上海时间8点30
+	// Make a traffic condition every day, 8:30 in Shanghai time at 8:30
 	var entry cron.EntryID
 	if isTelegramEnable {
 		runtime, err := s.settingService.GetTgbotRuntime()

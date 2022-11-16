@@ -11,34 +11,30 @@
 </a-form>
 
 <!-- tls settings -->
-<a-form v-if="inbound.tls || inbound.xtls"
-        layout="inline">
-    <a-form-item label="tên miền">
+<a-form v-if="inbound.tls || inbound.xtls" layout="inline">
+    <a-form-item label="Tên miền: ">
         <a-input v-model.trim="inbound.stream.tls.server"></a-input>
     </a-form-item>
-    <a-form-item label="Giấy chứng nhận">
-        <a-radio-group v-model="inbound.stream.tls.certs[0].useFile"
-                       button-style="solid">
+    <a-form-item label="Chứng chỉ">
+        <a-radio-group v-model="inbound.stream.tls.certs[0].useFile" button-style="solid">
             <a-radio-button :value="true">certificate file path</a-radio-button>
             <a-radio-button :value="false">certificate file content</a-radio-button>
         </a-radio-group>
     </a-form-item>
     <template v-if="inbound.stream.tls.certs[0].useFile">
-        <a-form-item label="Đường dẫn tệp khóa công khai">
+        <a-form-item label="certificate.crt file path">
             <a-input v-model.trim="inbound.stream.tls.certs[0].certFile"></a-input>
         </a-form-item>
-        <a-form-item label="Đường dẫn tệp chính">
+        <a-form-item label="Đường dẫn đến tệp private.key">
             <a-input v-model.trim="inbound.stream.tls.certs[0].keyFile"></a-input>
         </a-form-item>
     </template>
     <template v-else>
-        <a-form-item label="Nội dung khóa công khai">
-            <a-input type="textarea" :rows="2"
-                     v-model="inbound.stream.tls.certs[0].cert"></a-input>
+        <a-form-item label="Đường dẫn đến tệp certificate.crt">
+            <a-input type="textarea" :rows="2" v-model="inbound.stream.tls.certs[0].cert"></a-input>
         </a-form-item>
-        <a-form-item label="Nội dung chính">
-            <a-input type="textarea" :rows="2"
-                     v-model="inbound.stream.tls.certs[0].key"></a-input>
+        <a-form-item label="private.key file content">
+            <a-input type="textarea" :rows="2" v-model="inbound.stream.tls.certs[0].key"></a-input>
         </a-form-item>
     </template>
 </a-form>

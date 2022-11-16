@@ -20,29 +20,6 @@ function sizeFormat(size) {
     }
 }
 
-function checkFormat(size) {
-    if (size < ONE_KB) {
-        return size.toFixed(0);
-    } else if (size < ONE_MB) {
-        return (size / ONE_KB).toFixed(2);
-    } else if (size < ONE_GB) {
-        return (size / ONE_MB).toFixed(2);
-    } else if (size < ONE_TB) {
-        return (size / ONE_GB).toFixed(2);
-    } else if (size < ONE_PB) {
-        return (size / ONE_TB).toFixed(2);
-    } else {
-        return (size / ONE_PB).toFixed(2);
-    }
-}
-
-function truncate(value) {
-    if (value < 0) {
-        return Math.ceil(value);
-    }
-    return Math.floor(value);
-}
-
 function base64(str) {
     return Base64.encode(str);
 }
@@ -56,13 +33,13 @@ function safeBase64(str) {
 
 function formatSecond(second) {
     if (second < 60) {
-        return second.toFixed(0) + ' Giây';
+        return second.toFixed(0) + ' 秒';
     } else if (second < 3600) {
-        return (second / 60).toFixed(0) + ' Phút';
+        return (second / 60).toFixed(0) + ' 分钟';
     } else if (second < 3600 * 24) {
-        return (second / 3600).toFixed(0) + ' Giờ';
+        return (second / 3600).toFixed(0) + ' 小时';
     } else {
-        return (second / 3600 / 24).toFixed(0) + ' Ngày';
+        return (second / 3600 / 24).toFixed(0) + ' 天';
     }
 }
 

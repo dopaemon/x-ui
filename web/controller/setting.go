@@ -40,7 +40,7 @@ func (a *SettingController) initRouter(g *gin.RouterGroup) {
 func (a *SettingController) getAllSetting(c *gin.Context) {
 	allSetting, err := a.settingService.GetAllSetting()
 	if err != nil {
-		jsonMsg(c, "Nhập Cài Đặt", err)
+		jsonMsg(c, "Nhận cài đặt", err)
 		return
 	}
 	jsonObj(c, allSetting, nil)
@@ -50,27 +50,27 @@ func (a *SettingController) updateSetting(c *gin.Context) {
 	allSetting := &entity.AllSetting{}
 	err := c.ShouldBind(allSetting)
 	if err != nil {
-		jsonMsg(c, "Sửa đổi cài đặt", err)
+		jsonMsg(c, "Chỉnh sủa cài đặt", err)
 		return
 	}
 	err = a.settingService.UpdateAllSetting(allSetting)
-	jsonMsg(c, "Sửa đổi cài đặt", err)
+	jsonMsg(c, "Chỉnh sửa cài đặt", err)
 }
 
 func (a *SettingController) updateUser(c *gin.Context) {
 	form := &updateUserForm{}
 	err := c.ShouldBind(form)
 	if err != nil {
-		jsonMsg(c, "Sửa đổi người dùng", err)
+		jsonMsg(c, "Chỉnh sửa người dùng", err)
 		return
 	}
 	user := session.GetLoginUser(c)
 	if user.Username != form.OldUsername || user.Password != form.OldPassword {
-		jsonMsg(c, "Sửa đổi người dùng", errors.New("Tên người dùng ban đầu hoặc mật khẩu ban đầu bị sai"))
+		jsonMsg(c, "Chỉnh sửa người dùng", errors.New("Tên người dùng hoặc mật khẩu gốc không đúng"))
 		return
 	}
 	if form.NewUsername == "" || form.NewPassword == "" {
-		jsonMsg(c, "Sửa đổi người dùng", errors.New("Tên người dùng mới và mật khẩu mới không được để trống"))
+		jsonMsg(c, "Chỉnh sửa người dùng", errors.New("Tên tài khoản và mật khẩu mới không được để trống"))
 		return
 	}
 	err = a.userService.UpdateUser(user.Id, form.NewUsername, form.NewPassword)
@@ -79,7 +79,7 @@ func (a *SettingController) updateUser(c *gin.Context) {
 		user.Password = form.NewPassword
 		session.SetLoginUser(c, user)
 	}
-	jsonMsg(c, "Sửa đổi người dùng", err)
+	jsonMsg(c, "Chỉnh sửa người dùng", err)
 }
 
 func (a *SettingController) restartPanel(c *gin.Context) {

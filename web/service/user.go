@@ -46,16 +46,16 @@ func (s *UserService) UpdateUser(id int, username string, password string) error
 	db := database.GetDB()
 	return db.Model(model.User{}).
 		Where("id = ?", id).
-		Update("username", username).
-		Update("password", password).
+		Update("tên tài khoản", username).
+		Update("mật khẩu", password).
 		Error
 }
 
 func (s *UserService) UpdateFirstUser(username string, password string) error {
 	if username == "" {
-		return errors.New("username can not be empty")
+		return errors.New("tên tài khoản không được để trống")
 	} else if password == "" {
-		return errors.New("password can not be empty")
+		return errors.New("mật khẩu không được để trống")
 	}
 	db := database.GetDB()
 	user := &model.User{}

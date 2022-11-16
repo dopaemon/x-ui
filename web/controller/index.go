@@ -39,7 +39,7 @@ func (a *IndexController) index(c *gin.Context) {
 		c.Redirect(http.StatusTemporaryRedirect, "xui/")
 		return
 	}
-	html(c, "login.html", "X-UI Login", nil)
+	html(c, "login.html", "Đăng Nhập X-UI", nil)
 }
 
 func (a *IndexController) login(c *gin.Context) {
@@ -50,28 +50,28 @@ func (a *IndexController) login(c *gin.Context) {
 		return
 	}
 	if form.Username == "" {
-		pureJsonMsg(c, false, "Vui lòng nhập tên người dùng")
+		pureJsonMsg(c, false, "Vui lòng nhập tên tài khoản")
 		return
 	}
 	if form.Password == "" {
-		pureJsonMsg(c, false, "Xin vui lòng nhập mật khẩu")
+		pureJsonMsg(c, false, "Vui lòng nhập mật khẩu")
 		return
 	}
 	user := a.userService.CheckUser(form.Username, form.Password)
 	timeStr := time.Now().Format("2006-01-02 15:04:05")
 	if user == nil {
 		job.NewStatsNotifyJob().UserLoginNotify(form.Username, getRemoteIp(c), timeStr, 0)
-		logger.Infof("wrong username or password: \"%s\" \"%s\"", form.Username, form.Password)
-		pureJsonMsg(c, false, "tên người dùng hoặc mật khẩu sai")
+		logger.Infof("Sai tên tài khoản hoặc mật khẩu: \"%s\" \"%s\"", form.Username, form.Password)
+		pureJsonMsg(c, false, "Sai tên tài khoản hoặc mật khẩu!")
 		return
 	} else {
-		logger.Infof("%s login success,Ip Address:%s\n", form.Username, getRemoteIp(c))
+		logger.Infof("%s đăng nhập thành công, địa chỉ IP:%s\n", form.Username, getRemoteIp(c))
 		job.NewStatsNotifyJob().UserLoginNotify(form.Username, getRemoteIp(c), timeStr, 1)
 	}
 
 	err = session.SetLoginUser(c, user)
-	logger.Info("user", user.Id, "login success")
-	jsonMsg(c, "Đăng nhập", err)
+	logger.Info("user", user.Id, "đăng nhập thành công")
+	jsonMsg(c, "Log in", err)
 }
 
 func (a *IndexController) logout(c *gin.Context) {

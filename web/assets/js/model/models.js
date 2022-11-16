@@ -36,8 +36,6 @@ class DBInbound {
         this.remark = "";
         this.enable = true;
         this.expiryTime = 0;
-	this.contact = "";
-	this.domain = "";
 
         this.listen = "";
         this.port = 0;
@@ -171,7 +169,7 @@ class AllSetting {
         this.tgRunTime = "";
         this.xrayTemplateConfig = "";
 
-        this.timeLocation = "Asia/Ho_Chi_Chi";
+        this.timeLocation = "Asia/Shanghai";
 
         if (data == null) {
             return

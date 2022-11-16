@@ -253,7 +253,7 @@ class KcpStreamSettings extends XrayCommonClass {
         readBufferSize = 2,
         writeBufferSize = 2,
         type = 'none',
-        seed = RandomUtil.randomSeq(10),
+        seed = RandomUtil.randomSeq(32),
     ) {
         super();
         this.mtu = mtu;
@@ -1206,22 +1206,12 @@ Inbound.VmessSettings = class extends Inbound.Settings {
         this.disableInsecure = disableInsecureEncryption;
     }
 
-    indexOfVmessById(id) {
-        return this.vmesses.findIndex(vmess => vmess.id === id);
+    addVmess() {
+        this.vmesses.push(new Inbound.VmessSettings.Vmess());
     }
 
-    addVmess(vmess) {
-        if (this.indexOfVmessById(vmess.id) >= 0) {
-            return false;
-        }
-        this.vmesses.push(vmess);
-    }
-
-    delVmess(vmess) {
-        const i = this.indexOfVmessById(vmess.id);
-        if (i >= 0) {
-            this.vmesses.splice(i, 1);
-        }
+    delVmess(index) {
+        this.vmesses.splice(index, 1);
     }
 
     static fromJson(json = {}) {
@@ -1264,7 +1254,7 @@ Inbound.VLESSSettings = class extends Inbound.Settings {
         this.decryption = decryption;
         this.fallbacks = fallbacks;
     }
-
+    
     addVLESS() {
         this.vlesses.push(new Inbound.VLESSSettings.VLESS());
     }
@@ -1361,6 +1351,14 @@ Inbound.TrojanSettings = class extends Inbound.Settings {
         this.fallbacks = fallbacks;
     }
 
+    addTrojan() {
+        this.clients.push(new Inbound.TrojanSettings.Client());
+    }
+
+    delTrojan(index) {
+        this.clients.splice(index, 1);
+    }
+
     addTrojanFallback() {
         this.fallbacks.push(new Inbound.TrojanSettings.Fallback());
     }
@@ -1388,7 +1386,7 @@ Inbound.TrojanSettings = class extends Inbound.Settings {
     }
 };
 Inbound.TrojanSettings.Client = class extends XrayCommonClass {
-    constructor(password = RandomUtil.randomSeq(10), flow = FLOW_CONTROL.DIRECT) {
+    constructor(password = RandomUtil.randomSeq(32), flow = FLOW_CONTROL.DIRECT) {
         super();
         this.password = password;
         this.flow = flow;
@@ -1452,7 +1450,7 @@ Inbound.TrojanSettings.Fallback = class extends XrayCommonClass {
 Inbound.ShadowsocksSettings = class extends Inbound.Settings {
     constructor(protocol,
         method = SSMethods.AES_256_GCM,
-        password = btoa(RandomUtil.randomSeq(64)),
+        password = btoa(RandomUtil.randomSeq(32)),
         network = 'tcp,udp'
     ) {
         super(protocol);
@@ -1578,7 +1576,7 @@ Inbound.SocksSettings = class extends Inbound.Settings {
     }
 };
 Inbound.SocksSettings.SocksAccount = class extends XrayCommonClass {
-    constructor(user = RandomUtil.randomSeq(10), pass = RandomUtil.randomSeq(10)) {
+    constructor(user = RandomUtil.randomSeq(32), pass = RandomUtil.randomSeq(32)) {
         super();
         this.user = user;
         this.pass = pass;
@@ -1618,7 +1616,7 @@ Inbound.HttpSettings = class extends Inbound.Settings {
 };
 
 Inbound.HttpSettings.HttpAccount = class extends XrayCommonClass {
-    constructor(user = RandomUtil.randomSeq(10), pass = RandomUtil.randomSeq(10)) {
+    constructor(user = RandomUtil.randomSeq(32), pass = RandomUtil.randomSeq(32)) {
         super();
         this.user = user;
         this.pass = pass;

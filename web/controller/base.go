@@ -12,7 +12,7 @@ type BaseController struct {
 func (a *BaseController) checkLogin(c *gin.Context) {
 	if !session.IsLogin(c) {
 		if isAjax(c) {
-			pureJsonMsg(c, false, "Thời gian đăng nhập đã hết, vui lòng đăng nhập lại")
+			pureJsonMsg(c, false, "Phiên đăng nhập quá hạn, vui lòng đăng nhập lại!")
 		} else {
 			c.Redirect(http.StatusTemporaryRedirect, c.GetString("base_path"))
 		}

@@ -28,11 +28,11 @@ var defaultValueMap = map[string]string{
 	"webKeyFile":         "",
 	"secret":             random.Seq(32),
 	"webBasePath":        "/",
-	"timeLocation":       "Asia/Ho_Chi_Minh",
+	"timeLocation":       "Asia/Shanghai",
 	"tgBotEnable":        "false",
 	"tgBotToken":         "",
-	"tgBotChatId":        "-100",
-	"tgRunTime":	      "30 * * * * *",
+	"tgBotChatId":        "0",
+	"tgRunTime":          "",
 }
 
 type SettingService struct {
@@ -69,14 +69,14 @@ func (s *SettingService) GetAllSetting() (*entity.AllSetting, error) {
 		}
 
 		if !found {
-			// 有些设置自动生成，不需要返回到前端给用户修改
+			// Some settings are automatically generated, no need to return to the front end to modify the user
 			return nil
 		}
 
 		fieldV := v.FieldByName(field.Name)
 		switch t := fieldV.Interface().(type) {
 		case int:
-			n, err := strconv.ParseInt(value, 0, 64)
+			n, err := strconv.ParseInt(value, 10, 64)
 			if err != nil {
 				return err
 			}

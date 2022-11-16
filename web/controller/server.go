@@ -1,10 +1,11 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"time"
 	"x-ui/web/global"
 	"x-ui/web/service"
+
+	"github.com/gin-gonic/gin"
 )
 
 type ServerController struct {
@@ -68,7 +69,7 @@ func (a *ServerController) getXrayVersion(c *gin.Context) {
 
 	versions, err := a.serverService.GetXrayVersions()
 	if err != nil {
-		jsonMsg(c, "Nhận phiên bản", err)
+		jsonMsg(c, "Nhận phiên bản XRAY", err)
 		return
 	}
 
@@ -81,5 +82,5 @@ func (a *ServerController) getXrayVersion(c *gin.Context) {
 func (a *ServerController) installXray(c *gin.Context) {
 	version := c.Param("version")
 	err := a.serverService.UpdateXray(version)
-	jsonMsg(c, "Cài đặt xray", err)
+	jsonMsg(c, "Cài đặt XRAY", err)
 }
