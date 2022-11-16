@@ -1,170 +1,249 @@
 #!/bin/bash
 
-red='\033[0;31m'
-green='\033[0;32m'
-yellow='\033[0;33m'
-plain='\033[0m'
+export LANG=en_US.UTF-8
+
+RED="\033[31m"
+GREEN="\033[32m"
+YELLOW="\033[33m"
+PLAIN="\033[0m"
+
+red() {
+    echo -e "\033[31m\033[01m$1\033[0m"
+}
+
+green() {
+    echo -e "\033[32m\033[01m$1\033[0m"
+}
+
+yellow() {
+    echo -e "\033[33m\033[01m$1\033[0m"
+}
+
+REGEX=("debian" "ubuntu" "centos|red hat|kernel|oracle linux|alma|rocky" "'amazon linux'" "fedora", "alpine")
+RELEASE=("Debian" "Ubuntu" "CentOS" "CentOS" "Fedora" "Alpine")
+PACKAGE_UPDATE=("apt-get update" "apt-get update" "yum -y update" "yum -y update" "yum -y update" "apk update -f")
+PACKAGE_INSTALL=("apt -y install" "apt -y install" "yum -y install" "yum -y install" "yum -y install" "apk add -f")
+PACKAGE_REMOVE=("apt -y remove" "apt -y remove" "yum -y remove" "yum -y remove" "yum -y remove" "apk del -f")
+PACKAGE_UNINSTALL=("apt -y autoremove" "apt -y autoremove" "yum -y autoremove" "yum -y autoremove" "yum -y autoremove" "apk del -f")
+
+[[ $EUID -ne 0 ]] && red "Phai chay duoi quyen root！" && exit 1
+
+CMD=("$(grep -i pretty_name /etc/os-release 2>/dev/null | cut -d \" -f2)" "$(hostnamectl 2>/dev/null | grep -i system | cut -d : -f2)" "$(lsb_release -sd 2>/dev/null)" "$(grep -i description /etc/lsb-release 2>/dev/null | cut -d \" -f2)" "$(grep . /etc/redhat-release 2>/dev/null)" "$(grep . /etc/issue 2>/dev/null | cut -d \\ -f1 | sed '/^[ ]*$/d')")
+
+for i in "${CMD[@]}"; do
+    SYS="$i" && [[ -n $SYS ]] && break
+done
+
+for ((int = 0; int < ${#REGEX[@]}; int++)); do
+    [[ $(echo "$SYS" | tr '[:upper:]' '[:lower:]') =~ ${REGEX[int]} ]] && SYSTEM="${RELEASE[int]}" && [[ -n $SYSTEM ]] && break
+done
+
+[[ -z $SYSTEM ]] && red "Hien tai X-UI khong ho tro cho OS cua ban, vui long su dung OS duoc ho tro" && exit 1
 
 cur_dir=$(pwd)
+os_version=$(grep -i version_id /etc/os-release | cut -d \" -f2 | cut -d . -f1)
 
-# check root
-[[ $EUID -ne 0 ]] && echo -e "${red}Lỗi：${plain} Bạn cần chạy tập lệnh này dưới user root ( không phải sudo ) ！\n" && exit 1
+[[ $SYSTEM == "CentOS" && ${os_version} -lt 7 ]] && echo -e "Vui long su dung tu CentOS 7 tro len" && exit 1
+[[ $SYSTEM == "Fedora" && ${os_version} -lt 29 ]] && echo -e "Vui long su dung tu Fedora 29 tro len" && exit 1
+[[ $SYSTEM == "Ubuntu" && ${os_version} -lt 16 ]] && echo -e "Vui long su dung tu Ubuntu 16 tro len" && exit 1
+[[ $SYSTEM == "Debian" && ${os_version} -lt 9 ]] && echo -e "Vui long su dung tu Debian 9 tro len" && exit 1
 
-# check os
-if [[ -f /etc/redhat-release ]]; then
-    release="centos"
-elif cat /etc/issue | grep -Eqi "debian"; then
-    release="debian"
-elif cat /etc/issue | grep -Eqi "armbian"; then
-    release="armbian"
-elif cat /etc/issue | grep -Eqi "ubuntu"; then
-    release="ubuntu"
-elif cat /etc/issue | grep -Eqi "centos|red hat|redhat"; then
-    release="centos"
-elif cat /proc/version | grep -Eqi "debian"; then
-    release="debian"
-elif cat /proc/version | grep -Eqi "ubuntu"; then
-    release="ubuntu"
-elif cat /proc/version | grep -Eqi "centos|red hat|redhat"; then
-    release="centos"
-else
-    echo -e "${red}Phiên bản Linux bạn đang dùng không thể xác định！${plain}\n" && exit 1
-fi
-
-arch=$(arch)
-
-if [[ $arch == "x86_64" || $arch == "x64" || $arch == "amd64" ]]; then
-    arch="amd64"
-elif [[ $arch == "x86" ]]; then
-    arch="x86"
-elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
-    arch="arm64"
-elif [[ $arch == "s390x" ]]; then
-    arch="s390x"
-elif [[ $arch == "riscv64" ]]; then
-    arch="riscv64"
-else
-    arch="amd64"
-    echo -e "${red}Không thể xác định cấu trúc CPU, thử dùng Kiến Trúc amd64 ${arch}${plain}"
-fi
-
-echo "Kiến Trúc CPU: ${arch}"
-
-os_version=""
-
-# os version
-if [[ -f /etc/os-release ]]; then
-    os_version=$(awk -F'[= ."]' '/VERSION_ID/{print $3}' /etc/os-release)
-fi
-if [[ -z "$os_version" && -f /etc/lsb-release ]]; then
-    os_version=$(awk -F'[= ."]+' '/DISTRIB_RELEASE/{print $2}' /etc/lsb-release)
-fi
-
-if [[ x"${release}" == x"centos" ]]; then
-    if [[ ${os_version} -le 6 ]]; then
-        echo -e "${red}Bạn dùng dùng phiên bản CentOS 7 hoặc mới hơn！${plain}\n" && exit 1
-    fi
-elif [[ x"${release}" == x"ubuntu" ]]; then
-    if [[ ${os_version} -lt 16 ]]; then
-        echo -e "${red}Bạn dùng dùng phiên bản Ubuntu 16.04 hoặc mới hơn！${plain}\n" && exit 1
-    fi
-elif [[ x"${release}" == x"debian" ]]; then
-    if [[ ${os_version} -lt 8 ]]; then
-        echo -e "${red}Bạn dùng dùng phiên bản Debian 8 hoặc mới hơn！${plain}\n" && exit 1
-    fi
-fi
-
-install_base() {
-    if [[ x"${release}" == x"centos" ]]; then
-        yum install wget curl tar -y
-    else
-        apt install wget curl tar -y
-    fi
+archAffix(){
+    case "$(uname -m)" in
+        x86_64 | x64 | amd64 ) echo 'amd64' ;;
+        armv8 | arm64 | aarch64 ) echo 'arm64' ;;
+        s390x ) echo 's390x' ;;
+        * ) red "Khong ho tro cho kien truc CPU server cua ban " && rm -f install.sh && exit 1 ;;
+    esac
 }
 
-#This function will be called when user installed x-ui out of sercurity
-config_after_install() {
-    echo -e "${yellow}Vì lí do bảo mật, bạn nên đổi mật khẩu và tài khoản sau khi thiết lập xong ( hoặc cả port nếu bạn muốn )${plain}"
-    read -p "Xác nhận cài đặt hoàn tất ？[y/n]": config_confirm
-    if [[ x"${config_confirm}" == x"y" || x"${config_confirm}" == x"Y" ]]; then
-    	read -p "Tài khoản: " config_account
-    	echo -e "${yellow}Tên tài khoản bạn đặt là: ${config_account}${plain}"
-    	read -p "Mật khẩu:" config_password
-    	echo -e "${yellow}Mật khẩu của bạn đặt là: ${config_password}${plain}"
-    	read -p "Nhập Port:" config_port
-    	echo -e "${yellow}Port bạn sử dụng là: ${config_port}${plain}"
-        echo -e "${yellow}Xác nhận cài đặt${plain}"
-        /usr/local/x-ui/x-ui setting -username ${config_account} -password ${config_password}
-        echo -e "${yellow}Hoàn tất đặt mật khẩu${plain}"
-        /usr/local/x-ui/x-ui setting -port ${config_port}
-        echo -e "\n${yellow}Hoàn tất đặt Port${plain}"
-    else
-        echo -e "${red}Đã hủy cài đặt: Vui lòng cài đặt X-UI lại hoặc gỡ cài đặt mặc định, lý do bảo mật.${plain}"
-    fi
+info_bar(){
+    clear
+    echo -e "${GREEN} --------------------------------------------------------------------- ${PLAIN}"
+    echo "X-UI Vietnamese Version"
+    echo -e "${GREEN} --------------------------------------------------------------------- ${PLAIN}"
+    echo -e "Phai hien duoc OS: ${GREEN} ${CMD} ${PLAIN}"
+    echo ""
+    echo -e "${GREEN} --------------------------------------------------------------------- ${PLAIN}"
+    sleep 2
 }
 
-install_x-ui() {
-    systemctl stop x-ui
-    cd /usr/local/
+check_status(){
+    yellow "Dang kiem tra moi truong cau hình IP cua may chu, vui long cho..." && sleep 1
+    WgcfIPv4Status=$(curl -s4m8 https://www.cloudflare.com/cdn-cgi/trace -k | grep warp | cut -d= -f2)
+    WgcfIPv6Status=$(curl -s6m8 https://www.cloudflare.com/cdn-cgi/trace -k | grep warp | cut -d= -f2)
+    if [[ $WgcfIPv4Status =~ "on"|"plus" ]] || [[ $WgcfIPv6Status =~ "on"|"plus" ]]; then
+        wg-quick down wgcf >/dev/null 2>&1
+        v6=$(curl -s6m8 https://ip.gs -k)
+        v4=$(curl -s4m8 https://ip.gs -k)
+        wg-quick up wgcf >/dev/null 2>&1
+    else
+        v6=$(curl -s6m8 https://ip.gs -k)
+        v4=$(curl -s4m8 https://ip.gs -k)
+        if [[ -z $v4 && -n $v6 ]]; then
+            yellow "Chỉ IPv6 được phát hiện. Vì vậy, máy chủ phân tích cú pháp DNS64 đã được thêm tự động"
+            echo -e "nameserver 2606:4700:4700::1111" > /etc/resolv.conf
+        fi
+    fi
+    sleep 1
+}
 
+install_base(){
+    if [[ ! $SYSTEM == "CentOS" ]]; then
+        ${PACKAGE_UPDATE[int]}
+    fi
+    if [[ -z $(type -P curl) ]]; then
+        ${PACKAGE_INSTALL[int]} curl
+    fi
+    if [[ -z $(type -P tar) ]]; then
+        ${PACKAGE_INSTALL[int]} tar
+    fi   
+    check_status
+}
+
+download_xui(){
+    if [[ -e /usr/local/x-ui/ ]]; then
+        rm -rf /usr/local/x-ui/
+    fi
+    
     if [ $# == 0 ]; then
-        last_version=$(curl -Ls "https://api.github.com/repos/dopaemon/x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-        if [[ ! -n "$last_version" ]]; then
-            echo -e "${red}Không thể xác định phiên bản X-UI, vui lòng kiểm tra github release hoặc API Github đã bị đổi${plain}"
+        last_version=$(curl -Ls "https://api.github.com/repos/quydang04/x-ui-vn/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/') || last_version=$(curl -sm8 https://raw.githubusercontent.com/quydang04/x-ui-vn/main/config/version >/dev/null 2>&1)
+        if [[ -z "$last_version" ]]; then
+            red "Phat hien phien ban X-UI that bai, phai chac chan rang server cua ban phai duoc ket noi den API cua Github"
+            rm -f install.sh
             exit 1
         fi
-        echo -e "Đã xác định bản Latest của X-UI：${last_version}，Bắt đầu cài đặt"
-        wget -N --no-check-certificate -O /usr/local/x-ui-linux-${arch}.tar.gz https://github.com/dopaemon/x-ui/releases/download/${last_version}/x-ui-linux-${arch}.tar.gz
+        yellow "Phat hien duoc phien ban mơi nhat cua X-UI $ {last_version}, bat dau qua trinh cai dat..."
+        wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(archAffix).tar.gz https://github.com/quydang04/x-ui-vn/releases/download/${last_version}/x-ui-linux-$(archAffix).tar.gz
         if [[ $? -ne 0 ]]; then
-            echo -e "${red}Không thể tải xuống X-UI, kiểm tra bộ nhớ, hoặc Internet${plain}"
+            red "Tai X-UI that bai, phai chac chan rang server cua ban da duoc ket noi mang"
+            rm -f install.sh
             exit 1
         fi
     else
         last_version=$1
-        url="https://github.com/dopaemon/x-ui/releases/download/${last_version}/x-ui-linux-${arch}.tar.gz"
-        echo -e "Bắt đầu cài đặt x-ui v$1"
-        wget -N --no-check-certificate -O /usr/local/x-ui-linux-${arch}.tar.gz ${url}
+        url="https://github.com/quydang04/x-ui-vn/releases/download/${last_version}/x-ui-linux-$(archAffix).tar.gz"
+        yellow "Bat dau cai dat X-UI $1"
+        wget -N --no-check-certificate -O /usr/local/x-ui-linux-$(archAffix).tar.gz ${url}
         if [[ $? -ne 0 ]]; then
-            echo -e "${red}Không thể tải x-ui v$1，Đảm bảo rằng phiên bản này tồn tại${plain}"
+            red "Tai ve phien ban X-UI $ 1 that bai, phai chac chan rang phien ban nay da ton tai hay chua?"
+            rm -f install.sh
             exit 1
         fi
     fi
-
-    if [[ -e /usr/local/x-ui/ ]]; then
-        rm /usr/local/x-ui/ -rf
-    fi
-
-    tar zxvf x-ui-linux-${arch}.tar.gz
-    rm x-ui-linux-${arch}.tar.gz -f
+    
+    cd /usr/local/
+    tar zxvf x-ui-linux-$(archAffix).tar.gz
+    rm -f x-ui-linux-$(archAffix).tar.gz
+    
     cd x-ui
-    chmod +x x-ui bin/xray-linux-${arch}
+    chmod +x x-ui bin/xray-linux-$(archAffix)
     cp -f x-ui.service /etc/systemd/system/
-    wget --no-check-certificate -O /usr/bin/x-ui https://raw.githubusercontent.com/dopaemon/x-ui/main/x-ui.sh
+    
+    wget -N --no-check-certificate https://raw.githubusercontent.com/quydang04/x-ui-vn/main/x-ui.sh -O /usr/bin/x-ui
     chmod +x /usr/local/x-ui/x-ui.sh
     chmod +x /usr/bin/x-ui
-    config_after_install
-    systemctl daemon-reload
-    systemctl enable x-ui
-    systemctl start x-ui
-    echo -e "${green}x-ui v${last_version}${plain} Quá trình cài đặt hoàn tất, bảng điều khiển được khởi chạy，"
-    echo -e ""
-    echo -e "x-ui Cách sử dụng tập lệnh quản lý: "
-    echo -e "----------------------------------------------"
-    echo -e "x-ui              - Hiển thị menu quản lý (nhiều chức năng hơn)"
-    echo -e "x-ui start        - Khởi động bảng điều khiển x-ui"
-    echo -e "x-ui stop         - dừng bảng điều khiển x-ui"
-    echo -e "x-ui restart      - khởi động lại bảng điều khiển x-ui"
-    echo -e "x-ui status       - Xem trạng thái x-ui"
-    echo -e "x-ui enable       - Đặt x-ui để bắt đầu tự động khi khởi động"
-    echo -e "x-ui disable      - Hủy tự động khởi động x-ui boot"
-    echo -e "x-ui log          - Xem nhật ký x-ui"
-    echo -e "x-ui v2-ui        - Di chuyển dữ liệu tài khoản v2-ui của máy này sang x-ui"
-    echo -e "x-ui update       - Cập nhật bảng điều khiển x-ui"
-    echo -e "x-ui install      - cài đặt bảng điều khiển x-ui"
-    echo -e "x-ui uninstall    - Gỡ cài đặt bảng điều khiển x-ui"
-    echo -e "----------------------------------------------"
 }
 
-echo -e "${green}bắt đầu cài đặt${plain}"
-install_base
-install_x-ui $1
+panel_config() {
+    yellow "Vi ly do bao mat, sau khi qua trinh cai dat/ cap nhat, ban phai ghi nho lai tai khoan, mat khau va so cong port cua X-UI"
+    read -rp "Dat ten tai khoan cua ban [mac dinh se duoc dat ngau nhien]: " config_account
+    [[ -z $config_account ]] && config_account=$(date +%s%N | md5sum | cut -c 1-8)
+    read -rp "Dat mat khau cho tai khoan [mac dinh se duoc dat ngau nhien]: " config_password
+    [[ -z $config_password ]] && config_password=$(date +%s%N | md5sum | cut -c 1-8)
+    read -rp "Nhap so cong port ma ban muon dat [mac dinh se duoc dat ngau nhien]: " config_port
+    [[ -z $config_port ]] && config_port=$(shuf -i 1000-65535 -n 1)
+    until [[ -z $(ss -ntlp | awk '{print $4}' | grep -w "$config_port") ]]; do
+        if [[ -n $(ss -ntlp | awk '{print $4}' | grep -w  "$config_port") ]]; then
+            yellow "So cong port nay da duoc dat, vui long chon so cong port khac"
+            read -rp "Nhap so cong port ma ban muon dat [mac dinh se duoc dat ngau nhien]: " config_port
+            [[ -z $config_port ]] && config_port=$(shuf -i 1000-65535 -n 1)
+        fi
+    done
+    /usr/local/x-ui/x-ui setting -username ${config_account} -password ${config_password} >/dev/null 2>&1
+    /usr/local/x-ui/x-ui setting -port ${config_port} >/dev/null 2>&1
+}
+
+install_xui() {
+    info_bar
+    
+    if [[ -e /usr/local/x-ui/ ]]; then
+        yellow "X-UI hien da duoc cai dat, ban co chac chan muon xoa no chu?"
+        read -rp "Vui long chon [y/n, default n]: " yn
+        if [[ $yn =~ "Y"|"y" ]]; then
+            systemctl stop x-ui
+            systemctl disable x-ui
+            rm /etc/systemd/system/x-ui.service -f
+            systemctl daemon-reload
+            systemctl reset-failed
+            rm /etc/x-ui/ -rf
+            rm /usr/local/x-ui/ -rf
+            rm /usr/bin/x-ui -f
+        else
+            red "Da huy va go cai dat!"
+            exit 1
+        fi
+    fi
+    
+    systemctl stop x-ui >/dev/null 2>&1
+    
+    install_base
+    download_xui $1
+    panel_config
+    
+    systemctl daemon-reload
+    systemctl enable x-ui >/dev/null 2>&1
+    systemctl start x-ui
+    
+    cd $cur_dir
+    rm -f install.sh
+    green "X-UI v${last_version} Qua trinh cai dat hoan tat, X-UI da duoc khoi dong va dang chay!"
+    echo -e ""
+    echo -e "------------------------------------------------------------------------------"
+    echo -e "CAC LENH CUA X-UI "
+    echo -e "------------------------------------------------------------------------------"
+    echo -e "x-ui              - Hien thi menu quan ly"
+    echo -e "x-ui start        - Khoi dong X-UI"
+    echo -e "x-ui stop         - Dung X-UI"
+    echo -e "x-ui restart      - Khoi dong lai X-UI"
+    echo -e "x-ui status       - Xem trang thai cua X-UI"
+    echo -e "x-ui enable       - Bat X-UI khoi dong cung he thong"
+    echo -e "x-ui disable      - Tat X-UI khoi dong cung he thong"
+    echo -e "x-ui log          - Xem log cua X-UI"
+    echo -e "x-ui v2-ui        - Di chuyen tu V2-UI sang X-UI"
+    echo -e "x-ui update       - Cap nhat X-UI"
+    echo -e "x-ui install      - Cai dat X-UI"
+    echo -e "x-ui uninstall    - Go cai dat X-UI"
+    echo -e "------------------------------------------------------------------------------"
+    echo -e "------------------------------------------------------------------------------"
+    echo -e "Please do consider supporting authors"
+    echo -e "------------------------------------------------------------------------------"
+    echo -e "vaxilu            - https://github.com/vaxilu" 
+    echo -e "taffychan         - https://github.com/taffychan"  
+    echo -e "LuckyHunter       - https://github.com/Chasing66"
+    echo -e "Yu FranzKafka     - https://github.com/FranzKafkaYu"
+    echo -e "Niduka Akalanka   - https://github.com/NidukaAkalanka"
+    echo -e "--------------------------------------------------------------------------------"
+     echo -e "X-UI Vietnamese translation author:" 
+   echo -e "--------------------------------------------------------------------------------"
+    echo -e "quydang            - https://github.com/quydang04" 
+     echo -e "--------------------------------------------------------------------------------"
+    show_login_info
+    echo -e ""
+    yellow "(Neu ban khong truy cap duoc X-UI, dieu dau tien hay go vao SSH lenh so 17, sau do cau hinh lai cong port cua ban!)"
+}
+
+show_login_info(){
+    if [[ -n $v4 && -z $v6 ]]; then
+        echo -e "Dia chi login IPV4: ${GREEN}http://$v4:$config_port ${PLAIN}"
+    elif [[ -n $v6 && -z $v4 ]]; then
+        echo -e "Dia chi login IPV6: ${GREEN}http://[$v6]:$config_port ${PLAIN}"
+    elif [[ -n $v4 && -n $v6 ]]; then
+        echo -e "Dia chi login IPV4: ${GREEN}http://$v4:$config_port ${PLAIN}"
+        echo -e "Dia chi login IPV6: ${GREEN}http://[$v6]:$config_port ${PLAIN}"
+    fi
+    echo -e "Ten tai khoan: ${GREEN}$config_account ${PLAIN}"
+    echo -e "Mat khau: ${GREEN}$config_password ${PLAIN}"
+}
+
+install_xui $1
